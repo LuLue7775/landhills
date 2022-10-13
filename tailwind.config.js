@@ -1,3 +1,4 @@
+
 module.exports = {
   mode: 'jit',
   content: [
@@ -5,8 +6,15 @@ module.exports = {
     './src/components/**/*.{js,ts,jsx,tsx}',
   ], // remove unused styles in production
   darkMode: 'media', // or 'media' or 'class'
+
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        sans: ['Circular Medium, Helvetica'],
+        body: ['Circular Book, Helvetica'],
+        italic: ['Circular Book Italic, Helvetica'],
+      },
+    },
   },
   variants: {
     extend: {},

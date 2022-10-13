@@ -6,7 +6,7 @@
   * {
     box-sizing: border-box;
   }
-  
+
   html,
   body,
   #__next {
@@ -16,4 +16,29 @@
     padding: 0;
     overflow: hidden;
   }
+
+  @font-face {
+    font-family: 'Circular Medium';
+    font-style: normal;
+    src: local('circular-medium'),
+      url(/fonts/google/oswald/circular-medium.woff) format('woff');
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: 'Circular Book';
+    font-style: normal;
+    src: local('circular-book'),
+      url(/fonts/google/oswald/circular-book.woff) format('woff');
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: 'Circular Medium';
+    font-style: normal;
+    src: local('circular-medium'),
+      url(/fonts/google/oswald/circular-book-italic.woff) format('woff');
+    font-display: swap;
+  }
+
 }
