@@ -37,6 +37,28 @@ const Header = ({ title = titleDefault }) => {
         <meta name='og:site_name' content={title} />
         <meta name='og:description' content={description} />
 
+        {/* <link
+          rel="preload"
+          href="/fonts/circular-medium.woff"
+          as="font"
+          type="font/woff"
+          crossOrigin=""
+        />
+        <link
+          rel="preload"
+          href="/fonts/circular-book.woff"
+          as="font"
+          type="font/woff"
+          crossOrigin=""
+        />
+        <link
+          rel="preload"
+          href="/fonts/circular-book-italic.woff"
+          as="font"
+          type="font/woff"
+          crossOrigin=""
+        /> */}
+
         <link rel='apple-touch-icon' href='/icons/apple-touch-icon.png' />
         <link
           rel='apple-touch-icon'
