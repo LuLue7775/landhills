@@ -1,4 +1,5 @@
-import Instructions from '@/components/dom/Instructions'
+import useObjects from '@/queries/useObjects'
+import { useEffect } from 'react'
 import dynamic from 'next/dynamic'
 
 const Box = dynamic(() => import('@/components/canvas/Box'), {
@@ -7,9 +8,14 @@ const Box = dynamic(() => import('@/components/canvas/Box'), {
 
 // Step 5 - delete Instructions components
 const Page = (props) => {
+    const { objects, error, isLoading, isError, isSuccess } = useObjects()
+
+    useEffect(() => {
+        console.log(objects)
+    }, [objects])
+
     return (
         <>
-            <Instructions />
             <div> THIS IS OBJECTS</div>
 
         </>

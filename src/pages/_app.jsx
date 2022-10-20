@@ -1,10 +1,11 @@
-import { useRouter } from 'next/router'
 import { setState } from '@/helpers/store'
-import { useEffect } from 'react'
 import Header from '@/config'
 import Dom from '@/components/layout/dom'
 import '@/styles/index.css'
+import { useRouter } from 'next/router'
+import { useEffect } from 'react'
 import dynamic from 'next/dynamic'
+import { ReactQueryDevtools } from 'react-query/devtools'
 
 import { QueryClient, QueryClientProvider } from 'react-query'
 
@@ -29,6 +30,8 @@ function App({ Component, pageProps = { title: 'index' } }) {
           <Component {...pageProps} />
         </Dom>
         {Component?.r3f && <LCanvas>{Component.r3f(pageProps)}</LCanvas>}
+
+        <ReactQueryDevtools initialIsOpen={false} position='bottom-right' />
       </QueryClientProvider>
     </>
   )

@@ -1,4 +1,5 @@
-import Instructions from '@/components/dom/Instructions'
+import useEvents from '@/queries/useEvents'
+import { useEffect } from 'react'
 import dynamic from 'next/dynamic'
 
 const Box = dynamic(() => import('@/components/canvas/Box'), {
@@ -7,9 +8,14 @@ const Box = dynamic(() => import('@/components/canvas/Box'), {
 
 // Step 5 - delete Instructions components
 const Page = (props) => {
+    const { events, error, isLoading, isError, isSuccess } = useEvents()
+
+    useEffect(() => {
+        console.log(events)
+    }, [events])
+
     return (
         <>
-            <Instructions />
             <div> THIS IS EVENTS</div>
 
         </>
@@ -21,7 +27,6 @@ Page.r3f = (props) => (
         <Box route='/' />
     </>
 )
-
 export default Page
 
 export async function getStaticProps() {

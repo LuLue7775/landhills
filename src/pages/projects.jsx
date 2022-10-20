@@ -1,4 +1,5 @@
-import Instructions from '@/components/dom/Instructions'
+import useProjects from '@/queries/useProjects'
+import { useEffect } from 'react'
 import dynamic from 'next/dynamic'
 
 const Box = dynamic(() => import('@/components/canvas/Box'), {
@@ -6,9 +7,14 @@ const Box = dynamic(() => import('@/components/canvas/Box'), {
 })
 
 const Page = (props) => {
+  const { projects, error, isLoading, isError, isSuccess } = useProjects()
+
+  useEffect(() => {
+    console.log(projects)
+  }, [projects])
+
   return (
     <>
-      <Instructions />
       <div> THIS IS PROJECTS</div>
 
     </>

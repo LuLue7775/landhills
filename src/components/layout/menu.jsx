@@ -1,12 +1,17 @@
 
 import React from 'react'
 import useStore from '@/helpers/store'
+import useBrandInfo from '@/queries/useBrandInfo'
+import DOMPurify from 'isomorphic-dompurify'
 
-export default function Menu() {
 
+export default function Menu({ isMenuOpened }) {
     const router = useStore((state) => state.router)
+    const { brand_info, error, isLoading, isSuccess } = useBrandInfo()
+    const { info_content } = brand_info?.[0] || []
 
     return (
+        isMenuOpened &&
         <>
             <ul className='font-sans text-xl md:text-3xl'>
                 <li className="nav-item">
@@ -45,6 +50,13 @@ export default function Menu() {
                     > ABOUT </a>
                 </li>
             </ul>
+
+            {isSuccess
+                ? <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(info_content) }} />
+                : isLoading
+                    ? <p> Loader </p>
+                    : <p> {error} </p>
+            }
         </>
     )
 }

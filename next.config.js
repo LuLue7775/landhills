@@ -37,6 +37,11 @@ const nextConfig = {
 
     return config
   },
+
+}
+
+nextConfig.images = {
+  domains: ['landhills.co'],
 }
 
 // manage i18n
@@ -78,3 +83,4 @@ module.exports = (_phase, { defaultConfig }) => {
 
   return finalConfig
 }
+

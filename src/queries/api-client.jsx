@@ -9,6 +9,7 @@ function client(endpoint, customConfig = {}) {
     return window
         .fetch(`${apiURL}/${endpoint}`, config)
         .then(response => response.json())
+
 }
 
 export { client }
