@@ -5,6 +5,7 @@ import useHome from '@/queries/useHome'
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import DOMPurify from 'isomorphic-dompurify';
+import { useSwipeable } from 'react-swipeable';
 
 // import Shader from '@/components/canvas/Shader/Shader'
 
@@ -27,6 +28,12 @@ const Page = (props) => {
     console.log(home)
   }, [home])
 
+  const swipeHandlers = useSwipeable({
+    onSwiped: (eventData) => console.log("User Swiped!", eventData),
+    swipeDuration: 500,
+    preventScrollOnSwipe: true,
+    trackMouse: true
+  });
   return (
     <>
       {/* <Instructions /> */}
@@ -36,9 +43,10 @@ const Page = (props) => {
         <button onClick={() => setMenuOpen(!isMenuOpened)}> MENU </button>
       </div>
 
-      <div className="-z-10">
+      <div className="-z-10 carousel-wrapper" {...swipeHandlers}>
         {home_images?.map(imageData => (
           <Image
+            className="select-none"
             key={imageData.id}
             src={imageData.image}
             alt=""

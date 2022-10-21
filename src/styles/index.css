@@ -17,6 +17,10 @@
     overflow: hidden;
   }
 
+  img {
+    user-select: none;
+  }
+
   @font-face {
     font-family: 'Circular Medium';
     font-style: normal;

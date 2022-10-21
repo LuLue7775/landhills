@@ -26,19 +26,21 @@ const LCanvas = ({ children }) => {
   const dom = useStore((state) => state.dom)
 
   return (
-    <Canvas
-      mode='concurrent'
-      style={{
-        position: 'absolute',
-        top: 0,
-        zIndex: 100
-      }}
-      onCreated={(state) => state.events.connect(dom.current)}
-    >
-      <LControl />
-      <Preload all />
-      {children}
-    </Canvas>
+    <div className='pointer-events-none'>
+      <Canvas
+        mode='concurrent'
+        style={{
+          position: 'absolute',
+          top: 0,
+          zIndex: 100,
+        }}
+        onCreated={(state) => state.events.connect(dom.current)}
+      >
+        {/* <LControl /> */}
+        <Preload all />
+        {children}
+      </Canvas>
+    </div>
   )
 }
 
