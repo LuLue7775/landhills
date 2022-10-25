@@ -26,7 +26,7 @@ const LCanvas = ({ children }) => {
   const dom = useStore((state) => state.dom)
 
   return (
-    <div className='pointer-events-none'>
+    <div className="canvas">
       <Canvas
         mode='concurrent'
         style={{

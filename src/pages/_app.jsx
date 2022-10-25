@@ -1,7 +1,7 @@
+import { GlobalStyle } from '@/styles/styles'
 import { setState } from '@/helpers/store'
 import Header from '@/config'
-import Dom from '@/components/layout/dom'
-import '@/styles/index.css'
+import Layout from '@/components/layout/layout'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import dynamic from 'next/dynamic'
@@ -25,10 +25,12 @@ function App({ Component, pageProps = { title: 'index' } }) {
   return (
     <>
       <Header title={pageProps.title} />
+      <GlobalStyle />
+
       <QueryClientProvider client={queryClient}>
-        <Dom>
+        <Layout>
           <Component {...pageProps} />
-        </Dom>
+        </Layout>
         {Component?.r3f && <LCanvas>{Component.r3f(pageProps)}</LCanvas>}
 
         <ReactQueryDevtools initialIsOpen={false} position='bottom-right' />

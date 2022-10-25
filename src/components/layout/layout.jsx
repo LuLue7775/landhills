@@ -1,7 +1,8 @@
 import { setState } from '@/helpers/store'
 import { useEffect, useRef } from 'react'
+import Nav from '../nav'
 
-const Dom = ({ children }) => {
+const Layout = ({ children }) => {
   const ref = useRef(null)
   useEffect(() => {
     setState({ dom: ref })
@@ -12,9 +13,11 @@ const Dom = ({ children }) => {
       className='absolute top-0 left-0 z-10 w-screen h-screen overflow-hidden dom'
       ref={ref}
     >
+      <Nav />
+
       {children}
     </div>
   )
 }
 
-export default Dom
+export default Layout

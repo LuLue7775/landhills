@@ -1,11 +1,12 @@
-import dynamic from 'next/dynamic'
 import Instructions from '@/components/dom/Instructions'
 import Menu from '@/components/layout/menu'
+import Carousel from '@/components/carousel'
+import { StyledImageLink, StyledTextMedium } from '@/styles/styles'
+import dynamic from 'next/dynamic'
 import useHome from '@/queries/useHome'
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import DOMPurify from 'isomorphic-dompurify';
-import { useSwipeable } from 'react-swipeable';
 
 // import Shader from '@/components/canvas/Shader/Shader'
 
@@ -28,36 +29,29 @@ const Page = (props) => {
     console.log(home)
   }, [home])
 
-  const swipeHandlers = useSwipeable({
-    onSwiped: (eventData) => console.log("User Swiped!", eventData),
-    swipeDuration: 500,
-    preventScrollOnSwipe: true,
-    trackMouse: true
-  });
   return (
     <>
       {/* <Instructions /> */}
-      <div className="flex justify-between">
-        {/* <Image /> */}
-        <div> logo </div>
-        <button onClick={() => setMenuOpen(!isMenuOpened)}> MENU </button>
-      </div>
-
-      <div className="-z-10 carousel-wrapper" {...swipeHandlers}>
+      <Carousel>
         {home_images?.map(imageData => (
-          <Image
-            className="select-none"
-            key={imageData.id}
-            src={imageData.image}
-            alt=""
-            layout="fill"
-          // width="100"
-          // height="100"
-          />
+          <StyledImageLink key={imageData.id}
+            draggable="false"
+            href={imageData.image_link}
+          >
+            <Image
+              key={imageData.id}
+              className="images"
+              draggable="false"
+              src={imageData.image}
+              alt="image"
+              layout="fill"
+              objectFit="contain"
+            />
+          </StyledImageLink>
         ))}
-      </div>
+      </Carousel>
 
-      <div className="absolute bottom-0" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(current_event) }} />
+      <StyledTextMedium className="absolute bottom-0" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(current_event) }} />
 
       <Menu isMenuOpened={isMenuOpened} />
     </>
