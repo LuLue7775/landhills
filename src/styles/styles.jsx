@@ -39,7 +39,7 @@ export const GlobalStyle = createGlobalStyle`
     overflow: hidden;
 
     font-size: 13px;
-    font-family: Circular Medium;
+    font-family: Circular Book;
 
   }
 
@@ -60,15 +60,73 @@ export const GlobalStyle = createGlobalStyle`
   }
 `;
 
+export const StyledLayout = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+`
+
+export const StyledMenu = styled.div`
+  height: 100vh;
+  width: 100%;
+  padding: 0 0 0 2rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 20;
+
+  background-color: #dedcd380;
+  backdrop-filter: blur(10px);
+`
+
+export const StyledMenuUl = styled.ul`
+  font-size: 2rem;
+  line-height: 2rem;
+  font-family: Circular Medium;
+  padding: 0;
+  list-style-type: none;
+`
+
+export const StyledMenuInfo = styled.div`
+  position: absolute;
+  bottom: 1rem;
+`
+export const StyledCloseButton = styled.button`
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin: 1rem;
+    background-image: url('/img/close.png');
+    background-size: cover;
+    width: 30px;
+    height: 30px;
+`
+
 export const StyledNav = styled.div`
   padding: 2rem;
   display: flex;
   justify-content: space-between;
 `
+
 export const StyledTextMedium = styled.div`
   padding: 0 0 0 2rem;
   font-size: 1.5rem;
-  lineHeight: 1.5rem;
+  line-height: 1.5rem;
+  font-family: Circular Medium;
+
+`
+
+export const StyledText = styled.div`
+  font-size: 1rem;
+  line-height: .4rem;
+`
+
+export const StyledLink = styled.a`
+  cursor: pointer;
 `
 
 export const StyledSwipeHandler = styled.div`

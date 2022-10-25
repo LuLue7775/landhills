@@ -1,5 +1,4 @@
 import Instructions from '@/components/dom/Instructions'
-import Menu from '@/components/layout/menu'
 import Carousel from '@/components/carousel'
 import { StyledImageLink, StyledTextMedium } from '@/styles/styles'
 import dynamic from 'next/dynamic'
@@ -22,8 +21,6 @@ const Shader = dynamic(() => import('@/components/canvas/Shader/Shader'), {
 const Page = (props) => {
   const { home, error, isLoading, isError, isSuccess } = useHome()
   const { current_event, home_images } = home?.[0] || []
-
-  const [isMenuOpened, setMenuOpen] = useState(false)
 
   useEffect(() => {
     console.log(home)
@@ -53,7 +50,6 @@ const Page = (props) => {
 
       <StyledTextMedium className="absolute bottom-0" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(current_event) }} />
 
-      <Menu isMenuOpened={isMenuOpened} />
     </>
   )
 }

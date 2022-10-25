@@ -1,22 +1,27 @@
-import { setState } from '@/helpers/store'
-import { useEffect, useRef } from 'react'
 import Nav from '../nav'
+import Menu from './menu'
+import { StyledLayout } from '@/styles/styles'
+import { setState } from '@/helpers/store'
+import { useState, useEffect, useRef } from 'react'
 
 const Layout = ({ children }) => {
+  const [isMenuOpened, setMenuOpen] = useState(false)
   const ref = useRef(null)
+
   useEffect(() => {
     setState({ dom: ref })
   }, [])
 
   return (
-    <div
-      className='absolute top-0 left-0 z-10 w-screen h-screen overflow-hidden dom'
+    <StyledLayout
+      className='Layout'
       ref={ref}
     >
-      <Nav />
+      <Nav isMenuOpened={isMenuOpened} setMenuOpen={setMenuOpen} />
+      <Menu isMenuOpened={isMenuOpened} setMenuOpen={setMenuOpen} />
 
       {children}
-    </div>
+    </StyledLayout>
   )
 }
 

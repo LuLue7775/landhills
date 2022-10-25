@@ -3,7 +3,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { StyledNav } from '@/styles/styles'
 
-export default function Nav() {
+export default function Nav({ isMenuOpened, setMenuOpen }) {
     return (
         <StyledNav className="Nav">
             <Link href="/">

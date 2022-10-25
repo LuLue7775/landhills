@@ -3,60 +3,66 @@ import React from 'react'
 import useStore from '@/helpers/store'
 import useBrandInfo from '@/queries/useBrandInfo'
 import DOMPurify from 'isomorphic-dompurify'
+import { StyledMenu, StyledText, StyledMenuUl, StyledMenuInfo, StyledLink, StyledCloseButton } from '@/styles/styles'
+import Link from 'next/link'
+import Image from 'next/image'
 
-
-export default function Menu({ isMenuOpened }) {
+export default function Menu({ isMenuOpened, setMenuOpen }) {
     const router = useStore((state) => state.router)
     const { brand_info, error, isLoading, isSuccess } = useBrandInfo()
     const { info_content } = brand_info?.[0] || []
 
     return (
         isMenuOpened &&
-        <>
-            <ul className='font-sans text-xl md:text-3xl'>
+        <StyledMenu>
+            <StyledMenuUl className='font-sans text-xl md:text-3xl'>
                 <li className="nav-item">
-                    <a className="nav-link"
+                    <StyledLink className="nav-link"
                         onClick={() => {
                             router.push(`/projects`)
                         }}
-                    > PROJECTS </a>
+                    > PROJECTS </StyledLink>
                 </li>
                 <li className="nav-item">
-                    <a className="nav-link"
+                    <StyledLink className="nav-link"
                         onClick={() => {
                             router.push(`/objects`)
                         }}
-                    > OBJECTS </a>
+                    > OBJECTS </StyledLink>
                 </li>
                 <li className="nav-item">
-                    <a className="nav-link"
+                    <StyledLink className="nav-link"
                         onClick={() => {
                             router.push(`/archive`)
                         }}
-                    > ARCHIVE </a>
+                    > ARCHIVE </StyledLink>
                 </li>
                 <li className="nav-item">
-                    <a className="nav-link"
+                    <StyledLink className="nav-link"
                         onClick={() => {
                             router.push(`/events`)
                         }}
-                    > EVENTS </a>
+                    > EVENTS </StyledLink>
                 </li>
                 <li className="nav-item">
-                    <a className="nav-link"
+                    <StyledLink className="nav-link"
                         onClick={() => {
                             router.push(`/about`)
                         }}
-                    > ABOUT </a>
+                    > ABOUT </StyledLink>
                 </li>
-            </ul>
+            </StyledMenuUl>
 
             {isSuccess
-                ? <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(info_content) }} />
+                ? <StyledMenuInfo>
+                    <StyledText dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(info_content) }} />
+                </StyledMenuInfo>
                 : isLoading
                     ? <p> Loader </p>
                     : <p> {error} </p>
             }
-        </>
+
+            <StyledCloseButton onClick={() => setMenuOpen(!isMenuOpened)} />
+        </StyledMenu>
     )
 }
