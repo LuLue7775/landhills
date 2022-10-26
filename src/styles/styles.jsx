@@ -254,12 +254,9 @@ export const StyledSection = styled.div`
 `;
 
 export const StyledCoverSection = styled.div`
-// display: flex;
-// flex-direction: column;
-width: 80%;
-// height: 80%;
-margin-bottom: 10px;
-// background-color: red;
+
+  width: 80%;
+  margin-bottom: 10px;
 `;
 
 export const StyledObjectContent = styled.div`
@@ -273,21 +270,30 @@ export const StyledObjectContent = styled.div`
 export const StyledObjectDisplayCols = styled.div`
   display: flex;
   justify-content: center;
-  // align-items: bottom;
   height: 80vh;
   width: 100vw;
-
-  // background-color: orange;
 `;
 
 export const StyledObjectCol = styled.div`
-
-  // display: flex;
-  // flex-direction: column;
-  // justify-content: end;
   width: 350px;
   height: auto;
   margin: 10px;
-  // background-color: green;
+`
 
+/**
+ * Achive
+ */
+export const StyledTableWrapper = styled.div`
+position: relative;
+  height: auto;
+  width: 100vw;
+  margin-bottom: 100px;
+`
+export const StyledImageWrapper = styled.div`
+  position: absolute;
+  left: 20vw;
+  top: 0;
+  transform: ${({ mouseY }) => `translateY(${mouseY}px)`};
+  height: 200px;
+  width: 200px;
 `

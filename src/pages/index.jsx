@@ -3,7 +3,7 @@ import Carousel from '@/components/carousel'
 import { StyledImageLink, StyledTextMedium } from '@/styles/styles'
 import dynamic from 'next/dynamic'
 import useHome from '@/queries/useHome'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import Image from 'next/image'
 import DOMPurify from 'isomorphic-dompurify';
 
