@@ -3,7 +3,6 @@ import {
     StyledPages,
     StyledSection,
     StyledCoverSection,
-    StyledImage,
     StyledText,
     StyledObjectContent,
     StyledObjectDisplayCols,
@@ -18,7 +17,6 @@ const Box = dynamic(() => import('@/components/canvas/Box'), {
     ssr: false,
 })
 
-// Step 5 - delete Instructions components
 const Page = (props) => {
     const { objects, error, isLoading, isError, isSuccess } = useObjects()
 
@@ -31,12 +29,14 @@ const Page = (props) => {
             <StyledSection>
                 {objects?.map((object, i) => (
                     <StyledCoverSection key={object.id}>
-                        <StyledImage
+                        <Image
                             className="images"
                             draggable="false"
                             src={object.object_cover_image.guid}
                             alt="image"
-                            layout="fill"
+                            layout="responsive"
+                            height="75"
+                            width="100"
                             objectFit="contain"
                         />
                         <StyledText dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(object.object_cover_paragraph) }} />

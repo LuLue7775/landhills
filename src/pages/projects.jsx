@@ -26,10 +26,6 @@ const Page = (props) => {
               draggable="false"
               src={project.project_cover_image.guid}
               alt="image"
-            // layout="fill"
-            // height="600"
-            // width="400"
-            // objectFit="contain"
             />
 
             <StyledText>
