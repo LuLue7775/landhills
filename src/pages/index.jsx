@@ -48,7 +48,7 @@ const Page = (props) => {
         ))}
       </Carousel>
 
-      <StyledTextMedium className="absolute bottom-0" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(current_event) }} />
+      <StyledTextMedium dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(current_event) }} />
 
     </>
   )

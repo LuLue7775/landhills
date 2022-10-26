@@ -1,5 +1,5 @@
 import useProjects from '@/queries/useProjects'
-import { StyledProject, StyledRow, StyledItems, StyledImage, StyledText } from '@/styles/styles'
+import { StyledPages, StyledRow, StyledItems, StyledImage, StyledText } from '@/styles/styles'
 import { useEffect } from 'react'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
@@ -17,12 +17,11 @@ const Page = (props) => {
   }, [projects])
 
   return (
-    <StyledProject>
+    <StyledPages>
       <StyledRow>
-        {projects?.map((project, i) => (
-          <StyledItems key={i} >
+        {projects?.map(project => (
+          <StyledItems key={project.id} >
             <StyledImage
-              key={project.id}
               className="images"
               draggable="false"
               src={project.project_cover_image.guid}
@@ -43,7 +42,7 @@ const Page = (props) => {
 
       </StyledRow>
 
-    </StyledProject>
+    </StyledPages>
   )
 }
 

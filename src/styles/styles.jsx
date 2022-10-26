@@ -120,7 +120,7 @@ export const StyledNav = styled.div`
 export const StyledTextMedium = styled.div`
   padding: 0 0 0 2rem;
   font-size: 1.5rem;
-  line-height: 1.5rem;
+  line-height: 3rem;
   font-family: Circular Medium;
 
 `
@@ -128,11 +128,19 @@ export const StyledTextMedium = styled.div`
 export const StyledText = styled.div`
   text-align: start;
   font-size: 1rem;
+  line-height: 1.5rem;
+  padding: 0 .5rem;
 `
 
 export const StyledLink = styled.a`
   cursor: pointer;
 `
+
+export const StyledPages = styled.div`
+  position: relative;
+  height:100%;
+  overflow: scroll;
+`;
 
 /**
  * Carousel
@@ -184,7 +192,6 @@ export const StyledSlideButton = styled.button`
 
   height: 50%;
   width: 30%;
-  z-index:1;
   display: block;
   cursor: ${(props) => props.direction === 'PREV' ? `url('/img/prev.png')` : `url('/img/next.png')`}, auto;
   margin: 10px;
@@ -195,15 +202,12 @@ export const StyledImageLink = styled.a`
   cursor: url('/img/plus.png'), auto;
 `;
 
+
 /**
- * Project Page
+ * Projects Page
  */
 
-// export const StyledProject = styled.div`
-//   position: relative;
-//   height:100%;
-//   overflow: scroll;
-// `;
+
 // export const StyledRow = styled.div`
 //   font-size: 5rem;
 //   text-align: center;
@@ -220,11 +224,7 @@ export const StyledImageLink = styled.a`
 // `;
 
 // ========= non-next/image version 
-export const StyledProject = styled.div`
-  position: relative;
-  height:100%;
-  overflow: scroll;
-`;
+
 
 export const StyledRow = styled.div`
   width: 100%;
@@ -243,3 +243,50 @@ export const StyledImage = styled.img`
   object-fit: contain;
 `;
 
+/**
+ * Objects Page
+ */
+
+export const StyledSection = styled.div`
+  height: auto;
+  margin-bottom: 100px;
+
+`;
+export const StyledCoverSection = styled.div`
+// display: flex;
+// flex-direction: column;
+width: 80%;
+// height: 80%;
+margin-bottom: 10px;
+// background-color: red;
+`;
+
+export const StyledObjectContent = styled.div`
+  width: 100vw;
+  text-align: justify;
+  padding: 10vh 8vw;
+  font-family: Circular Medium;
+  font-size: 1.2rem;
+  line-height: 2rem;
+`;
+export const StyledObjectDisplayCols = styled.div`
+  display: flex;
+  justify-content: center;
+  // align-items: bottom;
+  height: 80vh;
+  width: 100vw;
+
+  // background-color: orange;
+`;
+
+export const StyledObjectCol = styled.div`
+
+  // display: flex;
+  // flex-direction: column;
+  // justify-content: end;
+  width: 350px;
+  height: auto;
+  margin: 10px;
+  // background-color: green;
+
+`
