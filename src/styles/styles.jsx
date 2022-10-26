@@ -55,9 +55,14 @@ export const GlobalStyle = createGlobalStyle`
     outline: inherit;
   }
 
+  p {
+    margin: 0;
+  }
+
   .canvas {
     pointer-events: none;
   }
+
 `;
 
 export const StyledLayout = styled.div`
@@ -65,18 +70,18 @@ export const StyledLayout = styled.div`
   top: 0;
   left: 0;
   z-index: 0;
-  height: 100vh;
   width: 100%;
+  height: 100vh;
   overflow: hidden;
 `
 
 export const StyledMenu = styled.div`
+  position: absolute; 
+  top: 0;
+  left: 0;
   height: 100vh;
   width: 100%;
   padding: 0 0 0 2rem;
-  position: absolute;
-  top: 0;
-  left: 0;
   z-index: 20;
 
   background-color: #dedcd380;
@@ -121,14 +126,17 @@ export const StyledTextMedium = styled.div`
 `
 
 export const StyledText = styled.div`
+  text-align: start;
   font-size: 1rem;
-  line-height: .4rem;
 `
 
 export const StyledLink = styled.a`
   cursor: pointer;
 `
 
+/**
+ * Carousel
+ */
 export const StyledSwipeHandler = styled.div`
  z-index: -1;
 `
@@ -186,3 +194,52 @@ export const StyledSlideButton = styled.button`
 export const StyledImageLink = styled.a`
   cursor: url('/img/plus.png'), auto;
 `;
+
+/**
+ * Project Page
+ */
+
+// export const StyledProject = styled.div`
+//   position: relative;
+//   height:100%;
+//   overflow: scroll;
+// `;
+// export const StyledRow = styled.div`
+//   font-size: 5rem;
+//   text-align: center;
+//   display: flex;
+//   flex-flow: row wrap;
+//   justify-content: center;
+
+// `;
+// export const StyledItems = styled.div`
+//   position: relative;
+//   height: 500px;
+//   width: 400px;
+//   margin: 10px;
+// `;
+
+// ========= non-next/image version 
+export const StyledProject = styled.div`
+  position: relative;
+  height:100%;
+  overflow: scroll;
+`;
+
+export const StyledRow = styled.div`
+  width: 100%;
+  font-size: 5rem;
+  text-align: center;
+  margin-bottom: 100px;
+`;
+export const StyledItems = styled.div`
+  height: 500px;
+  display: inline-block;
+  margin: 10px;
+`;
+export const StyledImage = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+`;
+
