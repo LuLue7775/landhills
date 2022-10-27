@@ -1,6 +1,5 @@
 import { StyledPages, StyledTableWrapper, StyledImageWrapper } from '@/styles/styles'
 // import { UpArrow, DownArrow } from '@/components/icons/arrows'
-import useMousePosition from '@/utils/useMousePosition'
 import useProjects from '@/queries/useProjects'
 import { useProjectStore } from '@/helpers/store'
 
@@ -51,8 +50,6 @@ const columns = [
 const Page = (props) => {
     const { projects, error, isLoading, isError, isSuccess } = useProjects()
     const { filteredProjects, setFilterdProjects } = useProjectStore()
-
-    const mousePosition = useMousePosition()
     const [projectImage, setProjectImage] = useState('')
     const [imagePos, setImagePos] = useState({})
 
@@ -79,8 +76,9 @@ const Page = (props) => {
 
     const handleRowMouseEnter = e => {
         setProjectImage(e.image)
-        setImagePos({ mouseY: mousePosition.mouseY })
+        setImagePos({ mouseY: (e.id + 1) * 52 + 100 })
     }
+
 
     return (
         <StyledPages>
@@ -109,16 +107,11 @@ const Page = (props) => {
                     </StyledImageWrapper>
                 }
             </StyledTableWrapper>
-
+            <div className='blockk'> </div>
         </StyledPages>
     )
 }
 
-Page.r3f = (props) => (
-    <>
-        <Box route='/' />
-    </>
-)
 
 export default Page
 
