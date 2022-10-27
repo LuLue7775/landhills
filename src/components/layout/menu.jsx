@@ -5,7 +5,6 @@ import useBrandInfo from '@/queries/useBrandInfo'
 import DOMPurify from 'isomorphic-dompurify'
 import { StyledMenu, StyledText, StyledMenuUl, StyledMenuInfo, StyledLink, StyledCloseButton } from '@/styles/styles'
 import Link from 'next/link'
-import Image from 'next/image'
 
 export default function Menu({ isMenuOpened, setMenuOpen }) {
     const router = useStore((state) => state.router)
@@ -17,35 +16,45 @@ export default function Menu({ isMenuOpened, setMenuOpen }) {
         <StyledMenu>
             <StyledMenuUl className='font-sans text-xl md:text-3xl'>
                 <li className="nav-item">
-                    <StyledLink className="nav-link"
+                    <StyledLink
+                        href="/projects"
+                        className="nav-link"
                         onClick={() => {
                             router.push(`/projects`)
                         }}
                     > PROJECTS </StyledLink>
                 </li>
                 <li className="nav-item">
-                    <StyledLink className="nav-link"
+                    <StyledLink
+                        href="/objects"
+                        className="nav-link"
                         onClick={() => {
                             router.push(`/objects`)
                         }}
                     > OBJECTS </StyledLink>
                 </li>
                 <li className="nav-item">
-                    <StyledLink className="nav-link"
+                    <StyledLink
+                        href="/archive"
+                        className="nav-link"
                         onClick={() => {
                             router.push(`/archive`)
                         }}
                     > ARCHIVE </StyledLink>
                 </li>
                 <li className="nav-item">
-                    <StyledLink className="nav-link"
+                    <StyledLink
+                        href="/events"
+                        className="nav-link"
                         onClick={() => {
                             router.push(`/events`)
                         }}
                     > EVENTS </StyledLink>
                 </li>
                 <li className="nav-item">
-                    <StyledLink className="nav-link"
+                    <StyledLink
+                        href="/about"
+                        className="nav-link"
                         onClick={() => {
                             router.push(`/about`)
                         }}
