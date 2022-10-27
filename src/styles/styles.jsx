@@ -301,6 +301,8 @@ export const StyledImageWrapper = styled.div`
   transform: ${({ mouseY }) => `translateY(${mouseY}px)`};
   height: 200px;
   width: 200px;
+  pointer-events: none;
+
 `
 
 /**

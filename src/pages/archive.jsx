@@ -72,6 +72,7 @@ const Page = (props) => {
 
     const handleRowClicked = () => {
         // go to single project route
+        console.log('clicked')
     }
 
     const handleRowMouseEnter = e => {
