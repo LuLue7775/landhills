@@ -1,5 +1,5 @@
 import { StyledPages, StyledTableWrapper, StyledImageWrapper } from '@/styles/styles'
-import { UpArrow, DownArrow } from '@/components/icons/arrows'
+// import { UpArrow, DownArrow } from '@/components/icons/arrows'
 import useMousePosition from '@/utils/useMousePosition'
 import useProjects from '@/queries/useProjects'
 import { useProjectStore } from '@/helpers/store'
@@ -70,7 +70,6 @@ const Page = (props) => {
 
             return filteredData
         }, [])
-        console.log(projects)
         setFilterdProjects(filterd_projects)
     }, [projects])
 

@@ -4,7 +4,7 @@ import { useQuery, queryCache } from 'react-query'
 import { client } from './api-client'
 
 export default function useBrandInfo() {
-    const { data: brand_info, error, isLoading, isError, isSuccess } = useQuery({
+    const { data: brandInfo, error, isLoading, isError, isSuccess } = useQuery({
         queryKey: 'brand_info',
         queryFn: async () => {
             const data = await client(`brand_info`)
@@ -18,6 +18,6 @@ export default function useBrandInfo() {
     })
 
     return {
-        brand_info, error, isLoading, isError, isSuccess
+        brandInfo, error, isLoading, isError, isSuccess
     }
 }

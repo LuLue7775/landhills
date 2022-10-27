@@ -140,6 +140,7 @@ export const StyledPages = styled.div`
   position: relative;
   height:100%;
   overflow: scroll;
+  padding-bottom: 10vh;
 `;
 
 /**
@@ -254,7 +255,6 @@ export const StyledSection = styled.div`
 `;
 
 export const StyledCoverSection = styled.div`
-
   width: 80%;
   margin-bottom: 10px;
 `;
@@ -292,8 +292,28 @@ position: relative;
 export const StyledImageWrapper = styled.div`
   position: absolute;
   left: 20vw;
-  top: 0;
+  top: -100px;
   transform: ${({ mouseY }) => `translateY(${mouseY}px)`};
   height: 200px;
   width: 200px;
+`
+
+/**
+ * Event & About
+ */
+
+export const StyledGridWrapper = styled.div`
+  display: grid;
+  grid-template-columns: 2fr 1fr 3fr 1fr;
+  margin: 6rem 0;
+`
+export const StyledCarouselWrapper = styled.div`
+  width: 200px;
+  height: 200px;
+  padding: 0 0 0 2rem;
+
+`
+export const StyledTextWrapper = styled.div`
+  padding: 0 0 0 4rem;
+
 `

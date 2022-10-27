@@ -9,8 +9,8 @@ import Image from 'next/image'
 
 export default function Menu({ isMenuOpened, setMenuOpen }) {
     const router = useStore((state) => state.router)
-    const { brand_info, error, isLoading, isSuccess } = useBrandInfo()
-    const { info_content } = brand_info?.[0] || []
+    const { brandInfo, error, isLoading, isSuccess } = useBrandInfo()
+    const { info_content } = brandInfo?.[0] || []
 
     return (
         isMenuOpened &&
