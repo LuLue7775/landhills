@@ -68,6 +68,18 @@ export const GlobalStyle = createGlobalStyle`
     pointer-events: none;
   }
 
+  ::-webkit-scrollbar {
+    width: 5px;
+  }
+  ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
+    border-radius: 10px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #505050;
+    border-radius: 10px;
+  }
+
 `;
 
 export const StyledLayout = styled.div`
@@ -167,6 +179,7 @@ export const StyledSwipeHandler = styled.div`
 export const StyledWrapper = styled.div`
   width: 100%;
   overflow: hidden;
+
 `;
 
 export const StyledCarouselContainer = styled.div`
@@ -253,7 +266,7 @@ export const StyledRow = styled.div`
   margin-bottom: 100px;
 `;
 export const StyledItems = styled.div`
-  height: 500px;
+  height: 360px;
   display: inline-block;
   margin: 10px;
 `;
@@ -337,7 +350,53 @@ export const StyledCarouselWrapper = styled.div`
 export const StyledTextWrapper = styled.div`
   padding: 0 0 0 4rem;
 `
+/**
+ * Projects Single Page
+ */
 
+export const StyledWrap = styled.div`
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  display: grid;
+  grid-template-rows: 1fr 1fr; 
+  overflow-y: scroll;
+  
+`
+
+export const StyledCover = styled.div`
+  position: relative;
+  height: calc(100vh - 70px);
+  width: 100%;
+`
+
+export const StyledProjectTitle = styled.h1`
+  font-size: 2rem;
+  padding: 1rem;
+`
+export const StyledProjectGrid = styled.div`
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: 40% 60%;
+
+  height: auto;
+  width: 100%;
+`
+
+export const StyledProjectContent = styled.div`
+  position: relative;
+  height: auto;
+  width: 100%;
+  margin: 2rem;
+`
+
+export const StyledProjectCoverImageContainer = styled.div`
+  position: absolute;
+  right: -10%;
+  top: 0;
+  height: 70vh;
+  width: 60%;
+`
 
 /**
  * Loader

@@ -48,7 +48,7 @@ const columns = [
 
 
 const Page = () => {
-    const { projects, error, isLoading, isError, isSuccess } = useProjects()
+    const { projects, isLoading } = useProjects()
     const { filteredProjects, setFilterdProjects } = useProjectStore()
     const [projectImage, setProjectImage] = useState('')
     const [imagePos, setImagePos] = useState({})

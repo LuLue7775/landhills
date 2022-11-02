@@ -38,5 +38,21 @@ const useProjectStore = create((set) => ({
 })
 )
 
-
 export { useProjectStore }
+
+const useProjectSingleStore = create((set) => ({
+  filteredProjectContent: {
+    id: 1,
+    title: '',
+    location: '',
+    type: '',
+    year: '',
+    no: '',
+  }
+  ,
+  setFilterdProjects: (filteredProjectContent) =>
+    set((state) => ({ filteredProjectContent: filteredProjectContent }))
+})
+)
+
+export { useProjectSingleStore }
