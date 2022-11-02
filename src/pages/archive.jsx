@@ -1,4 +1,4 @@
-import { StyledPages, StyledTableWrapper, StyledImageWrapper } from '@/styles/styles'
+import { StyledPages, StyledTableWrapper, StyledImageWrapper, StyledLoaderContainer, StyledLoader } from '@/styles/styles'
 // import { UpArrow, DownArrow } from '@/components/icons/arrows'
 import useProjects from '@/queries/useProjects'
 import { useProjectStore } from '@/helpers/store'
@@ -47,7 +47,7 @@ const columns = [
 ];
 
 
-const Page = (props) => {
+const Page = () => {
     const { projects, error, isLoading, isError, isSuccess } = useProjects()
     const { filteredProjects, setFilterdProjects } = useProjectStore()
     const [projectImage, setProjectImage] = useState('')
@@ -82,34 +82,39 @@ const Page = (props) => {
 
 
     return (
-        <StyledPages>
-            <StyledTableWrapper>
-                <DataTable
-                    columns={columns}
-                    data={filteredProjects}
-                    highlightOnHover={true}
-                    onRowClicked={handleRowClicked}
-                    onRowMouseEnter={handleRowMouseEnter}
-                    responsive={true}
-                // sortIcon={<DownArrow />}
-                />
+        isLoading ?
+            <StyledLoaderContainer>
+                <StyledLoader />
+            </StyledLoaderContainer>
+            :
+            <StyledPages>
+                <StyledTableWrapper>
+                    <DataTable
+                        columns={columns}
+                        data={filteredProjects}
+                        highlightOnHover={true}
+                        onRowClicked={handleRowClicked}
+                        onRowMouseEnter={handleRowMouseEnter}
+                        responsive={true}
+                    // sortIcon={<DownArrow />}
+                    />
 
-                {projectImage &&
-                    <StyledImageWrapper mouseY={imagePos.mouseY}>
-                        <Image
-                            draggable="false"
-                            src={projectImage}
-                            alt="image"
-                            layout="fixed"
-                            height={200}
-                            width={200}
-                            objectFit="contain"
-                        />
-                    </StyledImageWrapper>
-                }
-            </StyledTableWrapper>
-            <div className='blockk'> </div>
-        </StyledPages>
+                    {projectImage &&
+                        <StyledImageWrapper mouseY={imagePos.mouseY}>
+                            <Image
+                                draggable="false"
+                                src={projectImage}
+                                alt="image"
+                                layout="fixed"
+                                height={200}
+                                width={200}
+                                objectFit="contain"
+                            />
+                        </StyledImageWrapper>
+                    }
+                </StyledTableWrapper>
+                <div className='block'> </div>
+            </StyledPages>
     )
 }
 

@@ -22,13 +22,13 @@ function Carousel(props) {
 
     const slide = (dir) => {
         dispatch({ type: dir, item_amount })
-        setTimeout(() => dispatch({ type: "stopSliding" }), 100)
+        setTimeout(() => dispatch({ type: "stopSliding" }), 20)
     }
 
     const swipeHandlers = useSwipeable({
         onSwipedLeft: () => slide('NEXT'),
         onSwipedRight: () => slide('PREV'),
-        swipeDuration: 500,
+        swipeDuration: 200,
         preventScrollOnSwipe: true,
         trackMouse: true
     });

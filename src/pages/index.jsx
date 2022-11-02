@@ -1,9 +1,7 @@
-import Instructions from '@/components/dom/Instructions'
 import Carousel from '@/components/carousel'
-import { StyledImageLink, StyledTextMedium } from '@/styles/styles'
+import { StyledImageLink, StyledTextMedium, StyledLoader, StyledLoaderContainer } from '@/styles/styles'
 import dynamic from 'next/dynamic'
 import useHome from '@/queries/useHome'
-import { useEffect } from 'react'
 import Image from 'next/image'
 import DOMPurify from 'isomorphic-dompurify';
 
@@ -18,39 +16,38 @@ const Shader = dynamic(() => import('@/components/canvas/Shader/Shader'), {
 })
 
 // dom components goes here
-const Page = (props) => {
-  const { home, error, isLoading, isError, isSuccess } = useHome()
+const Page = () => {
+  const { home, isLoading } = useHome()
   const { current_event, home_images } = home?.[0] || []
 
-  useEffect(() => {
-    console.log(home)
-  }, [home])
-
   return (
-    <>
-      {/* <Instructions /> */}
-      <Carousel>
-        {home_images?.map(imageData => (
-          <StyledImageLink key={imageData.id}
-            draggable="false"
-            href={imageData.image_link}
-          >
-            <Image
-              key={imageData.id}
-              className="images"
-              draggable="false"
-              src={imageData.image}
-              alt="image"
-              layout="fill"
-              objectFit="contain"
-            />
-          </StyledImageLink>
-        ))}
-      </Carousel>
-
-      <StyledTextMedium dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(current_event) }} />
-
-    </>
+    isLoading ?
+      <StyledLoaderContainer>
+        <StyledLoader />
+      </StyledLoaderContainer>
+      : <>
+        <Carousel>
+          {
+            home_images?.map(imageData => (
+              <StyledImageLink key={imageData.id}
+                draggable="false"
+                href={imageData.image_link}
+              >
+                <Image
+                  key={imageData.id}
+                  className="images"
+                  draggable="false"
+                  src={imageData.image}
+                  alt="image"
+                  layout="fill"
+                  objectFit="contain"
+                />
+              </StyledImageLink>
+            ))
+          }
+        </Carousel>
+        <StyledTextMedium dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(current_event) }} />
+      </>
   )
 }
 

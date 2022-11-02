@@ -1,4 +1,4 @@
-import styled, { createGlobalStyle } from 'styled-components';
+import styled, { createGlobalStyle, keyframes } from 'styled-components';
 export const GlobalStyle = createGlobalStyle`
 
   @font-face {
@@ -147,6 +147,16 @@ export const StyledPages = styled.div`
   overflow: scroll;
   padding-bottom: 10vh;
 `;
+export const StyledLoaderContainer = styled.div`
+  position: relative;
+  height:100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+
 
 /**
  * Carousel
@@ -154,30 +164,34 @@ export const StyledPages = styled.div`
 export const StyledSwipeHandler = styled.div`
  z-index: -1;
 `
-
-export const StyledCarouselContainer = styled.div`
-  display: flex;
-  transition: ${(props) => (props.sliding ? "none" : "transform 1s ease")};
-  transform: ${(props) => {
-    if (!props.sliding) return "translateX(0%)";
-    if (props.dir === 'PREV') return "translateX(-50%)";
-    return "translateX(50%)";
-  }};
-`;
-
 export const StyledWrapper = styled.div`
   width: 100%;
   overflow: hidden;
 `;
 
+export const StyledCarouselContainer = styled.div`
+  display: flex;
+  transition: ${(props) => (props.sliding ? "none" : "transform 0.5s ease")};
+  transform: ${(props) => {
+    if (!props.sliding) return "translateX(0%)";
+    if (props.dir === 'PREV') return "translateX(-100%)";
+    return "translateX(100%)";
+  }};
+`;
+
 export const StyledCarouselSlot = styled.div`
   position: relative;
   display: flex;
+  justify-content: center;
+  align-items: center;
+
   flex: 1 0 100%;
   flex-basis: 100%;
   height: min(60vh, 550px);
   margin-right: 20px;
   order: ${(props) => props.order};
+
+
 `;
 
 export const StyledSlideButtonContainer = styled.div`
@@ -289,7 +303,7 @@ export const StyledObjectCol = styled.div`
  * Achive
  */
 export const StyledTableWrapper = styled.div`
-position: relative;
+  position: relative;
   height: auto;
   width: 100vw;
   margin-bottom: 100px;
@@ -322,5 +336,23 @@ export const StyledCarouselWrapper = styled.div`
 `
 export const StyledTextWrapper = styled.div`
   padding: 0 0 0 4rem;
+`
 
+
+/**
+ * Loader
+ */
+
+const spin = keyframes`
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+`
+
+export const StyledLoader = styled.div`
+  border: 1px solid #50505050;
+  border-top: 1px solid #000;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: ${spin} .5s linear infinite; 
 `

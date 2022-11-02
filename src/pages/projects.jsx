@@ -1,44 +1,42 @@
 import useProjects from '@/queries/useProjects'
-import { StyledPages, StyledRow, StyledItems, StyledImage, StyledText } from '@/styles/styles'
-import { useEffect } from 'react'
+import { StyledPages, StyledRow, StyledItems, StyledImage, StyledText, StyledLoader, StyledLoaderContainer } from '@/styles/styles'
 import dynamic from 'next/dynamic'
-import Image from 'next/image'
-
 
 const Box = dynamic(() => import('@/components/canvas/Box'), {
   ssr: false,
 })
 
-const Page = (props) => {
-  const { projects, error, isLoading, isError, isSuccess } = useProjects()
-
-  useEffect(() => {
-    console.log(projects)
-  }, [projects])
+const Page = () => {
+  const { projects, isLoading } = useProjects()
 
   return (
-    <StyledPages>
-      <StyledRow>
-        {projects?.map(project => (
-          <StyledItems key={project.id} >
-            <StyledImage
-              className="images"
-              draggable="false"
-              src={project.project_cover_image.guid}
-              alt="image"
-            />
+    isLoading ?
+      <StyledLoaderContainer>
+        <StyledLoader />
+      </StyledLoaderContainer>
+      :
+      <StyledPages>
+        <StyledRow>
+          {
+            projects?.map(project => (
+              <StyledItems key={project.id} >
+                <StyledImage
+                  className="images"
+                  draggable="false"
+                  src={project.project_cover_image.guid}
+                  alt="image"
+                />
 
-            <StyledText>
-              <div> {project.title.rendered} </div>
-              <div> {project.project_number} </div>
-            </StyledText>
+                <StyledText>
+                  <div> {project.title.rendered} </div>
+                  <div> {project.project_number} </div>
+                </StyledText>
 
-          </StyledItems>
-        ))}
-
-      </StyledRow>
-
-    </StyledPages>
+              </StyledItems>
+            ))
+          }
+        </StyledRow>
+      </StyledPages>
   )
 }
 

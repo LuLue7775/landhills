@@ -6,7 +6,9 @@ import {
     StyledMenuInfo,
     StyledText,
     StyledCarouselWrapper,
-    StyledTextWrapper
+    StyledTextWrapper,
+    StyledLoaderContainer,
+    StyledLoader
 } from '@/styles/styles'
 import Carousel from '@/components/carousel'
 
@@ -19,50 +21,51 @@ const Box = dynamic(() => import('@/components/canvas/Box'), {
 })
 
 
-const Page = (props) => {
-    const { about, error, isLoading, isError, isSuccess } = useAbout()
+const Page = () => {
+    const { about, isLoading } = useAbout()
     const { brandInfo } = useBrandInfo()
     const { info_content } = brandInfo?.[0] || []
 
-    const { about_content, about_images } = about?.[0] || []
-
-    useEffect(() => {
-        console.log(about)
-    }, [about])
+    // const { about_content, about_images } = about?.[0] || []
 
     return (
-        <StyledPages>
-            {about?.map(section => (
-                <StyledGridWrapper key={section.id}>
-                    <div>
-                        <StyledMenuInfo>
-                            <StyledText dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(info_content) }} />
-                        </StyledMenuInfo>
-                    </div>
-                    <StyledCarouselWrapper>
-                        <Carousel>
-                            {section?.about_images?.map(image => (
-                                <Image
-                                    key={image.ID}
-                                    draggable="false"
-                                    src={image.guid}
-                                    alt="image"
-                                    layout="fixed"
-                                    height={200}
-                                    width={200}
-                                    objectFit="contain"
-                                />
-                            ))}
-                        </Carousel>
-                    </StyledCarouselWrapper>
+        isLoading ?
+            <StyledLoaderContainer>
+                <StyledLoader />
+            </StyledLoaderContainer>
+            :
+            <StyledPages>
+                {about?.map(section => (
+                    <StyledGridWrapper key={section.id}>
+                        <div>
+                            <StyledMenuInfo>
+                                <StyledText dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(info_content) }} />
+                            </StyledMenuInfo>
+                        </div>
+                        <StyledCarouselWrapper>
+                            <Carousel>
+                                {section?.about_images?.map(image => (
+                                    <Image
+                                        key={image.ID}
+                                        draggable="false"
+                                        src={image.guid}
+                                        alt="image"
+                                        layout="fixed"
+                                        height={200}
+                                        width={200}
+                                        objectFit="contain"
+                                    />
+                                ))}
+                            </Carousel>
+                        </StyledCarouselWrapper>
 
-                    <StyledTextWrapper>
-                        <StyledText dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(section.about_content) }} />
-                    </StyledTextWrapper>
-                    <div> </div>
-                </StyledGridWrapper>
-            ))}
-        </StyledPages>
+                        <StyledTextWrapper>
+                            <StyledText dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(section.about_content) }} />
+                        </StyledTextWrapper>
+                        <div> </div>
+                    </StyledGridWrapper>
+                ))}
+            </StyledPages>
     )
 }
 
