@@ -147,6 +147,8 @@ export const StyledText = styled.div`
   font-size: 1rem;
   line-height: 1.5rem;
   padding: 0 .5rem;
+  text-align: justify;
+
 `
 
 export const StyledLink = styled.a`

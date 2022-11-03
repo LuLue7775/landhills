@@ -1,4 +1,10 @@
-import { StyledPages, StyledTableWrapper, StyledImageWrapper, StyledLoaderContainer, StyledLoader } from '@/styles/styles'
+import {
+    StyledPages,
+    StyledTableWrapper,
+    StyledImageWrapper,
+    StyledLoaderContainer,
+    StyledLoader
+} from '@/styles/styles'
 // import { UpArrow, DownArrow } from '@/components/icons/arrows'
 import useProjects from '@/queries/useProjects'
 import { useProjectStore } from '@/helpers/store'
@@ -7,6 +13,7 @@ import Image from 'next/image'
 import dynamic from 'next/dynamic'
 import { useEffect, useState } from 'react';
 import DataTable from 'react-data-table-component'
+import { useRouter } from 'next/router'
 
 const Box = dynamic(() => import('@/components/canvas/Box'), {
     ssr: false,
@@ -48,6 +55,7 @@ const columns = [
 
 
 const Page = () => {
+    const router = useRouter()
     const { projects, isLoading } = useProjects()
     const { filteredProjects, setFilterdProjects } = useProjectStore()
     const [projectImage, setProjectImage] = useState('')
@@ -56,7 +64,7 @@ const Page = () => {
     useEffect(() => {
         const filterd_projects = projects?.reduce((filteredData, project, index) => {
             filteredData.push({
-                id: index,
+                id: project.id,
                 title: project.title.rendered,
                 location: project.project_location,
                 type: project.project_category[0].slug,
@@ -68,16 +76,15 @@ const Page = () => {
             return filteredData
         }, [])
         setFilterdProjects(filterd_projects)
-    }, [projects])
+    }, [projects, setFilterdProjects])
 
-    const handleRowClicked = () => {
-        // go to single project route
-        console.log('clicked')
+    const handleRowClicked = target => {
+        router.push(`http://localhost:3000/projects/${target.id}`)
     }
 
-    const handleRowMouseEnter = e => {
-        setProjectImage(e.image)
-        setImagePos({ mouseY: (e.id + 1) * 52 + 100 })
+    const handleRowMouseEnter = target => {
+        setProjectImage(target.image)
+        setImagePos({ mouseY: (target.id + 1) * 52 + 100 })
     }
 
 

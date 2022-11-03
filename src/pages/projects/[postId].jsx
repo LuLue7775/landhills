@@ -26,7 +26,7 @@ export default function ProjectsSinglePage({ data }) {
             date: data?.project_date
         }
         setFilterdProjects(filterdData)
-    }, [data])
+    }, [data, setFilterdProjects])
 
     return (
         <StyledWrap>
