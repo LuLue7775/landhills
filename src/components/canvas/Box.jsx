@@ -28,7 +28,6 @@ const BoxComponent = ({ route }) => {
     if (viewport === 3) setPos([table[viewport], -2, 0])
     if (viewport === 2) setPos([table[viewport], -2, 0])
     if (viewport === 1) setPos([table[viewport], -2, 0])
-    // console.log(table[viewport])
   }, [viewport])
 
   useEffect(() => {
