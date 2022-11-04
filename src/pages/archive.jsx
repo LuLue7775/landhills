@@ -79,7 +79,11 @@ const Page = () => {
     }, [projects, setFilterdProjects])
 
     const handleRowClicked = target => {
-        router.push(`http://localhost:3000/projects/${target.id}`)
+        router.push(
+            process.env.NODE_ENV === 'development'
+                ? `http://localhost:3000/projects/${target.id}`
+                : `http://landhills.co/projects/${target.id}`
+        )
     }
 
     const handleRowMouseEnter = target => {

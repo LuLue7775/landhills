@@ -25,6 +25,7 @@
     "@react-three/fiber": "^8.7.2",
     "babel-plugin-glsl": "^1.0.0",
     "glsl-random": "^0.0.5",
+    "gsap": "^3.11.3",
     "html-react-parser": "^3.0.4",
     "isomorphic-dompurify": "^0.23.0",
     "ky": "^0.31.4",

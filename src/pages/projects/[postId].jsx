@@ -37,22 +37,24 @@ export default function ProjectsSinglePage({ data }) {
                         <StyledText dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(filteredProjectContent?.content) }} />
                     </StyledProjectContent>
                     <StyledProjectCoverImageContainer>
-                        <Image
-                            className="image"
-                            draggable="false"
-                            src={filteredProjectContent.coverImage}
-                            alt="image"
-                            layout="responsive"
-                            height="100"
-                            width="100"
-                            objectFit="contain" />
+                        {filteredProjectContent?.coverImage &&
+                            <Image
+                                className="image"
+                                draggable="false"
+                                src={filteredProjectContent.coverImage}
+                                alt="image"
+                                layout="responsive"
+                                height="100"
+                                width="100"
+                                objectFit="contain" />
+                        }
                     </StyledProjectCoverImageContainer>
                 </StyledProjectGrid>
             </StyledCover>
 
             <StyledRow>
                 {filteredProjectContent?.images?.map(imageData => (
-                    <StyledItems key={imageData.id}>
+                    <StyledItems key={imageData.ID}>
                         <StyledImage
                             className="images"
                             draggable="false"

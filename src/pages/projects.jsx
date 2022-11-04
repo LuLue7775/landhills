@@ -1,6 +1,16 @@
+import { useObjectScroll } from '@/helpers/store'
 import useProjects from '@/queries/useProjects'
-import { StyledPages, StyledRow, StyledItems, StyledImage, StyledText, StyledLoader, StyledLoaderContainer } from '@/styles/styles'
+import {
+  StyledPages,
+  StyledRow,
+  StyledItems,
+  StyledImage,
+  StyledText,
+  StyledLoader,
+  StyledLoaderContainer
+} from '@/styles/styles'
 import dynamic from 'next/dynamic'
+import { useEffect, useRef, useState } from 'react'
 
 const Box = dynamic(() => import('@/components/canvas/Box'), {
   ssr: false,
@@ -8,6 +18,23 @@ const Box = dynamic(() => import('@/components/canvas/Box'), {
 
 const Page = () => {
   const { projects, isLoading } = useProjects()
+  const { setObjectPos } = useObjectScroll()
+
+  const [scrollPos, setScrollPos] = useState(0)
+  const scrollRef = useRef()
+
+  useEffect(() => {
+    const setPos = () => setScrollPos(scrollRef.current.scrollTop)
+
+    scrollRef.current?.addEventListener('scroll', setPos)
+    return () => scrollRef.current?.removeEventListener('scroll', setPos)
+  }, [isLoading])
+
+  useEffect(() => {
+    const currentScrollPos = parseInt(scrollPos / 500)
+    setObjectPos(currentScrollPos)
+  }, [scrollPos])
+
 
   return (
     isLoading ?
@@ -15,7 +42,7 @@ const Page = () => {
         <StyledLoader />
       </StyledLoaderContainer>
       :
-      <StyledPages>
+      <StyledPages ref={scrollRef}>
         <StyledRow>
           {
             projects?.map(project => (

@@ -38,8 +38,6 @@ const useProjectStore = create((set) => ({
 })
 )
 
-export { useProjectStore }
-
 const useProjectSingleStore = create((set) => ({
   filteredProjectContent: {
     id: 1,
@@ -55,4 +53,16 @@ const useProjectSingleStore = create((set) => ({
 })
 )
 
-export { useProjectSingleStore }
+
+const useObjectScroll = create((set) => ({
+  objectPos: 1,
+  setObjectPos: (objectPos) =>
+    set(() => ({ objectPos: objectPos })),
+})
+)
+
+export {
+  useProjectStore,
+  useProjectSingleStore,
+  useObjectScroll
+}

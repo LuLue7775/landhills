@@ -43,7 +43,9 @@ function App({ Component, pageProps = { title: 'index' } }) {
         <Layout>
           <Component {...pageProps} />
         </Layout>
-        {Component?.r3f && <LCanvas>{Component.r3f(pageProps)}</LCanvas>}
+
+        {Component?.r3f &&
+          <LCanvas> {Component.r3f(pageProps)} </LCanvas>}
 
         <ReactQueryDevtools initialIsOpen={false} position='bottom-right' />
       </QueryClientProvider>

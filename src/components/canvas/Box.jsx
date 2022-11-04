@@ -1,20 +1,49 @@
 import useStore from '@/helpers/store'
-import { useFrame } from '@react-three/fiber'
-import { useRef, useState } from 'react'
+import useViewport from '@/utils/useViewport'
+import { useObjectScroll } from '@/helpers/store'
+import { useFrame, useThree } from '@react-three/fiber'
+import { useEffect, useRef, useState } from 'react'
+import gsap from 'gsap'
 
 const BoxComponent = ({ route }) => {
   const router = useStore((s) => s.router)
-  // This reference will give us direct access to the THREE.Mesh object
+
   const mesh = useRef(null)
-  // Set up state for the hovered and active state
+
   const [hovered, setHover] = useState(false)
-  // Subscribe this component to the render-loop, rotate the mesh every frame
-  useFrame((state, delta) =>
-    mesh.current
+
+  useFrame((state, delta) => {
+    return mesh.current
       ? (mesh.current.rotation.y = mesh.current.rotation.x += 0.01)
       : null
-  )
-  // Return the view, these are regular Threejs elements expressed in JSX
+  })
+
+  const [pos, setPos] = useState([])
+  const viewport = useViewport()
+  const table = { 1: 1, 2: 3, 3: 5, 4: 6 }
+  const { objectPos } = useObjectScroll()
+
+  useEffect(() => {
+    if (viewport === 4) setPos([table[viewport], -2, 0])
+    if (viewport === 3) setPos([table[viewport], -2, 0])
+    if (viewport === 2) setPos([table[viewport], -2, 0])
+    if (viewport === 1) setPos([table[viewport], -2, 0])
+    // console.log(table[viewport])
+  }, [viewport])
+
+  useEffect(() => {
+    const pos = objectPos % 2 ? 1 : -1
+
+    gsap.to(mesh.current.position, {
+      x: table[viewport] * pos || 4,
+      duration: 2,
+      // onUpdate: () => {
+      //   console.log(mesh.current.position)
+      // }
+    })
+  }, [objectPos])
+
+
   return (
     <>
       <mesh
@@ -22,7 +51,8 @@ const BoxComponent = ({ route }) => {
         onClick={() => router.push(route)}
         onPointerOver={() => setHover(true)}
         onPointerOut={() => setHover(false)}
-        scale={hovered ? 1.1 : 1}
+        scale={hovered ? 1.5 : 1}
+        position={pos}
       >
         <boxBufferGeometry args={[1, 1, 1]} />
         <meshPhysicalMaterial color={route === '/' ? 'orange' : 'hotpink'} />
