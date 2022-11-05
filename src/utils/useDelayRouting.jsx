@@ -20,16 +20,14 @@ export default function useDelayRouting() {
 
     const startAnimation = () => {
         return new Promise((resolve, reject) => {
-            console.log('...animate...')
             backtoCenterAnimation()
-            setTimeout(resolve, 3000); // <-- replace this line with your animation, and call resolve() when finished
+            setTimeout(resolve, 2000)
         });
     };
 
     const routerWrapper = {
         push: (url) => {
             startAnimation().then(() => {
-                console.log('Next.js routing starts...');
                 router.push(url);
             })
         }
