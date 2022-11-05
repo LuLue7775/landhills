@@ -27,33 +27,23 @@ const BoxComponent = ({ route }) => {
   const viewport = useViewport()
   const table = { 1: 1, 2: 3, 3: 5, 4: 6 }
   useEffect(() => {
-    if (viewport === 4) setObjectPos([table[viewport], -2, 0])
-    if (viewport === 3) setObjectPos([table[viewport], -2, 0])
-    if (viewport === 2) setObjectPos([table[viewport], -2, 0])
-    if (viewport === 1) setObjectPos([table[viewport], -2, 0])
+    gsap.to(mesh.current.position, {
+      x: table[viewport] || 4,
+      y: -2,
+    })
   }, [viewport])
 
   useEffect(() => {
-    console.log('first load')
-    const pos = objectPos % 2 ? 1 : -1
-
+    // const pos = objectPos % 2 ? 1 : -1
     gsap.fromTo(mesh.current.position, {
       x: 0,
       y: 0,
       duration: 2
     }, {
-      // x: table[viewport] * pos || 4,
-      x: 3,
+      x: table[viewport] || 4,
       y: -2,
     })
   }, [])
-
-  /**
-   * DONT RUN THIS AFTER FIRST LOAD
-   */
-  useEffect(() => {
-    console.log('mesh.current: ', mesh.current.position)
-  }, [mesh.current?.position.x])
 
   return (
     <>
