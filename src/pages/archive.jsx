@@ -129,6 +129,11 @@ const Page = () => {
     )
 }
 
+Page.r3f = (props) => (
+    <>
+        <Box route='/' />
+    </>
+)
 
 export default Page
 

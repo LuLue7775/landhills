@@ -1,4 +1,4 @@
-import { useObjectScroll } from '@/helpers/store'
+import { useObjectScrollStore } from '@/helpers/store'
 import useProjects from '@/queries/useProjects'
 import {
   StyledPages,
@@ -17,8 +17,10 @@ const Box = dynamic(() => import('@/components/canvas/Box'), {
 })
 
 const Page = () => {
+
+
   const { projects, isLoading } = useProjects()
-  const { setObjectPos } = useObjectScroll()
+  const { setObjectPos } = useObjectScrollStore()
 
   const [scrollPos, setScrollPos] = useState(0)
   const scrollRef = useRef()
@@ -30,10 +32,10 @@ const Page = () => {
     return () => scrollRef.current?.removeEventListener('scroll', setPos)
   }, [isLoading])
 
-  useEffect(() => {
-    const currentScrollPos = parseInt(scrollPos / 500)
-    setObjectPos(currentScrollPos)
-  }, [scrollPos])
+  // useEffect(() => {
+  //   const currentScrollPos = parseInt(scrollPos / 500)
+  //   setObjectPos([currentScrollPos, 1, 1])
+  // }, [scrollPos])
 
 
   return (

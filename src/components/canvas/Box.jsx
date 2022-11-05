@@ -1,14 +1,18 @@
-import useStore from '@/helpers/store'
+import useStore, { useMeshRefStore } from '@/helpers/store'
 import useViewport from '@/utils/useViewport'
-import { useObjectScroll } from '@/helpers/store'
+import { useObjectScrollStore } from '@/helpers/store'
 import { useFrame, useThree } from '@react-three/fiber'
 import { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 
+
 const BoxComponent = ({ route }) => {
+
   const router = useStore((s) => s.router)
 
+  const { setMeshRef } = useMeshRefStore()
   const mesh = useRef(null)
+  useEffect(() => { setMeshRef(mesh) }, [mesh])
 
   const [hovered, setHover] = useState(false)
 
@@ -18,30 +22,38 @@ const BoxComponent = ({ route }) => {
       : null
   })
 
-  const [pos, setPos] = useState([])
+  const { objectPos, setObjectPos } = useObjectScrollStore()
+
   const viewport = useViewport()
   const table = { 1: 1, 2: 3, 3: 5, 4: 6 }
-  const { objectPos } = useObjectScroll()
-
   useEffect(() => {
-    if (viewport === 4) setPos([table[viewport], -2, 0])
-    if (viewport === 3) setPos([table[viewport], -2, 0])
-    if (viewport === 2) setPos([table[viewport], -2, 0])
-    if (viewport === 1) setPos([table[viewport], -2, 0])
+    if (viewport === 4) setObjectPos([table[viewport], -2, 0])
+    if (viewport === 3) setObjectPos([table[viewport], -2, 0])
+    if (viewport === 2) setObjectPos([table[viewport], -2, 0])
+    if (viewport === 1) setObjectPos([table[viewport], -2, 0])
   }, [viewport])
 
   useEffect(() => {
+    console.log('first load')
     const pos = objectPos % 2 ? 1 : -1
 
-    gsap.to(mesh.current.position, {
-      x: table[viewport] * pos || 4,
-      duration: 2,
-      // onUpdate: () => {
-      //   console.log(mesh.current.position)
-      // }
+    gsap.fromTo(mesh.current.position, {
+      x: 0,
+      y: 0,
+      duration: 2
+    }, {
+      // x: table[viewport] * pos || 4,
+      x: 3,
+      y: -2,
     })
-  }, [objectPos])
+  }, [])
 
+  /**
+   * DONT RUN THIS AFTER FIRST LOAD
+   */
+  useEffect(() => {
+    console.log('mesh.current: ', mesh.current.position)
+  }, [mesh.current?.position.x])
 
   return (
     <>
@@ -51,7 +63,7 @@ const BoxComponent = ({ route }) => {
         onPointerOver={() => setHover(true)}
         onPointerOut={() => setHover(false)}
         scale={hovered ? 1.5 : 1}
-        position={pos}
+      // position={objectPos}
       >
         <boxBufferGeometry args={[1, 1, 1]} />
         <meshPhysicalMaterial color={route === '/' ? 'orange' : 'hotpink'} />

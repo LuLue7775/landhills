@@ -16,6 +16,8 @@ const { getState, setState } = useStoreImpl
 export { getState, setState }
 export default useStore
 
+
+
 /**
  * Other stores for pages data.
  */
@@ -54,15 +56,23 @@ const useProjectSingleStore = create((set) => ({
 )
 
 
-const useObjectScroll = create((set) => ({
-  objectPos: 1,
+const useObjectScrollStore = create((set) => ({
+  objectPos: [],
   setObjectPos: (objectPos) =>
     set(() => ({ objectPos: objectPos })),
+})
+)
+
+const useMeshRefStore = create((set) => ({
+  meshRef: {},
+  setMeshRef: (meshRef) =>
+    set(() => ({ meshRef: meshRef })),
 })
 )
 
 export {
   useProjectStore,
   useProjectSingleStore,
-  useObjectScroll
+  useObjectScrollStore,
+  useMeshRefStore
 }
