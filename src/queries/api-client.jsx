@@ -7,7 +7,7 @@ function client(endpoint, customConfig = {}) {
     }
 
     return window
-        .fetch(`${apiURL}/${endpoint}`, config)
+        .fetch(`https://landhills.co/wp-json/wp/v2/${endpoint}`, config)
         .then(response => response.json())
 
 }
