@@ -331,7 +331,6 @@ export const StyledImageWrapper = styled.div`
   height: 200px;
   width: 200px;
   pointer-events: none;
-
 `
 
 /**

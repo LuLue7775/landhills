@@ -65,6 +65,7 @@ const Page = () => {
         const filterd_projects = projects?.reduce((filteredData, project, index) => {
             filteredData.push({
                 id: project.id,
+                index: index,
                 title: project.title.rendered,
                 location: project.project_location,
                 type: project.project_category[0].slug,
@@ -88,9 +89,8 @@ const Page = () => {
 
     const handleRowMouseEnter = target => {
         setProjectImage(target.image)
-        setImagePos({ mouseY: (target.id + 1) * 52 + 100 })
+        setImagePos({ mouseY: (target.index + 1) * 52 + 100 })
     }
-
 
     return (
         isLoading ?
