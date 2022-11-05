@@ -1,11 +1,15 @@
 import * as THREE from 'three'
 import { useFrame, extend } from '@react-three/fiber'
-import { useRef, useState } from 'react'
+import { useRef, useEffect } from 'react'
 import useStore from '@/helpers/store'
 import { shaderMaterial } from '@react-three/drei'
 
 import vertex from './glsl/shader.vert'
 import fragment from './glsl/shader.frag'
+
+import { useMeshRefStore } from '@/helpers/store'
+import useViewport from '@/utils/useViewport'
+import gsap from 'gsap'
 
 const ColorShiftMaterial = shaderMaterial(
   {
@@ -24,11 +28,18 @@ ColorShiftMaterial.key = THREE.MathUtils.generateUUID()
 extend({ ColorShiftMaterial })
 
 const Shader = (props) => {
-  const meshRef = useRef(null)
-  const [hovered, setHover] = useState(false)
-  const router = useStore((state) => state.router)
+
+  const router = useStore((s) => s.router)
+
+  const { meshRef, setMeshRef } = useMeshRefStore()
+  const mesh = useRef(null)
+  useEffect(() => { setMeshRef(mesh) }, [mesh])
+
+
 
   useFrame((state, delta) => {
+    if (!meshRef.current) return
+
     if (meshRef.current) {
       meshRef.current.rotation.x = meshRef.current.rotation.y += 0.01
     }
@@ -38,15 +49,37 @@ const Shader = (props) => {
     }
   })
 
+
+
+  const viewport = useViewport()
+  const table = { 1: 1, 2: 3, 3: 5, 4: 6 }
+  useEffect(() => {
+    gsap.to(mesh.current.position, {
+      x: table[viewport] || 4,
+      y: -2,
+    })
+  }, [viewport])
+
+  useEffect(() => {
+    // const pos = objectPos % 2 ? 1 : -1
+    gsap.fromTo(mesh.current.position, {
+      x: 0,
+      y: 0,
+      duration: 2
+    }, {
+      x: table[viewport] || 4,
+      y: -2,
+    })
+  }, [])
+
   return (
     <mesh
-      ref={meshRef}
-      scale={hovered ? 1.1 : 1}
-      onClick={() => {
-        router.push(`/projects`)
-      }}
-      onPointerOver={(e) => setHover(true)}
-      onPointerOut={(e) => setHover(false)}
+      ref={mesh}
+      // onClick={() => {
+      //   router.push(`/projects`)
+      // }}
+      // onPointerOver={(e) => setHover(true)}
+      // onPointerOut={(e) => setHover(false)}
       {...props}
     >
       <boxBufferGeometry args={[1, 1, 1]} />
@@ -55,5 +88,6 @@ const Shader = (props) => {
     </mesh>
   )
 }
+
 
 export default Shader

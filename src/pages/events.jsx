@@ -6,9 +6,10 @@ import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import Carousel from '@/components/carousel'
 
-const Box = dynamic(() => import('@/components/canvas/Box'), {
+const Shader = dynamic(() => import('@/components/canvas/Shader/Shader'), {
     ssr: false,
 })
+
 
 // Step 5 - delete Instructions components
 const Page = () => {
@@ -59,9 +60,10 @@ const Page = () => {
 
 Page.r3f = (props) => (
     <>
-        <Box route='/' />
+        <Shader />
     </>
 )
+
 export default Page
 
 export async function getStaticProps() {

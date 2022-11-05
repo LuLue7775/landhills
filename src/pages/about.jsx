@@ -14,12 +14,10 @@ import Carousel from '@/components/carousel'
 
 import Image from 'next/image'
 import dynamic from 'next/dynamic'
-import { useEffect } from 'react'
 
-const Box = dynamic(() => import('@/components/canvas/Box'), {
+const Shader = dynamic(() => import('@/components/canvas/Shader/Shader'), {
     ssr: false,
 })
-
 
 const Page = () => {
     const { about, isLoading } = useAbout()
@@ -71,7 +69,7 @@ const Page = () => {
 
 Page.r3f = (props) => (
     <>
-        <Box route='/' />
+        <Shader />
     </>
 )
 

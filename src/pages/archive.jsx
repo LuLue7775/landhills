@@ -15,7 +15,7 @@ import { useEffect, useState } from 'react';
 import DataTable from 'react-data-table-component'
 import { useRouter } from 'next/router'
 
-const Box = dynamic(() => import('@/components/canvas/Box'), {
+const Shader = dynamic(() => import('@/components/canvas/Shader/Shader'), {
     ssr: false,
 })
 
@@ -131,7 +131,7 @@ const Page = () => {
 
 Page.r3f = (props) => (
     <>
-        <Box route='/' />
+        <Shader />
     </>
 )
 

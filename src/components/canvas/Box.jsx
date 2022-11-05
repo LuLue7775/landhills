@@ -12,7 +12,7 @@ const BoxComponent = ({ route }) => {
 
   const { setMeshRef } = useMeshRefStore()
   const mesh = useRef(null)
-  useEffect(() => { setMeshRef(mesh) }, [mesh])
+  // useEffect(() => { setMeshRef(mesh) }, [mesh])
 
   const [hovered, setHover] = useState(false)
 

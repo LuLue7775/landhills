@@ -1,5 +1,6 @@
 import Carousel from '@/components/carousel'
 import { StyledImageLink, StyledTextMedium, StyledLoader, StyledLoaderContainer } from '@/styles/styles'
+
 import dynamic from 'next/dynamic'
 import useHome from '@/queries/useHome'
 import Image from 'next/image'
@@ -14,6 +15,7 @@ import DOMPurify from 'isomorphic-dompurify';
 const Shader = dynamic(() => import('@/components/canvas/Shader/Shader'), {
   ssr: false,
 })
+
 
 // dom components goes here
 const Page = () => {
@@ -58,6 +60,12 @@ Page.r3f = (props) => (
     <Shader />
   </>
 )
+
+// Page.r3f = (props) => (
+//   <>
+//     <Box route='/' />
+//   </>
+// )
 
 export default Page
 

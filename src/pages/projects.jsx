@@ -12,7 +12,7 @@ import {
 import dynamic from 'next/dynamic'
 import { useEffect, useRef, useState } from 'react'
 
-const Box = dynamic(() => import('@/components/canvas/Box'), {
+const Shader = dynamic(() => import('@/components/canvas/Shader/Shader'), {
   ssr: false,
 })
 
@@ -71,7 +71,7 @@ const Page = () => {
 
 Page.r3f = (props) => (
   <>
-    <Box route='/' />
+    <Shader />
   </>
 )
 
