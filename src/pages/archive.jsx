@@ -83,7 +83,7 @@ const Page = () => {
         router.push(
             process.env.NODE_ENV === 'development'
                 ? `http://localhost:3000/projects/${target.id}`
-                : `http://landhills.co/projects/${target.id}`
+                : `https://landhills.netlify.app/projects/${target.id}`
         )
     }
 
@@ -137,11 +137,17 @@ Page.r3f = (props) => (
 
 export default Page
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
+    // const queryClient = new QueryClient()
+    // await queryClient.prefetchQuery(['projects'], getProjects)
+
+    // const projects = await getProjects()
+
     return {
         props: {
             title: 'Archive',
+            // dehydratedState: dehydrate(queryClient),
+            // projects,
         },
     }
 }
-

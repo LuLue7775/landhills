@@ -35,6 +35,8 @@ const useProjectStore = create((set) => ({
 
     }
   ],
+  setRawProjects: (rawProjects) =>
+    set((state) => ({ rawProjects: rawProjects })),
   setFilterdProjects: (filteredProjects) =>
     set((state) => ({ filteredProjects: filteredProjects }))
 })

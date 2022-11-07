@@ -7,26 +7,24 @@ import { useEffect, useState } from 'react'
 import dynamic from 'next/dynamic'
 import { ReactQueryDevtools } from 'react-query/devtools'
 
-import { QueryClient, QueryClientProvider } from 'react-query'
+import { Hydrate, QueryClient, QueryClientProvider } from 'react-query'
 
 const LCanvas = dynamic(() => import('@/components/layout/canvas'), {
   ssr: true,
 })
 
-// const queryClient = new QueryClient({
-//   defaultOptions: {
-//     queries: {
-//       refetchOnWindowFocus: false,
-//       refetchOnMount: false,
-//       cacheTime: 1 * 60 * 60 * 1000,
-//       staleTime: 1 * 60 * 60 * 1000,
-//       retry: 1
-//     },
-//   },
-// })
-
 function App({ Component, pageProps = { title: 'index' } }) {
-  const [queryClient] = useState(() => new QueryClient())
+  const [queryClient] = useState(() => new QueryClient({
+    defaultOptions: {
+      queries: {
+        refetchOnWindowFocus: false,
+        refetchOnMount: false,
+        cacheTime: 1 * 60 * 60 * 1000,
+        staleTime: Infinity,
+        retry: 1
+      },
+    }
+  }))
 
   const router = useRouter()
 
@@ -40,14 +38,16 @@ function App({ Component, pageProps = { title: 'index' } }) {
       <GlobalStyle />
 
       <QueryClientProvider client={queryClient}>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
+        <Hydrate state={pageProps.dehydratedState}>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
 
-        {Component?.r3f &&
-          <LCanvas> {Component.r3f(pageProps)} </LCanvas>}
+          {Component?.r3f &&
+            <LCanvas> {Component.r3f(pageProps)} </LCanvas>}
 
-        <ReactQueryDevtools initialIsOpen={false} position='bottom-right' />
+          <ReactQueryDevtools initialIsOpen={false} position='bottom-right' />
+        </Hydrate>
       </QueryClientProvider>
     </>
   )

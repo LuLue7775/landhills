@@ -41,7 +41,7 @@ const nextConfig = {
 }
 
 nextConfig.images = {
-  domains: ['landhills.co'],
+  domains: ['landhills.co', 'landhills.netlify.app'],
 }
 
 // manage i18n
