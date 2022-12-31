@@ -14,6 +14,7 @@ const LCanvas = dynamic(() => import('@/components/layout/canvas'), {
 })
 
 function App({ Component, pageProps = { title: 'index' } }) {
+
   const [queryClient] = useState(() => new QueryClient({
     defaultOptions: {
       queries: {
