@@ -33,7 +33,8 @@ const Page = () => {
             home_images?.map(imageData => (
               <StyledImageLink key={imageData.id}
                 draggable="false"
-                href={imageData.image_link}
+                $hasLink={imageData.image_link ? true : false}
+                href={imageData.image_link ? imageData.image_link : false}
               >
                 <Image
                   key={imageData.id}
@@ -41,8 +42,12 @@ const Page = () => {
                   draggable="false"
                   src={imageData.image}
                   alt="image"
-                  layout="fill"
-                  objectFit="contain"
+                  fill
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'contain'
+                  }}
                 />
               </StyledImageLink>
             ))
