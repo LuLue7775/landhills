@@ -7,16 +7,18 @@ export default function Nav({ isMenuOpened, setMenuOpen }) {
     return (
         <StyledNav className="Nav">
             <Link href="/">
-                <a>
-                    <Image
-                        src="/img/logo.png"
-                        alt="logo"
-                        layout="fixed"
-                        height="15"
-                        width="100"
-                        objectFit="contain"
-                    />
-                </a>
+                <Image
+                    src="/img/logo.png"
+                    alt="logo"
+                    // layout="fixed" // lagacy props
+                    // objectFit="contain"
+                    fixed
+                    height="15"
+                    width="100"
+                    style={{
+                        objectFit: 'contain',
+                    }}
+                />
             </Link>
             <button onClick={() => setMenuOpen(!isMenuOpened)}> MENU </button>
         </StyledNav>

@@ -6,7 +6,7 @@ import { useObjectScrollStore } from '@/helpers/store'
 import useDelayRouting from '@/utils/useDelayRouting'
 
 import DOMPurify from 'isomorphic-dompurify'
-import React, { useEffect, useReducer } from 'react'
+import React, { useEffect, useReducer, useRef } from 'react'
 
 export default function Menu({ isMenuOpened, setMenuOpen }) {
     const router = useStore((state) => state.router)
@@ -16,58 +16,69 @@ export default function Menu({ isMenuOpened, setMenuOpen }) {
     const { brandInfo, error, isLoading, isSuccess } = useBrandInfo()
     const { info_content } = brandInfo?.[0] || []
 
-    const { objectPos, setObjectPos } = useObjectScrollStore()
+    // const { objectPos, setObjectPos } = useObjectScrollStore()
+    const menuRef = useRef()
+    useEffect(() => {
+        function handleClick(e) {
+            e.stopPropagation()
+            if (!document.getElementById('menu').contains(e.target)) setMenuOpen(!isMenuOpened)
+        }
+
+        menuRef.current?.addEventListener('click', (e) => handleClick(e))
+        return menuRef.current?.removeEventListener('click', () => handleClick)
+    }, [isMenuOpened])
 
     return (
         isMenuOpened &&
-        <StyledMenu>
-            <StyledMenuUl className='font-sans text-xl md:text-3xl'>
-                <li className="nav-item">
-                    <StyledLink
-                        // href="/projects"
-                        className="nav-link"
-                        onClick={() => routerWrapper.push('/projects')}
-                    > PROJECTS </StyledLink>
-                </li>
-                <li className="nav-item">
-                    <StyledLink
-                        // href="/objects"
-                        className="nav-link"
-                        onClick={() => routerWrapper.push(`/objects`)}
-                    > OBJECTS </StyledLink>
-                </li>
-                <li className="nav-item">
-                    <StyledLink
-                        // href="/archive"
-                        className="nav-link"
-                        onClick={() => routerWrapper.push(`/archive`)}
-                    > ARCHIVE </StyledLink>
-                </li>
-                <li className="nav-item">
-                    <StyledLink
-                        // href="/events"
-                        className="nav-link"
-                        onClick={() => routerWrapper.push(`/events`)}
-                    > EVENTS </StyledLink>
-                </li>
-                <li className="nav-item">
-                    <StyledLink
-                        // href="/about"
-                        className="nav-link"
-                        onClick={() => routerWrapper.push(`/about`)}
-                    > ABOUT </StyledLink>
-                </li>
-            </StyledMenuUl>
+        <StyledMenu ref={menuRef}>
+            <div id="menu" style={{ height: "100%", width: "25%" }}>
+                <StyledMenuUl >
+                    <li className="nav-item">
+                        <StyledLink
+                            // href="/projects"
+                            className="nav-link"
+                            onClick={() => routerWrapper.push('/projects')}
+                        > PROJECTS </StyledLink>
+                    </li>
+                    <li className="nav-item">
+                        <StyledLink
+                            // href="/objects"
+                            className="nav-link"
+                            onClick={() => routerWrapper.push(`/objects`)}
+                        > OBJECTS </StyledLink>
+                    </li>
+                    <li className="nav-item">
+                        <StyledLink
+                            // href="/archive"
+                            className="nav-link"
+                            onClick={() => routerWrapper.push(`/archive`)}
+                        > ARCHIVE </StyledLink>
+                    </li>
+                    <li className="nav-item">
+                        <StyledLink
+                            // href="/events"
+                            className="nav-link"
+                            onClick={() => routerWrapper.push(`/events`)}
+                        > EVENTS </StyledLink>
+                    </li>
+                    <li className="nav-item">
+                        <StyledLink
+                            // href="/about"
+                            className="nav-link"
+                            onClick={() => routerWrapper.push(`/about`)}
+                        > ABOUT </StyledLink>
+                    </li>
+                </StyledMenuUl>
 
-            {isSuccess
-                ? <StyledMenuInfo>
-                    <StyledText dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(info_content) }} />
-                </StyledMenuInfo>
-                : isLoading
-                    ? <p> Loader </p>
-                    : <p> {error} </p>
-            }
-
+                {isSuccess
+                    ? <StyledMenuInfo>
+                        <StyledText dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(info_content) }} />
+                    </StyledMenuInfo>
+                    : isLoading
+                        ? <p> Loader </p>
+                        : <p> {error} </p>
+                }
+            </div>
             <StyledCloseButton onClick={() => setMenuOpen(!isMenuOpened)} />
         </StyledMenu>
     )

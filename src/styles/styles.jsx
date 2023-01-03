@@ -106,6 +106,8 @@ export const StyledMenu = styled.div`
 `
 
 export const StyledMenuUl = styled.ul`
+  width: 20%;
+
   font-size: 2rem;
   line-height: 2rem;
   font-family: Circular Medium;
@@ -116,6 +118,7 @@ export const StyledMenuUl = styled.ul`
 export const StyledMenuInfo = styled.div`
   position: absolute;
   bottom: 1rem;
+  left: 2rem;
 `
 export const StyledCloseButton = styled.button`
     position: absolute;
@@ -198,8 +201,7 @@ export const StyledCarouselSlot = styled.div`
   position: relative;
   display: flex;
   justify-content: center;
-  align-items: center;
-
+  align-items: center;  
   flex: 1 0 100%;
   flex-basis: 100%;
   height: min(60vh, 550px);
@@ -234,7 +236,7 @@ export const StyledSlideButton = styled.button`
 `;
 
 export const StyledImageLink = styled.a`
-  cursor: url('/img/plus.png'), auto;
+  cursor: ${({ $hasLink }) => $hasLink ? `url('/img/plus.png'), auto;` : 'auto'}
 `;
 
 
@@ -242,41 +244,52 @@ export const StyledImageLink = styled.a`
  * Projects Page
  */
 
+// ========= non-next/image version 
 
 // export const StyledRow = styled.div`
 //   font-size: 5rem;
 //   text-align: center;
-//   display: flex;
-//   flex-flow: row wrap;
+//   // display: flex;
+//   // flex-flow: row wrap;
 //   justify-content: center;
 
 // `;
 // export const StyledItems = styled.div`
 //   position: relative;
-//   height: 500px;
-//   width: 400px;
+//   height: 300px;
+//   width: 200px;
 //   margin: 10px;
+//   display: inline-block;
 // `;
 
-// ========= non-next/image version 
+// export const StyledImage = styled.img`
+//   width: 100%;
+//   height: 100%;
+//   object-fit: contain;
+// `;
 
-
+// ========= next/image version 
 export const StyledRow = styled.div`
   width: 100%;
   font-size: 5rem;
   text-align: center;
-  margin-bottom: 100px;
+  padding: 0 1rem;
+
 `;
 export const StyledItems = styled.div`
-  height: 360px;
   display: inline-block;
-  margin: 10px;
+  position: relative;
+  height: 600px;
+  width: 400px;
+  margin: 20px;
 `;
-export const StyledImage = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-`;
+
+export const StyledImageInfo = styled.div`
+  position: absolute;
+  bottom: -3rem;
+  font-size: 1.3rem;
+  text-align: start;
+`
 
 /**
  * Objects Page
@@ -339,17 +352,19 @@ export const StyledImageWrapper = styled.div`
 
 export const StyledGridWrapper = styled.div`
   display: grid;
-  grid-template-columns: 2fr 1fr 3fr 1fr;
+  grid-template-columns: 2fr 2fr 2fr 1fr;
   margin: 6rem 0;
 `
 export const StyledCarouselWrapper = styled.div`
-  width: 200px;
-  height: 200px;
+  width: 100%;
+  height: auto;
   padding: 0 0 0 2rem;
 
 `
 export const StyledTextWrapper = styled.div`
+  display: block;  
   padding: 0 0 0 4rem;
+  text-align: left;
 `
 /**
  * Projects Single Page

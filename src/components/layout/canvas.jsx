@@ -33,6 +33,7 @@ const LCanvas = ({ children }) => {
           position: 'absolute',
           top: 0,
           zIndex: 100,
+          pointerEvents: "none"
         }}
         onCreated={(state) => state.events.connect(dom.current)}
       >
