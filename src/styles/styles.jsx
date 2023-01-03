@@ -105,6 +105,10 @@ export const StyledMenu = styled.div`
   backdrop-filter: blur(10px);
 `
 
+export const StyledMenuWrap = styled.div`
+  width: 25%;
+  height: 100%;
+`
 export const StyledMenuUl = styled.ul`
   width: 20%;
 

@@ -1,7 +1,7 @@
 
 // import useStore from '@/helpers/store'
 import useBrandInfo from '@/queries/useBrandInfo'
-import { StyledMenu, StyledText, StyledMenuUl, StyledMenuInfo, StyledLink, StyledCloseButton } from '@/styles/styles'
+import { StyledMenu, StyledText, StyledMenuUl, StyledMenuInfo, StyledLink, StyledCloseButton, StyledMenuWrap } from '@/styles/styles'
 import { useObjectScrollStore } from '@/helpers/store'
 import useDelayRouting from '@/utils/useDelayRouting'
 
@@ -29,8 +29,8 @@ export default function Menu({ isMenuOpened, setMenuOpen }) {
     return (
         isMenuOpened &&
         <StyledMenu ref={menuRef}>
-            <div id="menu" style={{ height: "100%", width: "25%" }}>
-                <StyledMenuUl >
+            <StyledMenuWrap id="menu">
+                <StyledMenuUl>
                     <li className="nav-item">
                         <StyledLink
                             // href="/projects" // we dont use native href because we need to use the route state. see useDelayRouting
@@ -67,7 +67,7 @@ export default function Menu({ isMenuOpened, setMenuOpen }) {
                         ? <p> Loader </p>
                         : <p> {error} </p>
                 }
-            </div>
+            </StyledMenuWrap>
             <StyledCloseButton onClick={() => setMenuOpen(!isMenuOpened)} />
         </StyledMenu>
     )

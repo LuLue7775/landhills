@@ -3,6 +3,7 @@ import Menu from './menu'
 import { StyledLayout } from '@/styles/styles'
 import { setState } from '@/helpers/store'
 import { useState, useEffect, useRef } from 'react'
+import Footer from './footer'
 
 const Layout = ({ children }) => {
   const [isMenuOpened, setMenuOpen] = useState(false)
@@ -21,6 +22,7 @@ const Layout = ({ children }) => {
       <Menu isMenuOpened={isMenuOpened} setMenuOpen={setMenuOpen} />
 
       {children}
+      <Footer />
     </StyledLayout>
   )
 }
