@@ -39,10 +39,17 @@ const Page = () => {
                                         draggable="false"
                                         src={image.guid}
                                         alt="image"
-                                        layout="fixed"
-                                        height={200}
                                         width={200}
-                                        objectFit="contain"
+                                        height={200}
+                                        // sizes="100vw"
+                                        style={{
+                                            width: '100%',
+                                            height: 'auto',
+                                            maxHeight: '80%',
+                                            objectFit: 'contain',
+                                            position: 'absolute',
+                                            top: 0
+                                        }}
                                     />
                                 ))}
                             </Carousel>
