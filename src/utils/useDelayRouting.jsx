@@ -3,7 +3,7 @@ import { useMeshRefStore } from '@/helpers/store'
 import gsap from 'gsap'
 
 
-export default function useDelayRouting() {
+export default function useDelayRouting(isMenuOpened, setMenuOpen) {
     const { meshRef } = useMeshRefStore()
     const backtoCenterAnimation = () => {
         gsap.fromTo(meshRef.current?.position, {
@@ -20,7 +20,8 @@ export default function useDelayRouting() {
 
     const startAnimation = () => {
         return new Promise((resolve, reject) => {
-            backtoCenterAnimation()
+            backtoCenterAnimation();
+            setMenuOpen(!isMenuOpened);
             setTimeout(resolve, 2000)
         });
     };

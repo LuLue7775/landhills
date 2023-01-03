@@ -1,5 +1,5 @@
 
-import useStore from '@/helpers/store'
+// import useStore from '@/helpers/store'
 import useBrandInfo from '@/queries/useBrandInfo'
 import { StyledMenu, StyledText, StyledMenuUl, StyledMenuInfo, StyledLink, StyledCloseButton } from '@/styles/styles'
 import { useObjectScrollStore } from '@/helpers/store'
@@ -9,9 +9,8 @@ import DOMPurify from 'isomorphic-dompurify'
 import React, { useEffect, useReducer, useRef } from 'react'
 
 export default function Menu({ isMenuOpened, setMenuOpen }) {
-    const router = useStore((state) => state.router)
-
-    const routerWrapper = useDelayRouting()
+    // const router = useStore((state) => state.router)
+    const routerWrapper = useDelayRouting(isMenuOpened, setMenuOpen)
 
     const { brandInfo, error, isLoading, isSuccess } = useBrandInfo()
     const { info_content } = brandInfo?.[0] || []
@@ -20,7 +19,6 @@ export default function Menu({ isMenuOpened, setMenuOpen }) {
     const menuRef = useRef()
     useEffect(() => {
         function handleClick(e) {
-            e.stopPropagation()
             if (!document.getElementById('menu').contains(e.target)) setMenuOpen(!isMenuOpened)
         }
 
@@ -35,36 +33,27 @@ export default function Menu({ isMenuOpened, setMenuOpen }) {
                 <StyledMenuUl >
                     <li className="nav-item">
                         <StyledLink
-                            // href="/projects"
-                            className="nav-link"
+                            // href="/projects" // we dont use native href because we need to use the route state. see useDelayRouting
                             onClick={() => routerWrapper.push('/projects')}
                         > PROJECTS </StyledLink>
                     </li>
                     <li className="nav-item">
                         <StyledLink
-                            // href="/objects"
-                            className="nav-link"
                             onClick={() => routerWrapper.push(`/objects`)}
                         > OBJECTS </StyledLink>
                     </li>
                     <li className="nav-item">
                         <StyledLink
-                            // href="/archive"
-                            className="nav-link"
                             onClick={() => routerWrapper.push(`/archive`)}
                         > ARCHIVE </StyledLink>
                     </li>
                     <li className="nav-item">
                         <StyledLink
-                            // href="/events"
-                            className="nav-link"
                             onClick={() => routerWrapper.push(`/events`)}
                         > EVENTS </StyledLink>
                     </li>
                     <li className="nav-item">
                         <StyledLink
-                            // href="/about"
-                            className="nav-link"
                             onClick={() => routerWrapper.push(`/about`)}
                         > ABOUT </StyledLink>
                     </li>
