@@ -7,9 +7,11 @@ import {
   StyledImage,
   StyledText,
   StyledLoader,
-  StyledLoaderContainer
+  StyledLoaderContainer,
+  StyledImageInfo
 } from '@/styles/styles'
 import dynamic from 'next/dynamic'
+import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react'
 import { QueryClient, dehydrate } from 'react-query'
 
@@ -49,28 +51,64 @@ const Page = ({ projects_query }) => {
     //     <StyledLoader />
     //   </StyledLoaderContainer>
     //   :
+    // <StyledPages ref={scrollRef}>
+    //   <StyledRow>
+    //     {
+    //       rawProjects?.map(project => (
+    //         <StyledItems key={project.id} >
+    //           <figure style={{ display: "block", position: "relative" }}>
+    //             <StyledImage
+    //               className="images"
+    //               draggable="false"
+    //               src={project.project_cover_image.guid}
+    //               alt="image"
+    //             />
+    //           </figure>
+
+    //           <StyledText>
+    //             <div> {project.title.rendered} </div>
+    //             <div> {project.project_number} </div>
+    //           </StyledText>
+
+    //         </StyledItems>
+    //       ))
+    //     }
+    //   </StyledRow>
+    // </StyledPages>
+
     <StyledPages ref={scrollRef}>
       <StyledRow>
         {
           rawProjects?.map(project => (
-            <StyledItems key={project.id} >
-              <StyledImage
-                className="images"
-                draggable="false"
+            <StyledItems key={project.id}>
+              <Image
+                alt="projects"
                 src={project.project_cover_image.guid}
-                alt="image"
+                width={300} // these two are useless now, just to bypass nextJS
+                height={300}
+                // sizes="100vw"
+                style={{
+                  width: 'auto',
+                  height: 'auto',
+                  position: 'absolute',
+                  bottom: 0,
+                  left: 0
+                }}
+
+
               />
-
-              <StyledText>
-                <div> {project.title.rendered} </div>
-                <div> {project.project_number} </div>
-              </StyledText>
-
+              <StyledImageInfo>
+                <b> {project.title.rendered} </b>
+                <p> {project.project_number} </p>
+              </StyledImageInfo>
             </StyledItems>
           ))
         }
       </StyledRow>
     </StyledPages>
+
+
+
   )
 }
 
@@ -82,18 +120,18 @@ Page.r3f = (props) => (
 
 export default Page
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   const queryClient = new QueryClient()
   await queryClient.prefetchQuery('projects', getProjects)
 
   // const projects = await getProjects()
 
   return {
-
     props: {
       title: 'Projects',
       // dehydratedState: dehydrate(queryClient),
       projects_query: dehydrate(queryClient),
     },
+    revalidate: 60
   }
 }
