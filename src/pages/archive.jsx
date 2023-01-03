@@ -6,9 +6,9 @@ import {
     StyledLoader
 } from '@/styles/styles'
 // import { UpArrow, DownArrow } from '@/components/icons/arrows'
+import { columns, customStyles } from '@/components/table'
 import useProjects from '@/queries/useProjects'
 import { useProjectStore } from '@/helpers/store'
-
 import Image from 'next/image'
 import dynamic from 'next/dynamic'
 import { useEffect, useState } from 'react';
@@ -19,39 +19,6 @@ const Shader = dynamic(() => import('@/components/canvas/Shader/Shader'), {
     ssr: false,
 })
 
-const columns = [
-    {
-        name: 'Title',
-        selector: row => row.title,
-        sortable: true,
-    },
-    {
-        name: '',
-    },
-    {
-        name: '',
-    },
-    {
-        name: 'Location',
-        selector: row => row.location,
-        sortable: true,
-    },
-    {
-        name: 'Type',
-        selector: row => row.type,
-        sortable: true,
-    },
-    {
-        name: 'Year',
-        selector: row => row.year,
-        sortable: true,
-    },
-    {
-        name: 'No.',
-        selector: row => row.no,
-        sortable: true,
-    },
-];
 
 
 const Page = () => {
@@ -107,7 +74,7 @@ const Page = () => {
                         onRowClicked={handleRowClicked}
                         onRowMouseEnter={handleRowMouseEnter}
                         responsive={true}
-                    // sortIcon={<DownArrow />}
+                        customStyles={customStyles}
                     />
 
                     {projectImage &&
@@ -116,10 +83,11 @@ const Page = () => {
                                 draggable="false"
                                 src={projectImage}
                                 alt="image"
-                                layout="fixed"
                                 height={200}
                                 width={200}
-                                objectFit="contain"
+                                style={{
+                                    objectFit: 'contain',
+                                }}
                             />
                         </StyledImageWrapper>
                     }
@@ -137,7 +105,7 @@ Page.r3f = (props) => (
 
 export default Page
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
     // const queryClient = new QueryClient()
     // await queryClient.prefetchQuery(['projects'], getProjects)
 
@@ -149,5 +117,7 @@ export async function getServerSideProps() {
             // dehydratedState: dehydrate(queryClient),
             // projects,
         },
+        revalidate: 60
     }
 }
+

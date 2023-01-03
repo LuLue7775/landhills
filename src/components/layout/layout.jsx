@@ -20,9 +20,9 @@ const Layout = ({ children }) => {
     >
       <Nav isMenuOpened={isMenuOpened} setMenuOpen={setMenuOpen} />
       <Menu isMenuOpened={isMenuOpened} setMenuOpen={setMenuOpen} />
+      <Footer />
 
       {children}
-      <Footer />
     </StyledLayout>
   )
 }

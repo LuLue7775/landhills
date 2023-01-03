@@ -177,6 +177,12 @@ export const StyledLoaderContainer = styled.div`
   align-items: center;
 `;
 
+export const StyledFooter = styled.div`
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin: 2rem;
+`
 
 
 /**
