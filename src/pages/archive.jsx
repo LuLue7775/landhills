@@ -7,8 +7,11 @@ import {
 } from '@/styles/styles'
 // import { UpArrow, DownArrow } from '@/components/icons/arrows'
 import { columns, customStyles } from '@/components/table'
-import useProjects from '@/queries/useProjects'
+import useProjectsQuery, { getProjects } from '@/queries/useProjectsQuery'
 import { useProjectStore } from '@/helpers/store'
+
+import { QueryClient, dehydrate } from 'react-query'
+
 import Image from 'next/image'
 import dynamic from 'next/dynamic'
 import { useEffect, useState } from 'react';
@@ -19,32 +22,11 @@ const Shader = dynamic(() => import('@/components/canvas/Shader/Shader'), {
     ssr: false,
 })
 
-
-
 const Page = () => {
     const router = useRouter()
-    const { projects, isLoading } = useProjects()
-    const { filteredProjects, setFilterdProjects } = useProjectStore()
+    const { projects, isLoading } = useProjectsQuery()
     const [projectImage, setProjectImage] = useState('')
     const [imagePos, setImagePos] = useState({})
-
-    useEffect(() => {
-        const filterd_projects = projects?.reduce((filteredData, project, index) => {
-            filteredData.push({
-                id: project.id,
-                index: index,
-                title: project.title.rendered,
-                location: project.project_location,
-                type: project.project_category[0].slug,
-                year: project.project_date.slice(0, 4),
-                no: project.project_number,
-                image: project.project_cover_image.guid,
-            })
-
-            return filteredData
-        }, [])
-        setFilterdProjects(filterd_projects)
-    }, [projects, setFilterdProjects])
 
     const handleRowClicked = target => {
         router.push(
@@ -54,6 +36,10 @@ const Page = () => {
         )
     }
 
+    /**
+     * @TODO calculate mouseY based on realtime mouse curser 
+     * 算目前滑鼠高度取區間，不要用target.index，因為sorting後會出錯
+     */
     const handleRowMouseEnter = target => {
         setProjectImage(target.image)
         setImagePos({ mouseY: (target.index + 1) * 52 + 100 })
@@ -69,7 +55,7 @@ const Page = () => {
                 <StyledTableWrapper>
                     <DataTable
                         columns={columns}
-                        data={filteredProjects}
+                        data={projects}
                         highlightOnHover={true}
                         onRowClicked={handleRowClicked}
                         onRowMouseEnter={handleRowMouseEnter}
@@ -106,18 +92,17 @@ Page.r3f = (props) => (
 export default Page
 
 export async function getStaticProps() {
-    // const queryClient = new QueryClient()
-    // await queryClient.prefetchQuery(['projects'], getProjects)
-
-    // const projects = await getProjects()
-
+    const queryClient = new QueryClient()
+    await queryClient.prefetchQuery('projects', getProjects)
+    /**
+     * Use dehydrate to dehydrate the query cache and pass it to the page via the dehydratedState prop. 
+     * This is the same prop that the cache will be picked up from in your _app.js
+     */
     return {
         props: {
-            title: 'Archive',
-            // dehydratedState: dehydrate(queryClient),
-            // projects,
+            title: 'Projects',
+            dehydratedState: dehydrate(queryClient),
         },
         revalidate: 60
     }
 }
-

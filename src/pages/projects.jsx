@@ -1,5 +1,5 @@
 import { useProjectStore } from '@/helpers/store'
-import useProjects, { getProjects } from '@/queries/useProjects'
+import useProjectsQuery, { getProjects } from '@/queries/useProjectsQuery'
 import {
   StyledPages,
   StyledRow,
@@ -12,6 +12,7 @@ import {
 } from '@/styles/styles'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import { QueryClient, dehydrate } from 'react-query'
 
@@ -19,14 +20,9 @@ const Shader = dynamic(() => import('@/components/canvas/Shader/Shader'), {
   ssr: false,
 })
 
-const Page = ({ projects_query }) => {
+const Page = () => {
 
-  const { rawProjects, setRawProjects } = useProjectStore()
-  useEffect(() => {
-    setRawProjects(projects_query?.queries[0].state.data)
-  }, [projects_query])
-
-  // const { projects, isLoading } = useProjects()
+  const { projects, isLoading } = useProjectsQuery()
 
   // const [scrollPos, setScrollPos] = useState(0)
   const scrollRef = useRef()
@@ -79,27 +75,27 @@ const Page = ({ projects_query }) => {
     <StyledPages ref={scrollRef}>
       <StyledRow>
         {
-          rawProjects?.map(project => (
+          projects?.map(project => (
             <StyledItems key={project.id}>
-              <Image
-                alt="projects"
-                src={project.project_cover_image.guid}
-                width={300} // these two are useless now, just to bypass nextJS
-                height={300}
-                // sizes="100vw"
-                style={{
-                  width: 'auto',
-                  height: 'auto',
-                  position: 'absolute',
-                  bottom: 0,
-                  left: 0
-                }}
-
-
-              />
+              <Link href={`/projects/${project.id}`}>
+                <Image
+                  alt="projects"
+                  src={project.image}
+                  width={300} // these two are useless now, just to bypass nextJS
+                  height={300}
+                  // sizes="100vw"
+                  style={{
+                    width: 'auto',
+                    height: 'auto',
+                    position: 'absolute',
+                    bottom: 0,
+                    left: 0
+                  }}
+                />
+              </Link>
               <StyledImageInfo>
-                <b> {project.title.rendered} </b>
-                <p> {project.project_number} </p>
+                <b> {project.title} </b>
+                <p> {project.no} </p>
               </StyledImageInfo>
             </StyledItems>
           ))
@@ -123,14 +119,14 @@ export default Page
 export async function getStaticProps() {
   const queryClient = new QueryClient()
   await queryClient.prefetchQuery('projects', getProjects)
-
-  // const projects = await getProjects()
-
+  /**
+   * Use dehydrate to dehydrate the query cache and pass it to the page via the dehydratedState prop. 
+   * This is the same prop that the cache will be picked up from in your _app.js
+   */
   return {
     props: {
       title: 'Projects',
-      // dehydratedState: dehydrate(queryClient),
-      projects_query: dehydrate(queryClient),
+      dehydratedState: dehydrate(queryClient),
     },
     revalidate: 60
   }
