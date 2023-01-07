@@ -31,7 +31,8 @@ export default function useProjectsQuery() {
         queryFn: getProjects,
         refetchOnMount: false,
         // initialData: props.dehydratedState,
-        select: useCallback((data) => transformProjects(data), []),
+        // serialize data and randomize data in array
+        select: useCallback((data) => transformProjects(data).sort(() => Math.random() - 0.5), []),
         onError: (error) => { throw error }
     })
 
