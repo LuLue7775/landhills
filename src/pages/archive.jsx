@@ -1,7 +1,6 @@
 import {
     StyledPages,
     StyledTableWrapper,
-    StyledImageWrapper,
     StyledLoaderContainer,
     StyledLoader
 } from '@/styles/styles'
@@ -9,11 +8,11 @@ import {
 import { columns, customStyles } from '@/components/table'
 import useProjectsQuery, { getProjects } from '@/queries/useProjectsQuery'
 import { QueryClient, dehydrate } from '@tanstack/react-query'
-import Image from 'next/image'
 import dynamic from 'next/dynamic'
 import { useState } from 'react';
 import DataTable from 'react-data-table-component'
 import { useRouter } from 'next/router'
+import ArchiveImage from '@/components/archiveImage'
 
 const Shader = dynamic(() => import('@/components/canvas/Shader/Shader'), {
     ssr: false,
@@ -23,7 +22,6 @@ const Page = () => {
     const router = useRouter()
     const { projects, isLoading } = useProjectsQuery()
     const [projectImage, setProjectImage] = useState('')
-    const [imagePos, setImagePos] = useState({})
 
     const handleRowClicked = target => {
         router.push(
@@ -33,14 +31,8 @@ const Page = () => {
         )
     }
 
-    /**
-     * @TODO calculate mouseY based on realtime mouse curser 
-     * 算目前滑鼠高度取區間，不要用target.index，因為sorting後會出錯
-     */
-    const handleRowMouseEnter = target => {
-        setProjectImage(target.image)
-        setImagePos({ mouseY: (target.index + 1) * 52 + 100 })
-    }
+    const handleRowMouseEnter = target => setProjectImage(target.image)
+    const handleRowMouseLeave = () => setProjectImage('')
 
     return (
         isLoading ?
@@ -56,23 +48,13 @@ const Page = () => {
                         highlightOnHover={true}
                         onRowClicked={handleRowClicked}
                         onRowMouseEnter={handleRowMouseEnter}
+                        onRowMouseLeave={handleRowMouseLeave}
                         responsive={true}
                         customStyles={customStyles}
                     />
 
                     {projectImage &&
-                        <StyledImageWrapper mouseY={imagePos.mouseY}>
-                            <Image
-                                draggable="false"
-                                src={projectImage}
-                                alt="image"
-                                height={200}
-                                width={200}
-                                style={{
-                                    objectFit: 'contain',
-                                }}
-                            />
-                        </StyledImageWrapper>
+                        <ArchiveImage projectImage={projectImage} />
                     }
                 </StyledTableWrapper>
                 <div className='block'> </div>
