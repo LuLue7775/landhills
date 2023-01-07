@@ -1,4 +1,4 @@
-const apiURL = process.env.NEXT_PUBLIC__API_URL
+const apiURL = process.env.NEXT_PUBLIC_API_URL
 
 function client(endpoint, customConfig = {}) {
     const config = {
@@ -6,9 +6,9 @@ function client(endpoint, customConfig = {}) {
         ...customConfig,
     }
 
-    return window
-        .fetch(`https://landhills.co/wp-json/wp/v2/${endpoint}`, config)
+    return fetch(`${apiURL}/${endpoint}`, config)
         .then(response => response.json())
+        .catch((err) => { throw err })
 
 }
 

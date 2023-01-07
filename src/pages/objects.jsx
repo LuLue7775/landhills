@@ -1,4 +1,4 @@
-import useObjects from '@/queries/useObjects'
+import useObjectsQuery from '@/queries/useObjectsQuery'
 import {
     StyledPages,
     StyledSection,
@@ -10,7 +10,8 @@ import {
     StyledLoader,
     StyledLoaderContainer
 } from '@/styles/styles'
-import { useEffect } from 'react'
+import { getObjects } from '@/queries/useObjectsQuery'
+import { QueryClient, dehydrate } from '@tanstack/react-query'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import Carousel from '@/components/carousel'
@@ -20,7 +21,7 @@ const Shader = dynamic(() => import('@/components/canvas/Shader/Shader'), {
 })
 
 const Page = () => {
-    const { objects, isLoading } = useObjects()
+    const { objects, isLoading } = useObjectsQuery()
 
     return (
         isLoading ?
@@ -91,9 +92,17 @@ Page.r3f = (props) => (
 export default Page
 
 export async function getStaticProps() {
+    const queryClient = new QueryClient()
+    await queryClient.prefetchQuery('objects', getObjects)
+    /**
+     * Use dehydrate to dehydrate the query cache and pass it to the page via the dehydratedState prop. 
+     * This is the same prop that the cache will be picked up from in your _app.js
+     */
     return {
         props: {
             title: 'Objects',
+            dehydratedState: dehydrate(queryClient),
         },
+        revalidate: 1
     }
 }

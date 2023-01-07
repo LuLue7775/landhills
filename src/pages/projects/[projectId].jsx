@@ -1,4 +1,3 @@
-import { useProjectSingleStore } from '@/helpers/store'
 import {
     StyledWrap,
     StyledCover,
@@ -9,37 +8,19 @@ import {
     StyledProjectCoverImageContainer,
     StyledRow,
     StyledItems,
-    StyledImage,
     StyledLoaderContainer,
     StyledLoader
 } from '@/styles/styles'
 import { withCSR } from '@/HOC/withCSR'
-import { QueryClient, dehydrate } from 'react-query'
-import { useEffect } from 'react'
+import { QueryClient, dehydrate } from '@tanstack/react-query'
 import Image from 'next/image'
-import { getSingleProject, useSingleProjectQuery } from '@/queries/useProjectsQuery'
+import { getProjects, getSingleProject, useSingleProjectQuery } from '@/queries/useProjectsQuery'
 import { useRouter } from 'next/router'
 
 export default function ProjectsSinglePage({ isError }) {
-    const { filteredProjectContent, setFilterdProjects } = useProjectSingleStore()
     const { query: { projectId } } = useRouter()
     const { project, isLoading } = useSingleProjectQuery(projectId)
 
-    useEffect(() => {
-        // console.log(project)
-        const filterdData = {
-            title: project?.title.rendered,
-            coverImage: project?.project_cover_image.guid,
-            content: project?.content.rendered,
-            images: project?.project_images,
-            date: project?.project_date
-        }
-        setFilterdProjects(filterdData)
-    }, [project, setFilterdProjects])
-
-    useEffect(() => {
-        console.log(filteredProjectContent)
-    }, [filteredProjectContent])
     return (
         isLoading ?
             <StyledLoaderContainer>
@@ -50,18 +31,18 @@ export default function ProjectsSinglePage({ isError }) {
                 <StyledCover>
                     <StyledProjectGrid>
                         <StyledProjectContent>
-                            <StyledProjectTitle> {filteredProjectContent?.title} </StyledProjectTitle>
-                            <StyledText dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(filteredProjectContent?.content) }} />
+                            <StyledProjectTitle> {project?.title?.rendered} </StyledProjectTitle>
+                            <StyledText dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(project?.content?.rendered) }} />
                         </StyledProjectContent>
                         <StyledProjectCoverImageContainer>
-                            {filteredProjectContent?.coverImage &&
+                            {project?.project_cover_image &&
                                 <Image
                                     className="image"
                                     draggable="false"
-                                    src={filteredProjectContent.coverImage}
+                                    src={project.project_cover_image?.guid}
                                     alt="image"
-                                    height="100"
-                                    width="100"
+                                    height="500"
+                                    width="500"
                                     style={{
                                         objectFit: "contain"
                                     }} />
@@ -71,14 +52,22 @@ export default function ProjectsSinglePage({ isError }) {
                 </StyledCover>
 
                 <StyledRow>
-                    {filteredProjectContent?.images &&
-                        filteredProjectContent?.images?.map(imageData => (
-                            <StyledItems key={imageData.ID}>
-                                <StyledImage
-                                    className="images"
+                    {project?.project_images.length &&
+                        project?.project_images?.map(image => (
+                            <StyledItems key={image.ID}>
+                                <Image
+                                    alt="projects"
                                     draggable="false"
-                                    src={imageData.guid}
-                                    alt="image"
+                                    src={image.guid}
+                                    width={300} // these two are useless now, just to bypass nextJS
+                                    height={300}
+                                    style={{
+                                        width: 'auto',
+                                        height: 'auto',
+                                        position: 'absolute',
+                                        bottom: 0,
+                                        left: 0
+                                    }}
                                 />
                             </StyledItems>
                         ))}
@@ -87,55 +76,57 @@ export default function ProjectsSinglePage({ isError }) {
     )
 }
 
-// export async function getStaticPaths() {
-//     const res = await fetch(`https://landhills.co/wp-json/wp/v2/projects`)
-//     const id = await res.json()
-//     const idArr = id?.reduce((filteredIdArr, data) => {
-//         filteredIdArr.push({
-//             params: { projectId: `${data.id}` }
-//         })
-//         return filteredIdArr
-//     }, [])
+export async function getStaticPaths() {
 
-//     return {
-//         paths: idArr,
-//         fallback: false
-//     }
-// }
+    const data = await getProjects()
+    const idArr = data?.reduce((filteredIdArr, data) => {
+        filteredIdArr.push({
+            params: { projectId: `${data.id}` }
+        })
+        return filteredIdArr
+    }, [])
 
-// export async function getStaticProps({ params }) {
-//     const res = await fetch(`https://landhills.co/wp-json/wp/v2/projects/${params.projectId}`)
-//     const data = await res.json()
+    return {
+        paths: idArr,
+        fallback: 'blocking'
+    }
+}
 
-//     return {
-//         props: {
-//             data
-//         }
-//     }
-// }
 
-export const getServerSideProps = withCSR(async (ctx) => {
-
-    console.log('getServerSideProps');
-
-    const { projectId } = ctx.params;
-
+export async function getStaticProps({ params }) {
     const queryClient = new QueryClient();
 
-    let isError = false;
-
-    try {
-        await queryClient.fetchQuery(`project-${projectId}`, () => getSingleProject(projectId));
-    } catch (error) {
-        isError = true
-        ctx.res.statusCode = error.response.status;
-    }
+    await queryClient.fetchQuery([`project-${params.projectId}`], () => getSingleProject(params.projectId));
 
     return {
         props: {
-            //also passing down isError state to show a custom error component.
-            isError,
             dehydratedState: dehydrate(queryClient),
         },
+        revalidate: 1
+
     }
-})
+}
+
+
+// export const getServerSideProps = withCSR(async (ctx) => {
+//     const { projectId } = ctx.params;
+
+//     const queryClient = new QueryClient();
+
+//     let isError = false;
+
+//     try {
+//         await queryClient.fetchQuery(`project-${projectId}`, () => getSingleProject(projectId));
+//     } catch (error) {
+//         isError = true
+//         ctx.res.statusCode = error.response.status;
+//     }
+
+//     return {
+//         props: {
+//             //also passing down isError state to show a custom error component.
+//             isError,
+//             dehydratedState: dehydrate(queryClient),
+//         },
+//     }
+// })

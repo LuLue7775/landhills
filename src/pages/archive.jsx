@@ -8,13 +8,10 @@ import {
 // import { UpArrow, DownArrow } from '@/components/icons/arrows'
 import { columns, customStyles } from '@/components/table'
 import useProjectsQuery, { getProjects } from '@/queries/useProjectsQuery'
-import { useProjectStore } from '@/helpers/store'
-
-import { QueryClient, dehydrate } from 'react-query'
-
+import { QueryClient, dehydrate } from '@tanstack/react-query'
 import Image from 'next/image'
 import dynamic from 'next/dynamic'
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import DataTable from 'react-data-table-component'
 import { useRouter } from 'next/router'
 
@@ -100,9 +97,9 @@ export async function getStaticProps() {
      */
     return {
         props: {
-            title: 'Projects',
+            title: 'Archive',
             dehydratedState: dehydrate(queryClient),
         },
-        revalidate: 60
+        revalidate: 1
     }
 }

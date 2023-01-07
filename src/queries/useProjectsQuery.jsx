@@ -1,15 +1,10 @@
 
-import { useCallback, useMemo } from 'react'
-import { useQuery, queryCache } from 'react-query'
+import { useCallback } from 'react'
+import { useQuery } from '@tanstack/react-query'
 import { client } from './api-client'
 
-
 export const getProjects = async () => {
-    // const data = await client(`projects`)
-    const data = await fetch(`https://landhills.co/wp-json/wp/v2/projects`, { method: 'GET' })
-        .then(response => response.json())
-
-    return data
+    return await client(`projects`)
 }
 
 /**
@@ -32,11 +27,12 @@ const transformProjects = (data) => data?.reduce((filteredData, project, index) 
 
 export default function useProjectsQuery() {
     const { data: projects, error, isLoading, isError, isSuccess } = useQuery({
-        queryKey: 'projects',
+        queryKey: ['projects'],
         queryFn: getProjects,
         refetchOnMount: false,
-        // initialData: projects,
-        select: useCallback((data) => transformProjects(data), [])
+        // initialData: props.dehydratedState,
+        select: useCallback((data) => transformProjects(data), []),
+        onError: (error) => { throw error }
     })
 
     return {
@@ -46,18 +42,14 @@ export default function useProjectsQuery() {
 
 
 export const getSingleProject = async (projectId) => {
-    // const data = await client(`projects`)
-    const data = await fetch(`https://landhills.co/wp-json/wp/v2/projects/${projectId}`, { method: 'GET' })
-        .then(response => response.json())
-
-    return data
+    return await client(`projects/${projectId}`)
 }
-
 
 export function useSingleProjectQuery(projectId) {
     const { data: project, error, isLoading, isError, isSuccess } = useQuery({
-        queryKey: `project-${projectId}`,
-        queryFn: async () => await getSingleProject(projectId)
+        queryKey: [`project-${projectId}`],
+        queryFn: getSingleProject(projectId),
+        onError: (error) => { throw error }
     });
 
     return {

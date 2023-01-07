@@ -1,5 +1,5 @@
-import useAbout from '@/queries/useAbout'
-import useBrandInfo from '@/queries/useBrandInfo'
+import useAboutQuery, { getAbout } from '@/queries/useAboutQuery'
+import useBrandInfoQuery from '@/queries/useBrandInfoQuery'
 import {
     StyledPages,
     StyledGridWrapper,
@@ -14,14 +14,15 @@ import Carousel from '@/components/carousel'
 
 import Image from 'next/image'
 import dynamic from 'next/dynamic'
+import { dehydrate, QueryClient } from '@tanstack/react-query'
 
 const Shader = dynamic(() => import('@/components/canvas/Shader/Shader'), {
     ssr: false,
 })
 
 const Page = () => {
-    const { about, isLoading } = useAbout()
-    const { brandInfo } = useBrandInfo()
+    const { about, isLoading } = useAboutQuery()
+    const { brandInfo } = useBrandInfoQuery()
     const { info_content } = brandInfo?.[0] || []
 
     // const { about_content, about_images } = about?.[0] || []
@@ -83,9 +84,17 @@ Page.r3f = (props) => (
 export default Page
 
 export async function getStaticProps() {
+    const queryClient = new QueryClient()
+    await queryClient.prefetchQuery('about', getAbout)
+    /**
+     * Use dehydrate to dehydrate the query cache and pass it to the page via the dehydratedState prop. 
+     * This is the same prop that the cache will be picked up from in your _app.js
+     */
     return {
         props: {
             title: 'About',
+            dehydratedState: dehydrate(queryClient),
         },
+        revalidate: 1
     }
 }

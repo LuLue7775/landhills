@@ -5,9 +5,9 @@ import Layout from '@/components/layout/layout'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import dynamic from 'next/dynamic'
-import { ReactQueryDevtools } from 'react-query/devtools'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
-import { Hydrate, QueryClient, QueryClientProvider } from 'react-query'
+import { Hydrate, QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 const LCanvas = dynamic(() => import('@/components/layout/canvas'), {
   ssr: true,

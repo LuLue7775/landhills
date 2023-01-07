@@ -2,9 +2,10 @@ import Carousel from '@/components/carousel'
 import { StyledImageLink, StyledTextMedium, StyledLoader, StyledLoaderContainer } from '@/styles/styles'
 
 import dynamic from 'next/dynamic'
-import useHome from '@/queries/useHome'
+import useHomeQuery, { getHome } from '@/queries/useHomeQuery'
 import Image from 'next/image'
 import DOMPurify from 'isomorphic-dompurify';
+import { dehydrate, QueryClient } from '@tanstack/react-query'
 
 // import Shader from '@/components/canvas/Shader/Shader'
 
@@ -19,7 +20,7 @@ const Shader = dynamic(() => import('@/components/canvas/Shader/Shader'), {
 
 // dom components goes here
 const Page = () => {
-  const { home, isLoading } = useHome()
+  const { home, isLoading } = useHomeQuery()
   const { current_event, home_images } = home?.[0] || []
 
   return (
@@ -75,9 +76,17 @@ Page.r3f = (props) => (
 export default Page
 
 export async function getStaticProps() {
+  const queryClient = new QueryClient()
+  await queryClient.prefetchQuery('home', getHome)
+  /**
+   * Use dehydrate to dehydrate the query cache and pass it to the page via the dehydratedState prop. 
+   * This is the same prop that the cache will be picked up from in your _app.js
+   */
   return {
     props: {
       title: 'Index',
+      dehydratedState: dehydrate(queryClient),
     },
+    revalidate: 1
   }
 }

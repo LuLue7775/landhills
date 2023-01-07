@@ -1,21 +1,18 @@
 
 // import useStore from '@/helpers/store'
-import useBrandInfo from '@/queries/useBrandInfo'
+import useBrandInfoQuery from '@/queries/useBrandInfoQuery'
 import { StyledMenu, StyledText, StyledMenuUl, StyledMenuInfo, StyledLink, StyledCloseButton, StyledMenuWrap } from '@/styles/styles'
-import { useObjectScrollStore } from '@/helpers/store'
 import useDelayRouting from '@/utils/useDelayRouting'
 
 import DOMPurify from 'isomorphic-dompurify'
-import React, { useEffect, useReducer, useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 
 export default function Menu({ isMenuOpened, setMenuOpen }) {
-    // const router = useStore((state) => state.router)
     const routerWrapper = useDelayRouting(isMenuOpened, setMenuOpen)
 
-    const { brandInfo, error, isLoading, isSuccess } = useBrandInfo()
+    const { brandInfo, error, isLoading, isSuccess } = useBrandInfoQuery()
     const { info_content } = brandInfo?.[0] || []
 
-    // const { objectPos, setObjectPos } = useObjectScrollStore()
     const menuRef = useRef()
     useEffect(() => {
         function handleClick(e) {

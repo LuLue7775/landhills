@@ -1,7 +1,6 @@
 import useStore, { useMeshRefStore } from '@/helpers/store'
 import useViewport from '@/utils/useViewport'
-import { useObjectScrollStore } from '@/helpers/store'
-import { useFrame, useThree } from '@react-three/fiber'
+import { useFrame } from '@react-three/fiber'
 import { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 
@@ -21,8 +20,6 @@ const BoxComponent = ({ route }) => {
       ? (mesh.current.rotation.y = mesh.current.rotation.x += 0.01)
       : null
   })
-
-  const { objectPos, setObjectPos } = useObjectScrollStore()
 
   const viewport = useViewport()
   const table = { 1: 1, 2: 3, 3: 5, 4: 6 }
