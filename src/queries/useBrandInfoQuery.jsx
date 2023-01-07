@@ -21,7 +21,7 @@ export default function useBrandInfoQuery(props) {
         initialData: () => {
             const brandInfo = queryClient.getQueryData(['brand_info'])
             if (brandInfo) return { data: brandInfo }
-            else return brandInfoJSON
+            else return [brandInfoJSON]
         }
 
     })

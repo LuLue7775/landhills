@@ -80,7 +80,6 @@ const Page = () => {
                     src={project.image}
                     width={300} // these two are useless now, just to bypass nextJS
                     height={300}
-                    // sizes="100vw"
                     style={{
                       width: 'auto',
                       height: 'auto',

@@ -37,10 +37,14 @@ const Page = () => {
                                 draggable="false"
                                 src={object.object_cover_image.guid}
                                 alt="image"
-                                layout="responsive"
-                                height="75"
-                                width="100"
-                                objectFit="contain"
+                                height={475}
+                                width={700}
+                                sizes="100vh"
+                                style={{
+                                    width: 'auto',
+                                    height: '100%',
+                                    objectFit: "contain"
+                                }}
                             />
                             <StyledText dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(object.object_cover_paragraph) }} />
                             <StyledObjectContent dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(object.object_content) }} />
@@ -54,8 +58,11 @@ const Page = () => {
                                                 draggable="false"
                                                 src={imageData.guid}
                                                 alt="images"
-                                                layout="fill"
-                                                objectFit="contain" />
+                                                fill
+                                                sizes="100vw"
+                                                style={{
+                                                    objectFit: "cover"
+                                                }} />
                                         ))}
                                     </Carousel>
                                     <StyledText dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(object.object_description) }} />
@@ -67,10 +74,13 @@ const Page = () => {
                                         draggable="false"
                                         src={object.single_object_image.guid}
                                         alt="single-image"
-                                        layout="responsive"
                                         width="350"
                                         height="350"
-                                        objectFit="contain" />
+                                        style={{
+                                            // width: 'auto',
+                                            // height: '100%',
+                                            objectFit: "contain"
+                                        }} />
                                     <StyledText dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(object.single_object_description) }} />
                                 </StyledObjectCol>
                             </StyledObjectDisplayCols>

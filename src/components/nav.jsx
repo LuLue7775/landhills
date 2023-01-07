@@ -10,9 +10,6 @@ export default function Nav({ isMenuOpened, setMenuOpen }) {
                 <Image
                     src="/img/logo.png"
                     alt="logo"
-                    // layout="fixed" // lagacy props
-                    // objectFit="contain"
-                    fixed
                     height="15"
                     width="100"
                     style={{

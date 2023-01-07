@@ -161,8 +161,9 @@ export const StyledLink = styled.a`
 export const StyledPages = styled.div`
   position: relative;
   height:100%;
-  overflow: scroll;
   padding-bottom: 10vh;
+  
+  ${({ fixed }) => (fixed ? `overflow: hidden;` : `overflow: scroll;`)};
 `;
 export const StyledLoaderContainer = styled.div`
   position: relative;
@@ -356,17 +357,25 @@ export const StyledImageWrapper = styled.div`
  * Event & About
  */
 
+
+export const StyledContentWrapper = styled.div`
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 100%;
+
+`
 export const StyledGridWrapper = styled.div`
   display: grid;
   grid-template-columns: 2fr 2fr 2fr 1fr;
   margin: 6rem 0;
 `
+
 export const StyledCarouselWrapper = styled.div`
   width: 100%;
   height: auto;
   padding: 0 0 0 2rem;
-
 `
+
 export const StyledTextWrapper = styled.div`
   display: block;  
   padding: 0 0 0 4rem;

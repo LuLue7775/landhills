@@ -1,5 +1,5 @@
 import useEventsQuery, { getEvents } from '@/queries/useEventsQuery'
-import { StyledPages, StyledGridWrapper, StyledMenuInfo, StyledText, StyledCarouselWrapper, StyledTextWrapper, StyledLoaderContainer, StyledLoader } from '@/styles/styles'
+import { StyledPages, StyledGridWrapper, StyledMenuInfo, StyledText, StyledCarouselWrapper, StyledTextWrapper, StyledLoaderContainer, StyledLoader, StyledContentWrapper } from '@/styles/styles'
 import useBrandInfoQuery from '@/queries/useBrandInfoQuery'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
@@ -21,44 +21,44 @@ const Page = () => {
                 <StyledLoader />
             </StyledLoaderContainer>
             :
-            <StyledPages>
-                {events?.map(event => (
-                    <StyledGridWrapper key={event.id}>
-                        <div>
-                            <StyledMenuInfo>
-                                <StyledText dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(info_content) }} />
-                            </StyledMenuInfo>
-                        </div>
-                        <StyledCarouselWrapper>
-                            <Carousel>
-                                {event?.event_images?.map(image => (
-                                    <Image
-                                        key={image.ID}
-                                        draggable="false"
-                                        src={image.guid}
-                                        alt="image"
-                                        width={200}
-                                        height={200}
-                                        // sizes="100vw"
-                                        style={{
-                                            width: '100%',
-                                            height: 'auto',
-                                            maxHeight: '80%',
-                                            objectFit: 'contain',
-                                            position: 'absolute',
-                                            top: 0
-                                        }}
-                                    />
-                                ))}
-                            </Carousel>
-                        </StyledCarouselWrapper>
+            <StyledPages fixed>
+                <StyledMenuInfo>
+                    <StyledText dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(info_content) }} />
+                </StyledMenuInfo>
+                <StyledContentWrapper>
+                    {events?.map(event => (
+                        <StyledGridWrapper key={event.id}>
+                            <div></div>
+                            <StyledCarouselWrapper>
+                                <Carousel>
+                                    {event?.event_images?.map(image => (
+                                        <Image
+                                            key={image.ID}
+                                            draggable="false"
+                                            src={image.guid}
+                                            alt="image"
+                                            width={200}
+                                            height={200}
+                                            style={{
+                                                width: '100%',
+                                                height: 'auto',
+                                                maxHeight: '80%',
+                                                objectFit: 'contain',
+                                                position: 'absolute',
+                                                top: 0
+                                            }}
+                                        />
+                                    ))}
+                                </Carousel>
+                            </StyledCarouselWrapper>
 
-                        <StyledTextWrapper>
-                            <StyledText dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(event.event_content) }} />
-                        </StyledTextWrapper>
-                        <div> </div>
-                    </StyledGridWrapper>
-                ))}
+                            <StyledTextWrapper>
+                                <StyledText dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(event.event_content) }} />
+                            </StyledTextWrapper>
+                            <div> </div>
+                        </StyledGridWrapper>
+                    ))}
+                </StyledContentWrapper>
             </StyledPages>
     )
 }
