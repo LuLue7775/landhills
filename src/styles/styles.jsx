@@ -1,30 +1,5 @@
 import styled, { createGlobalStyle, keyframes } from 'styled-components';
-export const GlobalStyle = createGlobalStyle`
-
-  @font-face {
-    font-family: 'Circular Medium';
-    font-style: normal;
-    src: local('circular-medium'),
-      url(/fonts/circular-medium.woff) format('woff');
-    font-display: swap;
-  }
-
-  @font-face {
-    font-family: 'Circular Book';
-    font-style: normal;
-    src: local('circular-book'),
-      url(/fonts/circular-book.woff) format('woff');
-    font-display: swap;
-  }
-
-  @font-face {
-    font-family: 'Circular Italic';
-    font-style: italic;
-    src: local('circular-italic'),
-      url(/fonts/circular-book-italic.woff) format('woff');
-    font-display: swap;
-  }
-  
+export const GlobalStyle = createGlobalStyle`  
  * {
     box-sizing: border-box;
   }
@@ -39,8 +14,29 @@ export const GlobalStyle = createGlobalStyle`
     overflow: hidden;
 
     font-size: 13px;
-    font-family: Circular Book;
+    @font-face {
+      font-family: 'Circular Medium';
+      font-style: normal;
+      src: local('circular-medium'),
+        url(/fonts/circular-medium.woff) format('woff');
+      font-display: swap;
+    }
 
+    @font-face {
+      font-family: 'Circular Book';
+      font-style: normal;
+      src: local('circular-book'),
+        url(/fonts/circular-book.woff) format('woff');
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'Circular Italic';
+      font-style: italic;
+      src: local('circular-italic'),
+        url(/fonts/circular-book-italic.woff) format('woff');
+      font-display: swap;
+    }
   }
 
   button,

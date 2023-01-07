@@ -8,7 +8,6 @@ export default function ArchiveImage({ projectImage }) {
 
     const { mouseY } = useMousePosition()
     useEffect(() => {
-        // console.log(Math.ceil((mouseY - 100) / 52))
         setImagePos({ mouseY: Math.ceil(mouseY) })
     }, [mouseY])
 
