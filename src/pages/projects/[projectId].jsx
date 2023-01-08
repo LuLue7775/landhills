@@ -1,6 +1,4 @@
 import {
-    StyledWrap,
-    StyledCover,
     StyledProjectGrid,
     StyledProjectContent,
     StyledProjectTitle,
@@ -9,9 +7,10 @@ import {
     StyledRow,
     StyledItems,
     StyledLoaderContainer,
-    StyledLoader
+    StyledLoader,
+    StyledImage,
+    StyledPages
 } from '@/styles/styles'
-import { withCSR } from '@/HOC/withCSR'
 import { QueryClient, dehydrate } from '@tanstack/react-query'
 import Image from 'next/image'
 import { getProjects, getSingleProject, useSingleProjectQuery } from '@/queries/useProjectsQuery'
@@ -27,52 +26,55 @@ export default function ProjectsSinglePage({ isError }) {
                 <StyledLoader />
             </StyledLoaderContainer>
             :
-            <StyledWrap>
-                <StyledCover>
-                    <StyledProjectGrid>
-                        <StyledProjectContent>
-                            <StyledProjectTitle> {project?.title?.rendered} </StyledProjectTitle>
-                            <StyledText dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(project?.content?.rendered) }} />
-                        </StyledProjectContent>
-                        <StyledProjectCoverImageContainer>
-                            {project?.project_cover_image &&
-                                <Image
-                                    className="image"
-                                    draggable="false"
-                                    src={project.project_cover_image?.guid}
-                                    alt="image"
-                                    height="500"
-                                    width="500"
-                                    style={{
-                                        objectFit: "contain"
-                                    }} />
-                            }
-                        </StyledProjectCoverImageContainer>
-                    </StyledProjectGrid>
-                </StyledCover>
+            <StyledPages>
+                <StyledProjectGrid>
+
+                    <StyledProjectCoverImageContainer>
+                        {project?.project_cover_image &&
+                            // <Image
+                            //     className="image"
+                            //     draggable="false"
+                            //     src={project.project_cover_image?.guid}
+                            //     alt="image"
+                            //     height={1920}
+                            //     width={1080}
+                            //     sizes="100vw"
+                            //     style={{
+                            //         width: 'auto',
+                            //         height: '100%',
+                            //         objectFit: "contain"
+                            //     }}
+                            // />
+                            <StyledImage
+                                className="images"
+                                draggable="false"
+                                src={project.project_cover_image?.guid}
+                                alt="image"
+                            />
+                        }
+                    </StyledProjectCoverImageContainer>
+                    <StyledProjectContent>
+                        <StyledProjectTitle> {project?.title?.rendered} </StyledProjectTitle>
+                        <StyledText dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(project?.project_category[0]?.name) }} />
+                        <StyledText dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(project?.date) }} />
+                        <StyledText dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(project?.content?.rendered) }} />
+                    </StyledProjectContent>
+                </StyledProjectGrid>
 
                 <StyledRow>
                     {project?.project_images.length &&
                         project?.project_images?.map(image => (
                             <StyledItems key={image.ID}>
-                                <Image
-                                    alt="projects"
+                                <StyledImage
+                                    className="images"
                                     draggable="false"
                                     src={image.guid}
-                                    width={300} // these two are useless now, just to bypass nextJS
-                                    height={300}
-                                    style={{
-                                        width: 'auto',
-                                        height: 'auto',
-                                        position: 'absolute',
-                                        bottom: 0,
-                                        left: 0
-                                    }}
+                                    alt="image"
                                 />
                             </StyledItems>
                         ))}
                 </StyledRow>
-            </StyledWrap>
+            </StyledPages>
     )
 }
 
@@ -106,27 +108,3 @@ export async function getStaticProps({ params }) {
 
     }
 }
-
-
-// export const getServerSideProps = withCSR(async (ctx) => {
-//     const { projectId } = ctx.params;
-
-//     const queryClient = new QueryClient();
-
-//     let isError = false;
-
-//     try {
-//         await queryClient.fetchQuery(`project-${projectId}`, () => getSingleProject(projectId));
-//     } catch (error) {
-//         isError = true
-//         ctx.res.statusCode = error.response.status;
-//     }
-
-//     return {
-//         props: {
-//             //also passing down isError state to show a custom error component.
-//             isError,
-//             dehydratedState: dehydrate(queryClient),
-//         },
-//     }
-// })

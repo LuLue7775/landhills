@@ -1,4 +1,6 @@
 import styled, { createGlobalStyle, keyframes } from 'styled-components';
+import { devices } from './constants';
+
 export const GlobalStyle = createGlobalStyle`  
  * {
     box-sizing: border-box;
@@ -53,6 +55,7 @@ export const GlobalStyle = createGlobalStyle`
 
   p {
     margin: 0;
+    font-size:1rem;
   }
 
   a {
@@ -149,8 +152,10 @@ export const StyledText = styled.div`
   text-align: start;
   font-size: 1rem;
   line-height: 1.5rem;
-  padding: 0 .5rem;
   text-align: justify;
+  padding-right: 4rem;
+  font-family: 'Circular Book';
+
 
 `
 
@@ -162,8 +167,8 @@ export const StyledPages = styled.div`
   position: relative;
   height:100%;
   padding-bottom: 10vh;
-  
-  ${({ fixed }) => (fixed ? `overflow: hidden;` : `overflow: scroll;`)};
+  overflow-x: hidden;
+  ${({ fixed }) => (fixed ? `overflow-y: hidden;` : `overflow-y: scroll;`)};
 `;
 export const StyledLoaderContainer = styled.div`
   position: relative;
@@ -250,53 +255,52 @@ export const StyledImageLink = styled.a`
 /**
  * Projects Page
  */
-
-// ========= non-next/image version 
-
-// export const StyledRow = styled.div`
-//   font-size: 5rem;
-//   text-align: center;
-//   // display: flex;
-//   // flex-flow: row wrap;
-//   justify-content: center;
-
-// `;
-// export const StyledItems = styled.div`
-//   position: relative;
-//   height: 300px;
-//   width: 200px;
-//   margin: 10px;
-//   display: inline-block;
-// `;
-
-// export const StyledImage = styled.img`
-//   width: 100%;
-//   height: 100%;
-//   object-fit: contain;
-// `;
-
-// ========= next/image version 
-export const StyledRow = styled.div`
-  width: 100%;
-  font-size: 5rem;
-  text-align: center;
-  padding: 0 1rem;
-
-`;
 export const StyledItems = styled.div`
   display: inline-block;
   position: relative;
-  height: 600px;
-  width: 400px;
-  margin: 20px;
+  height: 100%;
+  width: auto;
+  max-width: 90vw;
+  margin: 1rem;
+  overflow: hidden;
 `;
 
-export const StyledImageInfo = styled.div`
-  position: absolute;
-  bottom: -3rem;
-  font-size: 1.3rem;
-  text-align: start;
-`
+// ========= non-next/image version 
+
+export const StyledRow = styled.div`
+  position: relative;
+  font-size: 5rem;
+  text-align: center;
+  justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+
+`;
+
+export const StyledImage = styled.img`
+  height: 100%;
+  width: auto;
+  max-width: 100vw; 
+  object-fit: contain;
+`;
+
+// ========= next/image version 
+// export const StyledRow = styled.div`
+//   width: 100%;
+//   font-size: 5rem;
+//   text-align: center;
+//   padding: 0 1rem;
+//   margin-top: 10vh;
+// `;
+
+
+// export const StyledImageInfo = styled.div`
+//   position: absolute;
+//   bottom: -3rem;
+//   font-size: 1.3rem;
+//   text-align: start;
+// `
 
 /**
  * Objects Page
@@ -385,48 +389,49 @@ export const StyledTextWrapper = styled.div`
  * Projects Single Page
  */
 
-export const StyledWrap = styled.div`
-  position: relative;
-  height: 100vh;
-  width: 100%;
-  display: grid;
-  grid-template-rows: 1fr 1fr; 
-  overflow-y: scroll;
-  
-`
 
-export const StyledCover = styled.div`
+export const StyledProjectGrid = styled.div`
   position: relative;
-  height: calc(100vh - 70px);
   width: 100%;
+  
+  @media ${devices.laptop} {
+    height: calc(100vh - 70px);  
+    overflow: hidden;
+      display: grid;
+      grid-auto-flow: column;
+      grid-template-columns: 45% 55%;
+  }
 `
 
 export const StyledProjectTitle = styled.h1`
   font-size: 2rem;
-  padding: 1rem;
-`
-export const StyledProjectGrid = styled.div`
-  display: grid;
-  grid-auto-flow: column;
-  grid-template-columns: 40% 60%;
+  font-family: 'Circular Medium';
 
-  height: auto;
-  width: 100%;
 `
 
 export const StyledProjectContent = styled.div`
   position: relative;
   height: auto;
   width: 100%;
-  margin: 2rem;
+  margin: 6rem 2rem;
+  overflow-y: scroll;
+  overflow-x: hidden;
+
 `
 
 export const StyledProjectCoverImageContainer = styled.div`
-  position: absolute;
-  right: -10%;
-  top: 0;
-  height: 70vh;
-  width: 60%;
+  position: relative;
+  // position: absolute;
+  // top: 0;
+  // z-index: -1;
+  
+  @media ${devices.laptop} {
+    position: absolute;
+    right: -10%;
+    bottom: 0;
+    height: 70vh;
+    width: 60%;
+  }
 `
 
 /**

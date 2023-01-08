@@ -4,7 +4,9 @@ import {
   StyledItems,
   StyledLoader,
   StyledLoaderContainer,
-  StyledImageInfo
+  StyledImageInfo,
+  StyledImage,
+  StyledText
 } from '@/styles/styles'
 import useProjectsQuery, { getProjects } from '@/queries/useProjectsQuery'
 import dynamic from 'next/dynamic'
@@ -20,7 +22,7 @@ const Shader = dynamic(() => import('@/components/canvas/Shader/Shader'), {
 const Page = () => {
 
   const { projects, isLoading } = useProjectsQuery()
-
+  console.log(projects)
   // const [scrollPos, setScrollPos] = useState(0)
   const scrollRef = useRef()
   // useEffect(() => {
@@ -44,60 +46,57 @@ const Page = () => {
         <StyledLoader />
       </StyledLoaderContainer>
       :
-      // <StyledPages ref={scrollRef}>
-      //   <StyledRow>
-      //     {
-      //       rawProjects?.map(project => (
-      //         <StyledItems key={project.id} >
-      //           <figure style={{ display: "block", position: "relative" }}>
-      //             <StyledImage
-      //               className="images"
-      //               draggable="false"
-      //               src={project.project_cover_image.guid}
-      //               alt="image"
-      //             />
-      //           </figure>
-
-      //           <StyledText>
-      //             <div> {project.title.rendered} </div>
-      //             <div> {project.project_number} </div>
-      //           </StyledText>
-
-      //         </StyledItems>
-      //       ))
-      //     }
-      //   </StyledRow>
-      // </StyledPages>
-
       <StyledPages ref={scrollRef}>
         <StyledRow>
           {
             projects?.map(project => (
-              <StyledItems key={project.id}>
+              <StyledItems key={project.id} >
                 <Link href={`/projects/${project.id}`}>
-                  <Image
-                    alt="projects"
+                  <StyledImage
+                    className="images"
+                    draggable="false"
                     src={project.image}
-                    width={300} // these two are useless now, just to bypass nextJS
-                    height={300}
-                    style={{
-                      width: 'auto',
-                      height: 'auto',
-                      position: 'absolute',
-                      bottom: 0,
-                      left: 0
-                    }}
+                    alt="image"
                   />
+
+                  <StyledText>
+                    <div> {project.title} </div>
+                    <div> {project.no} </div>
+                  </StyledText>
                 </Link>
-                <StyledImageInfo>
-                  <b> {project.title} </b>
-                  <p> {project.no} </p>
-                </StyledImageInfo>
               </StyledItems>
             ))
           }
         </StyledRow>
       </StyledPages>
+
+    // <StyledPages ref={scrollRef}>
+    //   <StyledRow>
+    //     {
+    //       projects?.map(project => (
+    //         <StyledItems key={project.id}>
+    //           <Link href={`/projects/${project.id}`}>
+    //             <Image
+    //               alt="projects"
+    //               src={project.image}
+    //               width={300}
+    //               height={300}
+    //               style={{
+    //                 width: 'auto',
+    //                 height: '100%',
+    //                 objectFit: 'contain'
+    //               }}
+    //             />
+    //           </Link>
+    //           <StyledImageInfo>
+    //             <b> {project.title} </b>
+    //             <p> {project.no} </p>
+    //           </StyledImageInfo>
+    //         </StyledItems>
+    //       ))
+    //     }
+    //   </StyledRow>
+    // </StyledPages>
 
 
 
