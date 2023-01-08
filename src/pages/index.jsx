@@ -77,7 +77,7 @@ export default Page
 
 export async function getStaticProps() {
   const queryClient = new QueryClient()
-  await queryClient.prefetchQuery('home', getHome)
+  await queryClient.prefetchQuery(['home'], getHome)
   /**
    * Use dehydrate to dehydrate the query cache and pass it to the page via the dehydratedState prop. 
    * This is the same prop that the cache will be picked up from in your _app.js

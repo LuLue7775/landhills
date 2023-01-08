@@ -22,7 +22,6 @@ const Shader = dynamic(() => import('@/components/canvas/Shader/Shader'), {
 const Page = () => {
 
   const { projects, isLoading } = useProjectsQuery()
-  console.log(projects)
   // const [scrollPos, setScrollPos] = useState(0)
   const scrollRef = useRef()
   // useEffect(() => {
@@ -37,8 +36,6 @@ const Page = () => {
   //   const currentScrollPos = parseInt(scrollPos / 500)
   //   setObjectPos([currentScrollPos, 1, 1])
   // }, [scrollPos])
-
-
 
   return (
     isLoading ?
@@ -113,7 +110,7 @@ export default Page
 
 export async function getStaticProps() {
   const queryClient = new QueryClient()
-  await queryClient.prefetchQuery('projects', getProjects)
+  await queryClient.prefetchQuery(['projects'], getProjects)
   /**
    * Use dehydrate to dehydrate the query cache and pass it to the page via the dehydratedState prop. 
    * This is the same prop that the cache will be picked up from in your _app.js
