@@ -5,6 +5,7 @@ import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import Carousel from '@/components/carousel'
 import { dehydrate, QueryClient } from '@tanstack/react-query'
+import useViewport from '@/utils/useViewport'
 
 const Shader = dynamic(() => import('@/components/canvas/Shader/Shader'), {
     ssr: false,
@@ -14,7 +15,7 @@ const Page = () => {
     const { events, isLoading } = useEventsQuery()
     const { brandInfo } = useBrandInfoQuery()
     const { info_content } = brandInfo?.[0] || []
-
+    const viewport = useViewport()
     return (
         isLoading ?
             <StyledLoaderContainer>
@@ -22,9 +23,12 @@ const Page = () => {
             </StyledLoaderContainer>
             :
             <StyledPages fixed>
-                <StyledMenuInfo>
-                    <StyledText dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(info_content) }} />
-                </StyledMenuInfo>
+                {
+                    viewport !== 'tablet' && viewport !== 'mobile' &&
+                    <StyledMenuInfo>
+                        <StyledText dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(info_content) }} />
+                    </StyledMenuInfo>
+                }
                 <StyledContentWrapper>
                     {events?.map(event => (
                         <StyledGridWrapper key={event.id}>
@@ -42,7 +46,7 @@ const Page = () => {
                                             style={{
                                                 width: '100%',
                                                 height: 'auto',
-                                                maxHeight: '80%',
+                                                maxHeight: '60%',
                                                 objectFit: 'contain',
                                                 position: 'absolute',
                                                 top: 0
@@ -53,7 +57,7 @@ const Page = () => {
                             </StyledCarouselWrapper>
 
                             <StyledTextWrapper>
-                                <StyledText dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(event.event_content) }} />
+                                <StyledText events dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(event.event_content) }} />
                             </StyledTextWrapper>
                             <div> </div>
                         </StyledGridWrapper>

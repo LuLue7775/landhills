@@ -1,7 +1,7 @@
 import React, { useReducer } from 'react'
 import {
     StyledSwipeHandler,
-    StyledWrapper,
+    StyledCarouselWrapper,
     StyledCarouselContainer,
     StyledCarouselSlot,
     StyledSlideButton
@@ -39,7 +39,7 @@ function Carousel(props) {
 
     return (
         <StyledSwipeHandler className="StyledSwipeHandler" {...swipeHandlers}>
-            <StyledWrapper className="StyledWrapper" >
+            <StyledCarouselWrapper className="StyledCarouselWrapper" >
                 <StyledCarouselContainer className="StyledCarouselContainer" dir={state.dir} sliding={state.sliding}>
                     {React.Children.map(props.children, (child, index) => (
                         <StyledCarouselSlot className="StyledCarouselSlot" order={getOrder(index, state.pos, item_amount)}>
@@ -52,7 +52,7 @@ function Carousel(props) {
                     <StyledSlideButton className="StyledSlideButton" onClick={() => slide('NEXT')} direction={'NEXT'} />
 
                 </StyledCarouselContainer>
-            </StyledWrapper>
+            </StyledCarouselWrapper>
 
         </StyledSwipeHandler>
     )

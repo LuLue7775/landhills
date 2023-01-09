@@ -16,6 +16,7 @@ import Carousel from '@/components/carousel'
 import Image from 'next/image'
 import dynamic from 'next/dynamic'
 import { dehydrate, QueryClient } from '@tanstack/react-query'
+import useViewport from '@/utils/useViewport'
 
 const Shader = dynamic(() => import('@/components/canvas/Shader/Shader'), {
     ssr: false,
@@ -25,9 +26,7 @@ const Page = () => {
     const { about, isLoading } = useAboutQuery()
     const { brandInfo } = useBrandInfoQuery()
     const { info_content } = brandInfo?.[0] || []
-
-    // const { about_content, about_images } = about?.[0] || []
-
+    const viewport = useViewport()
     return (
         isLoading ?
             <StyledLoaderContainer>
@@ -35,9 +34,12 @@ const Page = () => {
             </StyledLoaderContainer>
             :
             <StyledPages fixed>
-                <StyledMenuInfo>
-                    <StyledText dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(info_content) }} />
-                </StyledMenuInfo>
+                {
+                    viewport !== 'tablet' && viewport !== 'mobile' &&
+                    <StyledMenuInfo>
+                        <StyledText dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(info_content) }} />
+                    </StyledMenuInfo>
+                }
                 <StyledContentWrapper>
                     {about?.map(section => (
                         <StyledGridWrapper key={section.id}>

@@ -1,6 +1,5 @@
 import styled, { createGlobalStyle, keyframes } from 'styled-components';
 import { devices } from './constants';
-import DataTable from 'react-data-table-component';
 
 export const GlobalStyle = createGlobalStyle`  
  * {
@@ -155,8 +154,16 @@ export const StyledText = styled.div`
   line-height: 1.5rem;
   text-align: justify;
   padding-right: 4rem;
-  // margin-bottom: 5rem;
   font-family: 'Circular Book';
+  ${({ events }) => events && `
+    padding-right: 2rem;
+    text-align: right;
+    @media ${devices.laptop} {
+      text-align: left;
+    }
+  `
+
+  }
 `
 
 export const StyledLink = styled.a`
@@ -193,10 +200,11 @@ export const StyledFooter = styled.div`
 export const StyledSwipeHandler = styled.div`
  z-index: -1;
 `
-export const StyledWrapper = styled.div`
+export const StyledCarouselWrapper = styled.div`
   width: 100%;
+  height: auto;
+  max-height: 40vh;
   overflow: hidden;
-
 `;
 
 export const StyledCarouselContainer = styled.div`
@@ -369,15 +377,12 @@ export const StyledContentWrapper = styled.div`
 
 `
 export const StyledGridWrapper = styled.div`
-  display: grid;
-  grid-template-columns: 2fr 2fr 2fr 1fr;
   margin: 6rem 0;
-`
-
-export const StyledCarouselWrapper = styled.div`
-  width: 100%;
-  height: auto;
-  padding: 0 0 0 2rem;
+  position: relative;
+  @media ${devices.laptop} {
+      display: grid;
+      grid-template-columns: 2fr 2fr 2fr 1fr;
+    }
 `
 
 export const StyledTextWrapper = styled.div`
