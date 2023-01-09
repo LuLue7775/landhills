@@ -57,7 +57,7 @@ const Page = () => {
                             </StyledCarouselWrapper>
 
                             <StyledTextWrapper>
-                                <StyledText events dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(event.event_content) }} />
+                                <StyledText dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(event.event_content) }} />
                             </StyledTextWrapper>
                             <div> </div>
                         </StyledGridWrapper>
