@@ -6,7 +6,7 @@ import { shaderMaterial } from '@react-three/drei'
 
 import vertex from './glsl/shader.vert'
 import fragment from './glsl/shader.frag'
-
+import { table } from '@/utils/useViewport'
 import { useMeshRefStore } from '@/helpers/store'
 import useViewport from '@/utils/useViewport'
 import gsap from 'gsap'
@@ -27,6 +27,17 @@ ColorShiftMaterial.key = THREE.MathUtils.generateUUID()
 
 extend({ ColorShiftMaterial })
 
+const toSideAnimation = ({ mesh, viewport }) => {
+  gsap.fromTo(mesh.current.position, {
+    x: 0,
+    y: 0,
+  }, {
+    x: table[viewport] || 4,
+    y: -2,
+    duration: 3
+  })
+}
+
 const Shader = (props) => {
 
   const router = useStore((s) => s.router)
@@ -35,8 +46,9 @@ const Shader = (props) => {
   const mesh = useRef(null)
   useEffect(() => { setMeshRef(mesh) }, [mesh])
 
-
-
+  /**
+   * Object Rotation 
+   */
   useFrame((state, delta) => {
     if (!meshRef.current) return
 
@@ -49,28 +61,16 @@ const Shader = (props) => {
     }
   })
 
-
-
+  /**
+   * Position depend on viewport
+   * @TODO if duration is long, this need to be cancellable
+   */
   const viewport = useViewport()
-  const table = { 'mobile': 1, 'table': 3, 'desktopSM': 5, 'desktopLG': 6 }
-  useEffect(() => {
-    gsap.to(mesh.current.position, {
-      x: table[viewport] || 4,
-      y: -2,
-    })
-  }, [viewport])
 
   useEffect(() => {
     // const pos = objectPos % 2 ? 1 : -1
-    gsap.fromTo(mesh.current.position, {
-      x: 0,
-      y: 0,
-      duration: 2
-    }, {
-      x: table[viewport] || 4,
-      y: -2,
-    })
-  }, [])
+    toSideAnimation({ mesh, viewport })
+  }, [viewport, router])
 
   return (
     <mesh

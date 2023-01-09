@@ -2,27 +2,27 @@ import useStore from '@/helpers/store';
 import { useMeshRefStore } from '@/helpers/store'
 import gsap from 'gsap'
 
+const backToCenterAnimation = ({ meshRef }) => {
+    gsap.fromTo(meshRef.current?.position, {
+        x: 3,
+        y: -2,
+    }, {
+        x: 0,
+        y: 0,
+        duration: 2,
+    })
+}
 
 export default function useDelayRouting(isMenuOpened, setMenuOpen) {
     const { meshRef } = useMeshRefStore()
-    const backtoCenterAnimation = () => {
-        gsap.fromTo(meshRef.current?.position, {
-            x: 3,
-            y: -2,
-            duration: 2,
-        }, {
-            x: 0,
-            y: 0
-        })
-    }
 
     const router = useStore((state) => state.router)
 
     const startAnimation = () => {
         return new Promise((resolve, reject) => {
-            backtoCenterAnimation();
+            backToCenterAnimation({ meshRef });
             setMenuOpen(!isMenuOpened);
-            setTimeout(resolve, 2000)
+            setTimeout(resolve, 3000)
         });
     };
 
@@ -33,8 +33,6 @@ export default function useDelayRouting(isMenuOpened, setMenuOpen) {
             })
         }
     };
-
-
 
     return routerWrapper
 }

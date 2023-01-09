@@ -66,13 +66,6 @@ Page.r3f = (props) => (
     <Shader />
   </>
 )
-
-// Page.r3f = (props) => (
-//   <>
-//     <Box route='/' />
-//   </>
-// )
-
 export default Page
 
 export async function getStaticProps() {
