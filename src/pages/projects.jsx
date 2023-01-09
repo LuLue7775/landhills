@@ -58,9 +58,7 @@ const Page = ({ projects }) => {
                     draggable="false"
                     src={project.image}
                     alt="image"
-
                   />
-
                   <StyledImageInfo>
                     <div> {project.title} </div>
                     <div> {project.no} </div>

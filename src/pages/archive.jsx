@@ -5,14 +5,16 @@ import {
     StyledLoader
 } from '@/styles/styles'
 // import { UpArrow, DownArrow } from '@/components/icons/arrows'
-import { columns, customStyles } from '@/components/table'
+import { columns, customStyles } from '@/components/datatable/table_custom_properties'
 import useProjectsQuery, { getProjects, transformProjects } from '@/queries/useProjectsQuery'
+import ArchiveImage from '@/components/archiveImage'
+import ExpandedComponent from '@/components/datatable/ExpandedComponent'
 import { QueryClient, dehydrate } from '@tanstack/react-query'
 import dynamic from 'next/dynamic'
 import { useState } from 'react';
-import DataTable from 'react-data-table-component'
 import { useRouter } from 'next/router'
-import ArchiveImage from '@/components/archiveImage'
+import DataTable from 'react-data-table-component'
+import useViewport from '@/utils/useViewport'
 
 const Shader = dynamic(() => import('@/components/canvas/Shader/Shader'), {
     ssr: false,
@@ -34,6 +36,8 @@ const Page = ({ projects }) => {
     const handleRowMouseEnter = target => setProjectImage(target.image)
     const handleRowMouseLeave = () => setProjectImage('')
 
+    const viewport = useViewport()
+
     return (
         isLoading ?
             <StyledLoaderContainer>
@@ -50,10 +54,14 @@ const Page = ({ projects }) => {
                         onRowMouseEnter={handleRowMouseEnter}
                         onRowMouseLeave={handleRowMouseLeave}
                         responsive={true}
+                        striped={true}
                         customStyles={customStyles}
+                        expandableRows={viewport === 'tablet' || viewport === 'mobile'}
+                        expandableRowsComponent={ExpandedComponent}
                     />
 
-                    {projectImage &&
+                    {viewport !== 'tablet' && viewport !== 'mobile' &&
+                        projectImage &&
                         <ArchiveImage projectImage={projectImage} />
                     }
                 </StyledTableWrapper>

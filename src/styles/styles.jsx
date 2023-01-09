@@ -1,5 +1,6 @@
 import styled, { createGlobalStyle, keyframes } from 'styled-components';
 import { devices } from './constants';
+import DataTable from 'react-data-table-component';
 
 export const GlobalStyle = createGlobalStyle`  
  * {
@@ -396,9 +397,9 @@ export const StyledProjectGrid = styled.div`
   @media ${devices.laptop} {
     height: calc(100vh - 70px);  
     overflow: hidden;
-      display: grid;
-      grid-auto-flow: column;
-      grid-template-columns: 45% 55%;
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: 45% 55%;
   }
 `
 
@@ -450,3 +451,24 @@ export const StyledLoader = styled.div`
   height: 30px;
   animation: ${spin} .5s linear infinite; 
 `
+
+
+/**
+ * DataTable
+ * 
+ *  */
+
+export const StyledExpandContent = styled.div`
+  display: flex;
+  gap: 2rem;
+  padding: 0 2rem;
+`
+
+export const StyledExpandText = styled.div`
+  font-family: 'Circular Medium';
+  padding: 2rem 0;
+  text-align: start;
+  line-height: 2rem;
+
+`
+

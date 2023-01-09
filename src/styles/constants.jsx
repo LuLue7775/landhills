@@ -18,4 +18,6 @@ export const devices = {
     desktop: `(min-width: ${sizes.desktop})`,
     shortScreen: `(min-height: 870px)`,
     shortScreenM: `(min-height: 1100px)`,
+
+    mobileFallback: `(max-width: ${sizes.tablet})`
 };
