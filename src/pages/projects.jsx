@@ -64,19 +64,20 @@ const Page = ({ projects }) => {
   const [scrollPos, setScrollPos] = useState(0)
   const scrollRef = useRef()
   useEffect(() => {
-    // debounce for scroll behavior
+    const scrollPos = scrollRef.current
+    // detect scroll stop
     let timer = null;
     const handleScrollStopped = () => {
       if (timer !== null) {
         clearTimeout(timer);
       }
       timer = setTimeout(function () {
-        setScrollPos(scrollRef.current.scrollTop)
+        setScrollPos(scrollPos.scrollTop)
       }, 350);
     }
 
-    scrollRef.current?.addEventListener('scroll', handleScrollStopped)
-    return () => scrollRef.current?.removeEventListener('scroll', handleScrollStopped)
+    scrollPos?.addEventListener('scroll', handleScrollStopped)
+    return () => scrollPos?.removeEventListener('scroll', handleScrollStopped)
   }, [isLoading])
 
   const viewport = useViewport()
