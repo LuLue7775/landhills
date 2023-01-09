@@ -281,7 +281,7 @@ export const StyledRow = styled.div`
 export const StyledImage = styled.img`
   height: 100%;
   width: auto;
-  max-width: max(60vw, 1000px); 
+  max-width: min(80vw, 1000px); 
   object-fit: contain;
 `;
 
