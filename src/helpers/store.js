@@ -22,13 +22,6 @@ export default useStore
  * Other stores for pages data.
  */
 
-const useObjectScrollStore = create((set) => ({
-  objectPos: [],
-  setObjectPos: (objectPos) =>
-    set(() => ({ objectPos: objectPos })),
-})
-)
-
 const useMeshRefStore = create((set) => ({
   meshRef: {},
   setMeshRef: (meshRef) =>
@@ -37,6 +30,5 @@ const useMeshRefStore = create((set) => ({
 )
 
 export {
-  useObjectScrollStore,
   useMeshRefStore
 }

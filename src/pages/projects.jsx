@@ -6,18 +6,49 @@ import {
   StyledLoaderContainer,
   StyledImageInfo,
   StyledImage,
-  StyledText
 } from '@/styles/styles'
 import useProjectsQuery, { getProjects, transformProjects } from '@/queries/useProjectsQuery'
+import { useMeshRefStore, useObjectScrollStore } from '@/helpers/store'
+import useViewport, { projectShaderPosTable } from '@/utils/useViewport'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { QueryClient, dehydrate, useQueryClient } from '@tanstack/react-query'
+import gsap from 'gsap'
 
 const Shader = dynamic(() => import('@/components/canvas/Shader/Shader'), {
   ssr: false,
 })
+
+/**
+ *  1sec after scroll put move queue
+ */
+const moveAnimation = ({ meshRef, queue }) => {
+  if (!meshRef.current) return
+  if (!queue[1]) return
+  gsap.fromTo(meshRef.current.position, {
+    x: queue[0].x,
+    y: queue[0].y,
+  }, {
+    x: queue[1].x || 4,
+    y: queue[1].y || 4,
+    duration: 1,
+  })
+}
+/**
+ *  handle queue jobs
+ */
+const addNewPosToQueue = ({ animationQueueRef, viewport }) => {
+  return new Promise(function (resolve, reject) {
+    setTimeout(() => {
+      let getRandom = Math.floor(Math.random() * 4);
+      const newPos = projectShaderPosTable[viewport][getRandom]
+      animationQueueRef.current.push(newPos)
+      resolve()
+    }, 1000)
+  })
+}
 
 const Page = ({ projects }) => {
   const { isLoading } = useProjectsQuery()
@@ -26,20 +57,50 @@ const Page = ({ projects }) => {
   //   queryClient.setQueryData(['projects'], (data) => data.sort(() => Math.random() - 0.5))
   // }, [projects])
 
-  // const [scrollPos, setScrollPos] = useState(0)
+  /**
+   * Detect scroll behavior, move mesh after 2sec scrolled. 
+   * Move back to center when route change.
+   */
+  const [scrollPos, setScrollPos] = useState(0)
   const scrollRef = useRef()
-  // useEffect(() => {
-  //   const setPos = () => setScrollPos(scrollRef.current.scrollTop)
+  useEffect(() => {
+    // debounce for scroll behavior
+    let timer = null;
+    const handleScrollStopped = () => {
+      if (timer !== null) {
+        clearTimeout(timer);
+      }
+      timer = setTimeout(function () {
+        setScrollPos(scrollRef.current.scrollTop)
+      }, 350);
+    }
 
-  //   scrollRef.current?.addEventListener('scroll', setPos)
-  //   return () => scrollRef.current?.removeEventListener('scroll', setPos)
-  // }, [isLoading])
+    scrollRef.current?.addEventListener('scroll', handleScrollStopped)
+    return () => scrollRef.current?.removeEventListener('scroll', handleScrollStopped)
+  }, [isLoading])
 
-  // const { setObjectPos } = useObjectScrollStore()
-  // useEffect(() => {
-  //   const currentScrollPos = parseInt(scrollPos / 500)
-  //   setObjectPos([currentScrollPos, 1, 1])
-  // }, [scrollPos])
+  const viewport = useViewport()
+  const { meshRef } = useMeshRefStore()
+  const animationQueueRef = useRef([])
+
+  useEffect(() => {
+    if (!viewport) return
+
+    const waitFor3 = async () => {
+      addNewPosToQueue({ animationQueueRef, viewport })
+        .then(() => { return moveAnimation({ meshRef, queue: animationQueueRef.current }) })
+        .then(() => {
+          if (animationQueueRef.current.length > 2) animationQueueRef.current.shift()
+          if (animationQueueRef.current.length > 4) animationQueueRef.current.slice(0, 3)
+
+        })
+    }
+    waitFor3()
+
+    // delete jobs if job exceed certain number
+
+  }, [scrollPos, meshRef.current])
+
 
   return (
     isLoading ?
@@ -97,9 +158,6 @@ const Page = ({ projects }) => {
     //     }
     //   </StyledRow>
     // </StyledPages>
-
-
-
   )
 }
 

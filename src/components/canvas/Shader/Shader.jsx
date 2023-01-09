@@ -6,7 +6,7 @@ import { shaderMaterial } from '@react-three/drei'
 
 import vertex from './glsl/shader.vert'
 import fragment from './glsl/shader.frag'
-import { table } from '@/utils/useViewport'
+import { shaderPosTable } from '@/utils/useViewport'
 import { useMeshRefStore } from '@/helpers/store'
 import useViewport from '@/utils/useViewport'
 import gsap from 'gsap'
@@ -32,7 +32,7 @@ const toSideAnimation = ({ mesh, viewport }) => {
     x: 0,
     y: 0,
   }, {
-    x: table[viewport] || 4,
+    x: shaderPosTable[viewport] || 4,
     y: -2,
     duration: 3
   })
