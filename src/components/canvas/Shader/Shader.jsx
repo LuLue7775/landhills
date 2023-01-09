@@ -52,7 +52,7 @@ const Shader = (props) => {
 
 
   const viewport = useViewport()
-  const table = { 1: 1, 2: 3, 3: 5, 4: 6 }
+  const table = { 'mobile': 1, 'table': 3, 'desktopSM': 5, 'desktopLG': 6 }
   useEffect(() => {
     gsap.to(mesh.current.position, {
       x: table[viewport] || 4,
