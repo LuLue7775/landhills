@@ -61,10 +61,10 @@ const Page = ({ projects }) => {
 
                   />
 
-                  <StyledText>
+                  <StyledImageInfo>
                     <div> {project.title} </div>
                     <div> {project.no} </div>
-                  </StyledText>
+                  </StyledImageInfo>
                 </Link>
               </StyledItems>
             ))

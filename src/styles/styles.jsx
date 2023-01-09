@@ -295,12 +295,11 @@ export const StyledImage = styled.img`
 // `;
 
 
-// export const StyledImageInfo = styled.div`
-//   position: absolute;
-//   bottom: -3rem;
-//   font-size: 1.3rem;
-//   text-align: start;
-// `
+export const StyledImageInfo = styled.div`
+  font-family: 'Circular Medium';
+  font-size: 1.3rem;
+  text-align: start;
+`
 
 /**
  * Objects Page
