@@ -307,13 +307,17 @@ export const StyledImageInfo = styled.div`
  */
 
 export const StyledSection = styled.div`
+  position: relative;
+
   height: auto;
   margin-bottom: 100px;
 
 `;
 
 export const StyledCoverSection = styled.div`
-  width: 80%;
+  position: relative;
+  height: auto;
+  max-width: 80%;
   margin-bottom: 10px;
 `;
 
@@ -326,10 +330,14 @@ export const StyledObjectContent = styled.div`
   line-height: 2rem;
 `;
 export const StyledObjectDisplayCols = styled.div`
-  display: flex;
-  justify-content: center;
-  height: 80vh;
+  position: relative;
   width: 100vw;
+  margin-bottom: 10vh;
+  padding-left: 2rem;
+  @media ${devices.laptop} {
+    display: flex;
+    justify-content: center;
+  }
 `;
 
 export const StyledObjectCol = styled.div`

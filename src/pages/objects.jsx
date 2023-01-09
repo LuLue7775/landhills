@@ -42,11 +42,12 @@ const Page = () => {
                                 sizes="100vh"
                                 style={{
                                     width: 'auto',
+                                    maxWidth: '70vw',
                                     height: '100%',
                                     objectFit: "contain"
                                 }}
                             />
-                            <StyledText dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(object.object_cover_paragraph) }} />
+                            <StyledText style={{ paddingLeft: "2rem" }} dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(object.object_cover_paragraph) }} />
                             <StyledObjectContent dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(object.object_content) }} />
                             <StyledObjectDisplayCols>
                                 <StyledObjectCol>
