@@ -10,7 +10,7 @@ export default function useViewport() {
     const [viewport, setViewport] = useState(0)
     useEffect(() => {
         if (isMobile) setViewport('mobile')
-        if (isTablet) setViewport('table')
+        if (isTablet) setViewport('tablet')
         if (isDesktopSM) setViewport('desktopSM')
         if (isDesktopLG) setViewport('desktopLG')
     }, [isMobile, isTablet, isDesktopSM, isDesktopLG])
