@@ -155,14 +155,6 @@ export const StyledText = styled.div`
   text-align: justify;
   padding-right: 4rem;
   font-family: 'Circular Book';
-  ${({ events }) => events && `
-    padding-right: 2rem;
-    text-align: right;
-    @media ${devices.laptop} {
-      text-align: left;
-    }
-  `
-
   }
 `
 
@@ -387,7 +379,7 @@ export const StyledGridWrapper = styled.div`
 
 export const StyledTextWrapper = styled.div`
   display: block;  
-  padding: 0 0 0 4rem;
+  padding: 0 0 0 2rem;
   text-align: left;
 `
 /**
