@@ -64,12 +64,26 @@ export default function ProjectsSinglePage({ isError }) {
                 <StyledRow>
                     {project?.project_images.length &&
                         project?.project_images?.map(image => (
+                            // <StyledItems key={image.ID}>
+                            //     <StyledImage
+                            //         className="images"
+                            //         draggable="false"
+                            //         src={image.guid}
+                            //         alt="image"
+                            //     />
+                            // </StyledItems>
+
                             <StyledItems key={image.ID}>
-                                <StyledImage
-                                    className="images"
-                                    draggable="false"
+                                <Image
+                                    alt="projects"
                                     src={image.guid}
-                                    alt="image"
+                                    width={300}
+                                    height={300}
+                                    style={{
+                                        width: 'auto',
+                                        height: '100%',
+                                        objectFit: 'contain'
+                                    }}
                                 />
                             </StyledItems>
                         ))}
@@ -98,7 +112,7 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
     const queryClient = new QueryClient();
 
-    await queryClient.fetchQuery([`project-${params.projectId}`], () => getSingleProject(params.projectId));
+    await queryClient.prefetchQuery([`project-${params.projectId}`], () => getSingleProject(params.projectId));
 
     return {
         props: {

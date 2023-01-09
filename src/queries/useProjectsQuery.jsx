@@ -10,7 +10,7 @@ export const getProjects = async () => {
 /**
  * @TODO 在此吐隨機順序，/achive /projects都可以用
  */
-const transformProjects = (data) => data?.reduce((filteredData, project, index) => {
+export const transformProjects = (data) => data?.reduce((filteredData, project, index) => {
     filteredData.push({
         id: project.id,
         index: index,
@@ -31,8 +31,10 @@ export default function useProjectsQuery() {
         queryFn: getProjects,
         refetchOnMount: false,
         // initialData: props.dehydratedState,
-        // serialize data and randomize data in array
+        // serialize data and randomize data in array. 
+        // but randomize causes hydration error. for now we surpress it.
         select: useCallback((data) => transformProjects(data).sort(() => Math.random() - 0.5), []),
+        // select: useCallback((data) => transformProjects(data), []),
         onError: (error) => { throw error }
     })
 

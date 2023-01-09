@@ -6,7 +6,7 @@ import {
 } from '@/styles/styles'
 // import { UpArrow, DownArrow } from '@/components/icons/arrows'
 import { columns, customStyles } from '@/components/table'
-import useProjectsQuery, { getProjects } from '@/queries/useProjectsQuery'
+import useProjectsQuery, { getProjects, transformProjects } from '@/queries/useProjectsQuery'
 import { QueryClient, dehydrate } from '@tanstack/react-query'
 import dynamic from 'next/dynamic'
 import { useState } from 'react';
@@ -18,9 +18,9 @@ const Shader = dynamic(() => import('@/components/canvas/Shader/Shader'), {
     ssr: false,
 })
 
-const Page = () => {
+const Page = ({ projects }) => {
     const router = useRouter()
-    const { projects, isLoading } = useProjectsQuery()
+    const { isLoading } = useProjectsQuery()
     const [projectImage, setProjectImage] = useState('')
 
     const handleRowClicked = target => {
@@ -72,15 +72,16 @@ export default Page
 
 export async function getStaticProps() {
     const queryClient = new QueryClient()
-    await queryClient.prefetchQuery(['projects'], getProjects)
+    const data = await queryClient.fetchQuery(['projects'], getProjects)
+    const sortedData = transformProjects(data).sort(() => Math.random() - 0.5)
     /**
-     * Use dehydrate to dehydrate the query cache and pass it to the page via the dehydratedState prop. 
-     * This is the same prop that the cache will be picked up from in your _app.js
+     * @WANRING Now we are not using our custom hook
      */
     return {
         props: {
             title: 'Archive',
-            dehydratedState: dehydrate(queryClient),
+            // dehydratedState: dehydrate(queryClient),
+            projects: sortedData
         },
         revalidate: 1
     }

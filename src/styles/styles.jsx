@@ -120,7 +120,7 @@ export const StyledMenuUl = styled.ul`
 
 export const StyledMenuInfo = styled.div`
   position: absolute;
-  bottom: 1rem;
+  bottom: 2rem;
   left: 2rem;
 `
 export const StyledCloseButton = styled.button`
@@ -154,9 +154,8 @@ export const StyledText = styled.div`
   line-height: 1.5rem;
   text-align: justify;
   padding-right: 4rem;
+  // margin-bottom: 5rem;
   font-family: 'Circular Book';
-
-
 `
 
 export const StyledLink = styled.a`
@@ -165,7 +164,7 @@ export const StyledLink = styled.a`
 
 export const StyledPages = styled.div`
   position: relative;
-  height:100%;
+    height: calc(100vh - 70px);  
   padding-bottom: 10vh;
   overflow-x: hidden;
   ${({ fixed }) => (fixed ? `overflow-y: hidden;` : `overflow-y: scroll;`)};
@@ -272,6 +271,7 @@ export const StyledRow = styled.div`
   font-size: 5rem;
   text-align: center;
   justify-content: center;
+  align-items: end;
   display: flex;
   flex-wrap: wrap;
   margin-top: 2rem;
@@ -281,7 +281,7 @@ export const StyledRow = styled.div`
 export const StyledImage = styled.img`
   height: 100%;
   width: auto;
-  max-width: 100vw; 
+  max-width: max(60vw, 1000px); 
   object-fit: contain;
 `;
 

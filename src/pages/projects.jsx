@@ -8,20 +8,24 @@ import {
   StyledImage,
   StyledText
 } from '@/styles/styles'
-import useProjectsQuery, { getProjects } from '@/queries/useProjectsQuery'
+import useProjectsQuery, { getProjects, transformProjects } from '@/queries/useProjectsQuery'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useRef } from 'react'
-import { QueryClient, dehydrate } from '@tanstack/react-query'
+import { useEffect, useRef } from 'react'
+import { QueryClient, dehydrate, useQueryClient } from '@tanstack/react-query'
 
 const Shader = dynamic(() => import('@/components/canvas/Shader/Shader'), {
   ssr: false,
 })
 
-const Page = () => {
+const Page = ({ projects }) => {
+  const { isLoading } = useProjectsQuery()
+  // const queryClient = useQueryClient()
+  // useEffect(() => {
+  //   queryClient.setQueryData(['projects'], (data) => data.sort(() => Math.random() - 0.5))
+  // }, [projects])
 
-  const { projects, isLoading } = useProjectsQuery()
   // const [scrollPos, setScrollPos] = useState(0)
   const scrollRef = useRef()
   // useEffect(() => {
@@ -44,7 +48,7 @@ const Page = () => {
       </StyledLoaderContainer>
       :
       <StyledPages ref={scrollRef}>
-        <StyledRow>
+        <StyledRow >
           {
             projects?.map(project => (
               <StyledItems key={project.id} >
@@ -54,6 +58,7 @@ const Page = () => {
                     draggable="false"
                     src={project.image}
                     alt="image"
+
                   />
 
                   <StyledText>
@@ -110,15 +115,17 @@ export default Page
 
 export async function getStaticProps() {
   const queryClient = new QueryClient()
-  await queryClient.prefetchQuery(['projects'], getProjects)
+
+  const data = await queryClient.fetchQuery(['projects'], getProjects)
+  const sortedData = transformProjects(data).sort(() => Math.random() - 0.5)
   /**
-   * Use dehydrate to dehydrate the query cache and pass it to the page via the dehydratedState prop. 
-   * This is the same prop that the cache will be picked up from in your _app.js
+   * @WANRING Now we are not using our custom hook
    */
   return {
     props: {
       title: 'Projects',
-      dehydratedState: dehydrate(queryClient),
+      // dehydratedState: dehydrate(queryClient),
+      projects: sortedData
     },
     revalidate: 1
   }
