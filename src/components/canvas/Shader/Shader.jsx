@@ -55,10 +55,10 @@ const Shader = (props) => {
     if (meshRef.current) {
       meshRef.current.rotation.x = meshRef.current.rotation.y += 0.01
     }
-    if (meshRef.current.material) {
-      meshRef.current.material.uniforms.time.value +=
-        Math.sin(delta / 2) * Math.cos(delta / 2)
-    }
+    // if (meshRef.current.material) {
+    //   meshRef.current.material.uniforms.time.value +=
+    //     Math.sin(delta / 2) * Math.cos(delta / 2)
+    // }
   })
 
   /**
