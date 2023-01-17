@@ -11,21 +11,21 @@ import { useMeshRefStore } from '@/helpers/store'
 import useViewport from '@/utils/useViewport'
 import gsap from 'gsap'
 
-const ColorShiftMaterial = shaderMaterial(
-  {
-    time: 0,
-    color: new THREE.Color(0.05, 0.0, 0.025),
-  },
-  vertex,
-  fragment
-)
+// const ColorShiftMaterial = shaderMaterial(
+//   {
+//     time: 0,
+//     color: new THREE.Color(0.05, 0.0, 0.025),
+//   },
+//   vertex,
+//   fragment
+// )
 
-// This is the 🔑 that HMR will renew if this file is edited
-// It works for THREE.ShaderMaterial as well as for drei/shaderMaterial
-// @ts-ignore
-ColorShiftMaterial.key = THREE.MathUtils.generateUUID()
+// // This is the 🔑 that HMR will renew if this file is edited
+// // It works for THREE.ShaderMaterial as well as for drei/shaderMaterial
+// // @ts-ignore
+// ColorShiftMaterial.key = THREE.MathUtils.generateUUID()
 
-extend({ ColorShiftMaterial })
+// extend({ ColorShiftMaterial })
 
 const toSideAnimation = ({ mesh, viewport }) => {
   gsap.fromTo(mesh.current.position, {
@@ -84,7 +84,7 @@ const Shader = (props) => {
     >
       <boxBufferGeometry args={[1, 1, 1]} />
       {/* @ts-ignore */}
-      <colorShiftMaterial key={ColorShiftMaterial.key} time={3} />
+      {/* <colorShiftMaterial key={ColorShiftMaterial.key} time={3} /> */}
     </mesh>
   )
 }
