@@ -114,7 +114,8 @@ const Page = ({ projects }) => {
           {
             projects?.map(project => (
               <StyledItems key={project.id} >
-                <Link href={`/projects/${project.id}`}>
+                <Link href={`${process.env.NODE_ENV !== 'production'
+                  ? 'http://localhost:3001' : NEXT_PUBLIC_SITE_URL}/projects/${project.id}`}>
                   <StyledImage
                     className="images"
                     draggable="false"
