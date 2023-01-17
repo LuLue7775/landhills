@@ -18,103 +18,104 @@ import { useRouter } from 'next/router'
 
 export default function ProjectsSinglePage({ project }) {
     const { query: { projectId } } = useRouter()
-    const { isLoading } = useSingleProjectQuery(projectId)
+    // const { isLoading } = useSingleProjectQuery(projectId)
 
     return (
-        isLoading ?
-            <StyledLoaderContainer>
-                <StyledLoader />
-            </StyledLoaderContainer>
-            :
-            <StyledPages>
-                <StyledProjectGrid>
+        // isLoading ?
+        //     <StyledLoaderContainer>
+        //         <StyledLoader />
+        //     </StyledLoaderContainer>
+        //     :
+        <StyledPages>
+            <StyledProjectGrid>
 
-                    <StyledProjectCoverImageContainer>
-                        {project?.project_cover_image &&
-                            // <Image
-                            //     className="image"
-                            //     draggable="false"
-                            //     src={project.project_cover_image?.guid}
-                            //     alt="image"
-                            //     height={1920}
-                            //     width={1080}
-                            //     sizes="100vw"
-                            //     style={{
-                            //         width: 'auto',
-                            //         height: '100%',
-                            //         objectFit: "contain"
-                            //     }}
-                            // />
-                            <StyledImage
-                                className="images"
-                                draggable="false"
-                                src={project.project_cover_image?.guid}
-                                alt="image"
+                <StyledProjectCoverImageContainer>
+                    {project?.project_cover_image &&
+                        // <Image
+                        //     className="image"
+                        //     draggable="false"
+                        //     src={project.project_cover_image?.guid}
+                        //     alt="image"
+                        //     height={1920}
+                        //     width={1080}
+                        //     sizes="100vw"
+                        //     style={{
+                        //         width: 'auto',
+                        //         height: '100%',
+                        //         objectFit: "contain"
+                        //     }}
+                        // />
+                        <StyledImage
+                            className="images"
+                            draggable="false"
+                            src={project.project_cover_image?.guid}
+                            alt="image"
+                        />
+                    }
+                </StyledProjectCoverImageContainer>
+                <StyledProjectContent>
+                    <StyledProjectTitle> {project?.title?.rendered} </StyledProjectTitle>
+                    <StyledText dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(project?.project_category[0]?.name) }} />
+                    <StyledText dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(project?.date) }} />
+                    <StyledText dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(project?.content?.rendered) }} />
+                </StyledProjectContent>
+            </StyledProjectGrid>
+
+            <StyledRow>
+                {project?.project_images.length &&
+                    project?.project_images?.map(image => (
+                        // <StyledItems key={image.ID}>
+                        //     <StyledImage
+                        //         className="images"
+                        //         draggable="false"
+                        //         src={image.guid}
+                        //         alt="image"
+                        //     />
+                        // </StyledItems>
+
+                        <StyledItems key={image.ID}>
+                            <Image
+                                alt="projects"
+                                src={image.guid}
+                                width={300}
+                                height={300}
+                                style={{
+                                    width: 'auto',
+                                    height: '100%',
+                                    objectFit: 'contain'
+                                }}
                             />
-                        }
-                    </StyledProjectCoverImageContainer>
-                    <StyledProjectContent>
-                        <StyledProjectTitle> {project?.title?.rendered} </StyledProjectTitle>
-                        <StyledText dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(project?.project_category[0]?.name) }} />
-                        <StyledText dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(project?.date) }} />
-                        <StyledText dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(project?.content?.rendered) }} />
-                    </StyledProjectContent>
-                </StyledProjectGrid>
-
-                <StyledRow>
-                    {project?.project_images.length &&
-                        project?.project_images?.map(image => (
-                            // <StyledItems key={image.ID}>
-                            //     <StyledImage
-                            //         className="images"
-                            //         draggable="false"
-                            //         src={image.guid}
-                            //         alt="image"
-                            //     />
-                            // </StyledItems>
-
-                            <StyledItems key={image.ID}>
-                                <Image
-                                    alt="projects"
-                                    src={image.guid}
-                                    width={300}
-                                    height={300}
-                                    style={{
-                                        width: 'auto',
-                                        height: '100%',
-                                        objectFit: 'contain'
-                                    }}
-                                />
-                            </StyledItems>
-                        ))}
-                </StyledRow>
-            </StyledPages>
+                        </StyledItems>
+                    ))}
+            </StyledRow>
+        </StyledPages>
     )
 }
 
 export async function getStaticPaths() {
 
-    // const data = await getProjects()
-    // const idArr = data?.reduce((filteredIdArr, data) => {
-    //     filteredIdArr.push({
-    //         params: { projectId: `${data.id}` }
-    //     })
-    //     return filteredIdArr
-    // }, [])
-
+    const data = await getProjects()
+    const idArr = data?.reduce((filteredIdArr, data) => {
+        filteredIdArr.push({
+            params: { projectId: `${data.id}` }
+        })
+        return filteredIdArr
+    }, [])
+    // console.log(idArr)
     return {
-        paths: [
-            { params: { projectId: '5164' } },
-            { params: { projectId: '5163' } },
-            { params: { projectId: '5162' } },
-            { params: { projectId: '5161' } },
-            { params: { projectId: '5160' } },
-            { params: { projectId: '5159' } },
-            { params: { projectId: '5158' } },
-            { params: { projectId: '5146' } },
-            { params: { projectId: '5144' } },
-            { params: { projectId: '5143' } }
-        ],
+        // paths: [
+        //     { params: { projectId: '5164' } },
+        //     { params: { projectId: '5163' } },
+        //     { params: { projectId: '5162' } },
+        //     { params: { projectId: '5161' } },
+        //     { params: { projectId: '5160' } },
+        //     { params: { projectId: '5159' } },
+        //     { params: { projectId: '5158' } },
+        //     { params: { projectId: '5146' } },
+        //     { params: { projectId: '5144' } },
+        //     { params: { projectId: '5143' } }
+        // ],
+        paths: idArr,
         fallback: 'blocking'
     }
 }
@@ -123,13 +124,16 @@ export async function getStaticPaths() {
  * either prefetch or fetch with ISR
  */
 export async function getStaticProps({ params }) {
-    const queryClient = new QueryClient();
+    // const queryClient = new QueryClient();
 
+    // const project = await queryClient.fetchQuery({
+    //     queryKey: [`projects`, params.projectId],
+    //     queryFn: async () => await getSingleProject(params.projectId)
+    // })
     // await queryClient.prefetchQuery([`projects`, params.projectId], () => getSingleProject(params.projectId));
-    const project = await queryClient.fetchQuery({
-        queryKey: [`projects`, params.projectId],
-        queryFn: async () => await getSingleProject(params.projectId)
-    })
+
+    const data = await fetch(`https://landhills.co/wp-json/wp/v2/projects/${params.projectId}`)
+    const project = await data.json()
 
     return {
         props: {

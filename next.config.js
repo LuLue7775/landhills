@@ -45,12 +45,12 @@ nextConfig.images = {
 }
 
 // manage i18n
-if (process.env.EXPORT !== 'true') {
-  nextConfig.i18n = {
-    locales: ['en', 'jp'],
-    defaultLocale: 'en',
-  }
-}
+// if (process.env.EXPORT !== 'true') {
+//   nextConfig.i18n = {
+//     locales: ['en', 'jp'],
+//     defaultLocale: 'en',
+//   }
+// }
 
 const KEYS_TO_OMIT = [
   'webpackDevMiddleware',
