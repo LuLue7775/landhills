@@ -103,19 +103,19 @@ export async function getStaticPaths() {
     }, [])
     // console.log(idArr)
     return {
-        // paths: [
-        //     { params: { projectId: '5164' } },
-        //     { params: { projectId: '5163' } },
-        //     { params: { projectId: '5162' } },
-        //     { params: { projectId: '5161' } },
-        //     { params: { projectId: '5160' } },
-        //     { params: { projectId: '5159' } },
-        //     { params: { projectId: '5158' } },
-        //     { params: { projectId: '5146' } },
-        //     { params: { projectId: '5144' } },
-        //     { params: { projectId: '5143' } }
-        // ],
-        paths: idArr,
+        paths: [
+            { params: { projectId: '5164' } },
+            { params: { projectId: '5163' } },
+            { params: { projectId: '5162' } },
+            { params: { projectId: '5161' } },
+            { params: { projectId: '5160' } },
+            { params: { projectId: '5159' } },
+            { params: { projectId: '5158' } },
+            { params: { projectId: '5146' } },
+            { params: { projectId: '5144' } },
+            { params: { projectId: '5143' } }
+        ],
+        // paths: idArr || [{ params: { projectId: '5164' } }],
         fallback: 'blocking'
     }
 }
