@@ -1,4 +1,4 @@
-import * as THREE from 'three'
+// import * as THREE from 'three'
 import { useFrame, extend } from '@react-three/fiber'
 import { useRef, useEffect } from 'react'
 import useStore from '@/helpers/store'
