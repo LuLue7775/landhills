@@ -16,9 +16,9 @@ import Image from 'next/image'
 import { getProjects, getSingleProject, useSingleProjectQuery } from '@/queries/useProjectsQuery'
 import { useRouter } from 'next/router'
 
-export default function ProjectsSinglePage({ project }) {
+export default function ProjectsSinglePage(props) {
     const { query: { projectId } } = useRouter()
-    // const { isLoading } = useSingleProjectQuery(projectId)
+    const { project, isLoading } = useSingleProjectQuery(projectId, props)
 
     return (
         // isLoading ?
@@ -93,30 +93,35 @@ export default function ProjectsSinglePage({ project }) {
 }
 
 export async function getStaticPaths() {
+    try {
 
-    const data = await getProjects()
-    const idArr = data?.reduce((filteredIdArr, data) => {
-        filteredIdArr.push({
-            params: { projectId: `${data.id}` }
-        })
-        return filteredIdArr
-    }, [])
-    // console.log(idArr)
-    return {
-        paths: [
-            { params: { projectId: '5164' } },
-            { params: { projectId: '5163' } },
-            { params: { projectId: '5162' } },
-            { params: { projectId: '5161' } },
-            { params: { projectId: '5160' } },
-            { params: { projectId: '5159' } },
-            { params: { projectId: '5158' } },
-            { params: { projectId: '5146' } },
-            { params: { projectId: '5144' } },
-            { params: { projectId: '5143' } }
-        ],
-        // paths: idArr || [{ params: { projectId: '5164' } }],
-        fallback: 'blocking'
+        const data = await getProjects()
+        const paths = await data?.reduce((filteredIdArr, data) => {
+            filteredIdArr.push({
+                params: { projectId: `${data.id}` }
+            })
+            return filteredIdArr
+        }, [])
+        // console.log(idArr)
+
+        return {
+            // paths: [
+            //     { params: { projectId: '5164' } },
+            //     { params: { projectId: '5163' } },
+            //     { params: { projectId: '5162' } },
+            //     { params: { projectId: '5161' } },
+            //     { params: { projectId: '5160' } },
+            //     { params: { projectId: '5159' } },
+            //     { params: { projectId: '5158' } },
+            //     { params: { projectId: '5146' } },
+            //     { params: { projectId: '5144' } },
+            //     { params: { projectId: '5143' } }
+            // ],
+            paths,
+            fallback: true
+        }
+    } catch (e) {
+        console.log({ e })
     }
 }
 
@@ -131,7 +136,6 @@ export async function getStaticProps({ params }) {
     //     queryFn: async () => await getSingleProject(params.projectId)
     // })
     // await queryClient.prefetchQuery([`projects`, params.projectId], () => getSingleProject(params.projectId));
-
     const data = await fetch(`https://landhills.co/wp-json/wp/v2/projects/${params.projectId}`)
     const project = await data.json()
 
@@ -143,4 +147,5 @@ export async function getStaticProps({ params }) {
         revalidate: 1
 
     }
+
 }
