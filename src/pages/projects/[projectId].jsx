@@ -18,7 +18,7 @@ import { useRouter } from 'next/router'
 
 export default function ProjectsSinglePage({ project }) {
     // const { query: { projectId } } = useRouter()
-    // const { project, isLoading } = useSingleProjectQuery(projectId, props)
+    // const { project, isLoading } = useSingleProjectQuery(projectId)
 
     return (
         // isLoading ?

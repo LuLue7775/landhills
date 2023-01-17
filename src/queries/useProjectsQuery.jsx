@@ -49,11 +49,10 @@ export const getSingleProject = async (projectId) => {
     return await client(`projects/${projectId}`)
 }
 
-export function useSingleProjectQuery(projectId, props) {
+export function useSingleProjectQuery(projectId,) {
     const { data: project, error, isLoading, isError, isSuccess } = useQuery({
         queryKey: [`projects`, projectId],
         queryFn: async () => await getSingleProject(projectId),
-        initialData: props.project,
         onError: (error) => { throw error }
     });
 
