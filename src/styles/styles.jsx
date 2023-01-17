@@ -195,7 +195,7 @@ export const StyledSwipeHandler = styled.div`
 export const StyledCarouselWrapper = styled.div`
   width: 100%;
   height: auto;
-  max-height: 40vh;
+  // max-height: 40vh;
   overflow: hidden;
 `;
 
