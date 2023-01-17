@@ -172,10 +172,12 @@ Page.r3f = (props) => (
 export default Page
 
 export async function getStaticProps() {
-  const queryClient = new QueryClient()
+  // const queryClient = new QueryClient()
+  // const data = await queryClient.fetchQuery(['projects'], getProjects)
+  const data = await fetch(`https://landhills.co/wp-json/wp/v2/projects`)
+  const project = await data.json()
 
-  const data = await queryClient.fetchQuery(['projects'], getProjects)
-  const sortedData = transformProjects(data).sort(() => Math.random() - 0.5)
+  const sortedData = transformProjects(project).sort(() => Math.random() - 0.5)
   /**
    * @WANRING Now we are not using our custom hook
    */
