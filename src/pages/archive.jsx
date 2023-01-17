@@ -27,9 +27,8 @@ const Page = ({ projects }) => {
 
     const handleRowClicked = target => {
         router.push(
-            process.env.NODE_ENV === 'development'
-                ? `http://localhost:3000/projects/${target.id}`
-                : `https://landhills.netlify.app/projects/${target.id}`
+            `${process.env.NODE_ENV !== 'production'
+                ? 'http://localhost:3001' : process.env.NEXT_PUBLIC_SITE_URL}/projects/${target.id}`
         )
     }
 

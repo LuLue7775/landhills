@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query'
 import { client } from './api-client'
 
 export const getProjects = async () => {
+
     return await client(`projects`)
 }
 
