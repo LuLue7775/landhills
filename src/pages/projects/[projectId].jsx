@@ -16,9 +16,9 @@ import Image from 'next/image'
 import { getProjects, getSingleProject, useSingleProjectQuery } from '@/queries/useProjectsQuery'
 import { useRouter } from 'next/router'
 
-export default function ProjectsSinglePage({ isError }) {
+export default function ProjectsSinglePage({ project }) {
     const { query: { projectId } } = useRouter()
-    const { project, isLoading } = useSingleProjectQuery(projectId)
+    const { isLoading } = useSingleProjectQuery(projectId)
 
     return (
         isLoading ?
@@ -119,15 +119,22 @@ export async function getStaticPaths() {
     }
 }
 
-
+/**
+ * either prefetch or fetch with ISR
+ */
 export async function getStaticProps({ params }) {
     const queryClient = new QueryClient();
 
-    await queryClient.prefetchQuery([`project-${params.projectId}`], () => getSingleProject(params.projectId));
+    // await queryClient.prefetchQuery([`projects`, params.projectId], () => getSingleProject(params.projectId));
+    const project = await queryClient.fetchQuery({
+        queryKey: [`projects`, params.projectId],
+        queryFn: async () => await getSingleProject(params.projectId)
+    })
 
     return {
         props: {
-            dehydratedState: dehydrate(queryClient),
+            // dehydratedState: dehydrate(queryClient),
+            project
         },
         revalidate: 1
 
