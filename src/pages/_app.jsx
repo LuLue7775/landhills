@@ -47,7 +47,7 @@ function App({ Component, pageProps = { title: 'index' } }) {
           {Component?.r3f &&
             <LCanvas> {Component.r3f(pageProps)} </LCanvas>}
 
-          <ReactQueryDevtools initialIsOpen={false} position='bottom-right' />
+          {/* <ReactQueryDevtools initialIsOpen={false} position='bottom-right' /> */}
         </Hydrate>
       </QueryClientProvider>
     </>

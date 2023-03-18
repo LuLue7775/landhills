@@ -51,7 +51,8 @@ const addNewPosToQueue = ({ animationQueueRef, viewport }) => {
 }
 
 const Page = ({ projects }) => {
-  const { isLoading } = useProjectsQuery()
+  /** @TODO useProjectsQuery unable to fetch */
+  // const { isLoading } = useProjectsQuery()
   // const queryClient = useQueryClient()
   // useEffect(() => {
   //   queryClient.setQueryData(['projects'], (data) => data.sort(() => Math.random() - 0.5))
@@ -78,7 +79,8 @@ const Page = ({ projects }) => {
 
     scrollPos?.addEventListener('scroll', handleScrollStopped)
     return () => scrollPos?.removeEventListener('scroll', handleScrollStopped)
-  }, [isLoading])
+    // }, [isLoading])
+  }, [])
 
   const viewport = useViewport()
   const { meshRef } = useMeshRefStore()
@@ -104,34 +106,34 @@ const Page = ({ projects }) => {
 
 
   return (
-    isLoading ?
-      <StyledLoaderContainer>
-        <StyledLoader />
-      </StyledLoaderContainer>
-      :
-      <StyledPages ref={scrollRef}>
-        <StyledRow >
-          {
-            projects?.map(project => (
-              <StyledItems key={project.id} >
-                <Link href={`${process.env.NODE_ENV !== 'production'
-                  ? 'http://localhost:3001' : process.env.NEXT_PUBLIC_SITE_URL}/projects/${project.id}`}>
-                  <StyledImage
-                    className="images"
-                    draggable="false"
-                    src={project.image}
-                    alt="image"
-                  />
-                  <StyledImageInfo>
-                    <div> {project.title} </div>
-                    <div> {project.no} </div>
-                  </StyledImageInfo>
-                </Link>
-              </StyledItems>
-            ))
-          }
-        </StyledRow>
-      </StyledPages>
+    // isLoading ?
+    //   <StyledLoaderContainer>
+    //     <StyledLoader />
+    //   </StyledLoaderContainer>
+    //   :
+    <StyledPages ref={scrollRef}>
+      <StyledRow >
+        {
+          projects?.map(project => (
+            <StyledItems key={project.id} >
+              <Link href={`${process.env.NODE_ENV !== 'production'
+                ? 'http://localhost:3000' : process.env.NEXT_PUBLIC_SITE_URL}/projects/${project.id}`}>
+                <StyledImage
+                  className="images"
+                  draggable="false"
+                  src={project.image}
+                  alt="image"
+                />
+                <StyledImageInfo>
+                  <div> {project.title} </div>
+                  <div> {project.no} </div>
+                </StyledImageInfo>
+              </Link>
+            </StyledItems>
+          ))
+        }
+      </StyledRow>
+    </StyledPages>
 
     // <StyledPages ref={scrollRef}>
     //   <StyledRow>
@@ -171,6 +173,10 @@ Page.r3f = (props) => (
 
 export default Page
 
+/**
+ * either prefetch or fetch with ISR
+ * @TODO make this react-query again
+ */
 export async function getStaticProps() {
   // const queryClient = new QueryClient()
   // const data = await queryClient.fetchQuery(['projects'], getProjects)

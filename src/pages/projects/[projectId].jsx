@@ -115,8 +115,10 @@ export async function getStaticPaths() {
 
 /**
  * either prefetch or fetch with ISR
+ * @TODO make this react-query again
  */
 export async function getStaticProps({ params }) {
+    console.log(params)
     // const queryClient = new QueryClient();
 
     // const project = await queryClient.fetchQuery({

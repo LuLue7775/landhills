@@ -138,7 +138,8 @@ export const StyledNav = styled.div`
   padding: 2rem;
   display: flex;
   justify-content: space-between;
-`
+  
+  `
 
 export const StyledTextMedium = styled.div`
   padding: 0 0 0 2rem;
@@ -164,7 +165,7 @@ export const StyledLink = styled.a`
 
 export const StyledPages = styled.div`
   position: relative;
-    height: calc(100vh - 70px);  
+  height: calc(100vh - 70px);  
   padding-bottom: 10vh;
   overflow-x: hidden;
   ${({ fixed }) => (fixed ? `overflow-y: hidden;` : `overflow-y: scroll;`)};
@@ -183,6 +184,8 @@ export const StyledFooter = styled.div`
   bottom: 0;
   right: 0;
   margin: 2rem;
+  z-index: 10;
+  font-family: 'Circular Book';
 `
 
 
@@ -269,14 +272,14 @@ export const StyledItems = styled.div`
 
 export const StyledRow = styled.div`
   position: relative;
+padding: 0 2rem;
   font-size: 5rem;
   text-align: center;
+  display: flex;
   justify-content: center;
   align-items: end;
-  display: flex;
   flex-wrap: wrap;
-  margin-top: 2rem;
-
+  text-algin: center;
 `;
 
 export const StyledImage = styled.img`

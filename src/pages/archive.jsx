@@ -22,13 +22,14 @@ const Shader = dynamic(() => import('@/components/canvas/Shader/Shader'), {
 
 const Page = ({ projects }) => {
     const router = useRouter()
-    const { isLoading } = useProjectsQuery()
+    /** @TODO useProjectsQuery unable to fetch */
+    // const { isLoading } = useProjectsQuery()
     const [projectImage, setProjectImage] = useState('')
 
     const handleRowClicked = target => {
         router.push(
             `${process.env.NODE_ENV !== 'production'
-                ? 'http://localhost:3001' : process.env.NEXT_PUBLIC_SITE_URL}/projects/${target.id}`
+                ? 'http://localhost:3000' : process.env.NEXT_PUBLIC_SITE_URL}/projects/${target.id}`
         )
     }
 
@@ -38,34 +39,34 @@ const Page = ({ projects }) => {
     const viewport = useViewport()
 
     return (
-        isLoading ?
-            <StyledLoaderContainer>
-                <StyledLoader />
-            </StyledLoaderContainer>
-            :
-            <StyledPages>
-                <StyledTableWrapper>
-                    <DataTable
-                        columns={columns}
-                        data={projects}
-                        highlightOnHover={true}
-                        onRowClicked={handleRowClicked}
-                        onRowMouseEnter={handleRowMouseEnter}
-                        onRowMouseLeave={handleRowMouseLeave}
-                        responsive={true}
-                        striped={true}
-                        customStyles={customStyles}
-                        expandableRows={viewport === 'tablet' || viewport === 'mobile'}
-                        expandableRowsComponent={ExpandedComponent}
-                    />
+        // isLoading ?
+        //     <StyledLoaderContainer>
+        //         <StyledLoader />
+        //     </StyledLoaderContainer>
+        //     :
+        <StyledPages>
+            <StyledTableWrapper>
+                <DataTable
+                    columns={columns}
+                    data={projects}
+                    highlightOnHover={true}
+                    onRowClicked={handleRowClicked}
+                    onRowMouseEnter={handleRowMouseEnter}
+                    onRowMouseLeave={handleRowMouseLeave}
+                    responsive={true}
+                    striped={true}
+                    customStyles={customStyles}
+                    expandableRows={viewport === 'tablet' || viewport === 'mobile'}
+                    expandableRowsComponent={ExpandedComponent}
+                />
 
-                    {viewport !== 'tablet' && viewport !== 'mobile' &&
-                        projectImage &&
-                        <ArchiveImage projectImage={projectImage} />
-                    }
-                </StyledTableWrapper>
-                <div className='block'> </div>
-            </StyledPages>
+                {viewport !== 'tablet' && viewport !== 'mobile' &&
+                    projectImage &&
+                    <ArchiveImage projectImage={projectImage} />
+                }
+            </StyledTableWrapper>
+            <div className='block'> </div>
+        </StyledPages>
     )
 }
 
@@ -77,6 +78,10 @@ Page.r3f = (props) => (
 
 export default Page
 
+/**
+ * either prefetch or fetch with ISR
+ * @TODO make this react-query again
+ */
 export async function getStaticProps() {
     // const queryClient = new QueryClient()
     // const data = await queryClient.fetchQuery(['projects'], getProjects)
