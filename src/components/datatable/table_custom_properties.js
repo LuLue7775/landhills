@@ -15,6 +15,7 @@ export const columns = [
         right: true,
         hide: 'md'
     },
+    { hide: 'md' },
     {
         name: 'Type',
         selector: row => row.type,
@@ -40,23 +41,29 @@ export const columns = [
 export const customStyles = {
     rows: {
         style: {
-            minHeight: '4rem', // override the row height
+            minHeight: '39px', // override the row height
             cursor: 'pointer',
             fontFamily: 'Circular Book',
         },
     },
+    headRow: {
+        style: {
+            minHeight: '39px', // override the row height
+        }
+    },
     headCells: {
         style: {
-            paddingLeft: '2rem', // override the cell padding for head cells
-            paddingRight: '2rem',
+            margin: '0',
+            paddingLeft: '0rem', // override the cell padding for head cells
+            paddingRight: '0rem',
             fontFamily: 'Circular Medium'
         },
 
     },
     cells: {
         style: {
-            paddingLeft: '2rem', // override the cell padding for data cells
-            paddingRight: '2rem',
+            paddingLeft: '0rem', // override the cell padding for data cells
+            paddingRight: '0rem',
 
         },
     },

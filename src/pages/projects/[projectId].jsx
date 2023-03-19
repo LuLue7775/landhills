@@ -28,23 +28,14 @@ export default function ProjectsSinglePage({ project }) {
         //     :
         <StyledPages>
             <StyledProjectGrid>
-
+                <StyledProjectContent>
+                    <StyledProjectTitle> {project?.title?.rendered} </StyledProjectTitle>
+                    <StyledText dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(project?.project_category[0]?.name) }} />
+                    <StyledText dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(project?.date) }} />
+                    <StyledText dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(project?.content?.rendered) }} />
+                </StyledProjectContent>
                 <StyledProjectCoverImageContainer>
                     {project?.project_cover_image &&
-                        // <Image
-                        //     className="image"
-                        //     draggable="false"
-                        //     src={project.project_cover_image?.guid}
-                        //     alt="image"
-                        //     height={1920}
-                        //     width={1080}
-                        //     sizes="100vw"
-                        //     style={{
-                        //         width: 'auto',
-                        //         height: '100%',
-                        //         objectFit: "contain"
-                        //     }}
-                        // />
                         <StyledImage
                             className="images"
                             draggable="false"
@@ -53,39 +44,33 @@ export default function ProjectsSinglePage({ project }) {
                         />
                     }
                 </StyledProjectCoverImageContainer>
-                <StyledProjectContent>
-                    <StyledProjectTitle> {project?.title?.rendered} </StyledProjectTitle>
-                    <StyledText dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(project?.project_category[0]?.name) }} />
-                    <StyledText dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(project?.date) }} />
-                    <StyledText dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(project?.content?.rendered) }} />
-                </StyledProjectContent>
             </StyledProjectGrid>
 
             <StyledRow>
                 {project?.project_images.length &&
                     project?.project_images?.map(image => (
-                        // <StyledItems key={image.ID}>
-                        //     <StyledImage
-                        //         className="images"
-                        //         draggable="false"
-                        //         src={image.guid}
-                        //         alt="image"
-                        //     />
-                        // </StyledItems>
-
                         <StyledItems key={image.ID}>
-                            <Image
-                                alt="projects"
+                            <StyledImage
+                                className="images"
+                                draggable="false"
                                 src={image.guid}
-                                width={300}
-                                height={300}
-                                style={{
-                                    width: 'auto',
-                                    height: '100%',
-                                    objectFit: 'contain'
-                                }}
+                                alt="image"
                             />
                         </StyledItems>
+
+                        // <StyledItems key={image.ID}>
+                        //     <Image
+                        //         alt="projects"
+                        //         src={image.guid}
+                        //         width={300}
+                        //         height={300}
+                        //         style={{
+                        //             width: 'auto',
+                        //             height: '100%',
+                        //             objectFit: 'contain'
+                        //         }}
+                        //     />
+                        // </StyledItems>
                     ))}
             </StyledRow>
         </StyledPages>

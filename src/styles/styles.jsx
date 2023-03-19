@@ -56,6 +56,12 @@ export const GlobalStyle = createGlobalStyle`
   p {
     margin: 0;
     font-size:1rem;
+   letter-spacing: 1px;
+  }
+  h2 {
+    letter-spacing: 2px;
+    font-size: 2rem;
+    line-height: 3rem;
   }
 
   a {
@@ -135,17 +141,23 @@ export const StyledCloseButton = styled.button`
 `
 
 export const StyledNav = styled.div`
+  position: fixed;
+  top:0;
+  z-index: 10;
+  width: 100%;
   padding: 2rem;
   display: flex;
   justify-content: space-between;
-  
-  `
+`
 
 export const StyledTextMedium = styled.div`
-  padding: 0 0 0 2rem;
-  font-size: 1.5rem;
-  line-height: 3rem;
-  font-family: Circular Medium;
+ position: absolute;
+ bottom: 0;
+ z-index:10;
+ padding: 0 0 2rem 2rem;
+ font-size: 2rem;
+ line-height: 2rem;
+ font-family: Circular Medium;
 
 `
 
@@ -154,7 +166,6 @@ export const StyledText = styled.div`
   font-size: 1rem;
   line-height: 1.5rem;
   text-align: justify;
-  padding-right: 4rem;
   font-family: 'Circular Book';
   }
 `
@@ -165,8 +176,10 @@ export const StyledLink = styled.a`
 
 export const StyledPages = styled.div`
   position: relative;
-  height: calc(100vh - 70px);  
-  padding-bottom: 10vh;
+    // height: calc(100vh - 70px);  
+    height: 100dvh;
+    padding-top: 70px;
+  // padding-bottom: 10vh;
   overflow-x: hidden;
   ${({ fixed }) => (fixed ? `overflow-y: hidden;` : `overflow-y: scroll;`)};
 `;
@@ -184,8 +197,6 @@ export const StyledFooter = styled.div`
   bottom: 0;
   right: 0;
   margin: 2rem;
-  z-index: 10;
-  font-family: 'Circular Book';
 `
 
 
@@ -203,13 +214,25 @@ export const StyledCarouselWrapper = styled.div`
 `;
 
 export const StyledCarouselContainer = styled.div`
+
   display: flex;
-  transition: ${(props) => (props.sliding ? "none" : "transform 0.5s ease")};
-  transform: ${(props) => {
-    if (!props.sliding) return "translateX(0%)";
-    if (props.dir === 'PREV') return "translateX(-100%)";
-    return "translateX(100%)";
+    transition: ${(props) => (props.sliding ? "none" : "opacity 0.5s ease")};
+    opacity: ${(props) => {
+    if (!props.sliding) return "1";
+    if (props.dir === 'PREV') return "0";
+    return "0";
   }};
+
+  ${(props) => (props.homepage ? `
+    position: absolute;
+    transform: translate(0, -50%);
+    top: 50%;
+  `: `
+    position: relative;
+  `
+  )}
+
+
 `;
 
 export const StyledCarouselSlot = styled.div`
@@ -219,11 +242,12 @@ export const StyledCarouselSlot = styled.div`
   align-items: center;  
   flex: 1 0 100%;
   flex-basis: 100%;
-  height: min(60vh, 550px);
+  height: 100%;
   margin-right: 20px;
   order: ${(props) => props.order};
 
-
+  justify-content: start;
+  align-items:start;
 `;
 
 export const StyledSlideButtonContainer = styled.div`
@@ -266,20 +290,20 @@ export const StyledItems = styled.div`
   max-width: 90vw;
   margin: 1rem;
   overflow: hidden;
+  padding-bottom: 1.5rem;
 `;
 
 // ========= non-next/image version 
 
 export const StyledRow = styled.div`
   position: relative;
-padding: 0 2rem;
   font-size: 5rem;
   text-align: center;
-  display: flex;
   justify-content: center;
   align-items: end;
+  display: flex;
   flex-wrap: wrap;
-  text-algin: center;
+
 `;
 
 export const StyledImage = styled.img`
@@ -287,6 +311,7 @@ export const StyledImage = styled.img`
   width: auto;
   max-width: min(80vw, 1000px); 
   object-fit: contain;
+  
 `;
 
 // ========= next/image version 
@@ -300,9 +325,12 @@ export const StyledImage = styled.img`
 
 
 export const StyledImageInfo = styled.div`
-  font-family: 'Circular Medium';
-  font-size: 1.3rem;
+  font-family: 'Circular Book';
+  font-size: 1rem;
   text-align: start;
+  position: absolute;
+  bottom: 0;
+  margin-top: 2rem;
 `
 
 /**
@@ -316,38 +344,23 @@ export const StyledSection = styled.div`
   margin-bottom: 100px;
 
 `;
-
-export const StyledCoverSection = styled.div`
+export const StyledObject = styled.div`
   position: relative;
   height: auto;
-  max-width: 80%;
-  margin-bottom: 10px;
+  ${({ object_top }) => `margin-top: ${object_top}px`};
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
 `;
 
 export const StyledObjectContent = styled.div`
-  width: 100vw;
+${({ object_width }) => `width: ${object_width}px`};
   text-align: justify;
-  padding: 10vh 8vw;
   font-family: Circular Medium;
   font-size: 1.2rem;
   line-height: 2rem;
-`;
-export const StyledObjectDisplayCols = styled.div`
-  position: relative;
-  width: 100vw;
-  margin-bottom: 10vh;
-  padding-left: 2rem;
-  @media ${devices.laptop} {
-    display: flex;
-    justify-content: center;
-  }
+
 `;
 
-export const StyledObjectCol = styled.div`
-  width: 350px;
-  height: auto;
-  margin: 10px;
-`
 
 /**
  * Achive
@@ -355,16 +368,17 @@ export const StyledObjectCol = styled.div`
 export const StyledTableWrapper = styled.div`
   position: relative;
   height: auto;
-  width: 100vw;
-  margin-bottom: 100px;
+  width: calc(100% - 4rem);
+  margin: 0 2rem 100px 2rem;
+  border-top: 1px solid #00000050;
 `
 export const StyledImageWrapper = styled.div`
   position: absolute;
-  left: 20vw;
+  left: calc(25vw - 2rem);
   top: -100px;
   transform: ${({ mouseY }) => `translateY(${mouseY}px)`};
-  height: 200px;
-  width: 200px;
+  height: auto;
+  width: 250px;
   pointer-events: none;
 `
 
@@ -384,7 +398,7 @@ export const StyledGridWrapper = styled.div`
   position: relative;
   @media ${devices.laptop} {
       display: grid;
-      grid-template-columns: 2fr 2fr 2fr 1fr;
+      grid-template-columns: 2fr 2fr 2fr 2fr;
     }
 `
 
@@ -421,9 +435,14 @@ export const StyledProjectContent = styled.div`
   position: relative;
   height: auto;
   width: 100%;
-  margin: 6rem 2rem;
+  margin: 4rem 2rem;
   overflow-y: scroll;
   overflow-x: hidden;
+  ::-webkit-scrollbar {
+    width: 0px;
+  }
+box-shadow:         inset 0px 11px 8px -10px #CCC,
+        inset 0px -11px 8px -10px #CCC;  
 
 `
 
@@ -436,7 +455,7 @@ export const StyledProjectCoverImageContainer = styled.div`
   @media ${devices.laptop} {
     position: absolute;
     right: -10%;
-    bottom: 0;
+    top: 0;
     height: 70vh;
     width: 60%;
   }

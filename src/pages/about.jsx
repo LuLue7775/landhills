@@ -55,12 +55,11 @@ const Page = () => {
                                             width={200}
                                             height={200}
                                             style={{
-                                                width: '100%',
-                                                height: 'auto',
-                                                maxHeight: '80%',
+                                                width: 'auto',
+                                                height: '100%',
+                                                maxWidth: '250px',
+                                                maxHeight: '250px',
                                                 objectFit: 'contain',
-                                                position: 'absolute',
-                                                top: 0
                                             }}
                                         />
                                     ))}

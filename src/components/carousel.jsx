@@ -7,6 +7,7 @@ import {
     StyledSlideButton
 } from '@/styles/styles';
 import { useSwipeable } from 'react-swipeable';
+import { useRouter } from 'next/router';
 
 // a function for looping back to the first image when reaching last.
 const getOrder = (index, pos, item_amount) => {
@@ -16,7 +17,7 @@ const getOrder = (index, pos, item_amount) => {
 const getInitialState = (item_amount) => ({ pos: item_amount - 1, dir: 'NEXT', sliding: false })
 
 function Carousel(props) {
-
+    const router = useRouter();
     const item_amount = React.Children.count(props.children)
     const [state, dispatch] = useReducer(reducer, getInitialState(item_amount))
 
@@ -40,7 +41,7 @@ function Carousel(props) {
     return (
         <StyledSwipeHandler className="StyledSwipeHandler" {...swipeHandlers}>
             <StyledCarouselWrapper className="StyledCarouselWrapper" >
-                <StyledCarouselContainer className="StyledCarouselContainer" dir={state.dir} sliding={state.sliding}>
+                <StyledCarouselContainer className="StyledCarouselContainer" dir={state.dir} sliding={state.sliding} homepage={router.pathname === '/'}>
                     {React.Children.map(props.children, (child, index) => (
                         <StyledCarouselSlot className="StyledCarouselSlot" order={getOrder(index, state.pos, item_amount)}>
                             {child}

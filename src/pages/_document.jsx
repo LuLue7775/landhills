@@ -1,6 +1,5 @@
-
-import Document from 'next/document'
 import { ServerStyleSheet } from 'styled-components'
+import Document, { Html, Head, Main, NextScript } from "next/document";
 
 export default class MyDocument extends Document {
     static async getInitialProps(ctx) {
@@ -25,4 +24,34 @@ export default class MyDocument extends Document {
             sheet.seal()
         }
     }
+
+    render() {
+        return (
+            <Html>
+                <Head >
+                    <link
+                        rel="preload"
+                        href="/fonts/circular-book.woff"
+                        as="font"
+                        type="font/woff"
+                        crossOrigin="anonymous"
+                    />
+                    <link
+                        rel="preload"
+                        href="/fonts/circular-medium.woff"
+                        as="font"
+                        type="font/woff"
+                        crossOrigin="anonymous"
+                    />
+
+                </Head>
+                <body>
+                    <Main />
+                    <NextScript />
+                </body>
+            </Html>
+        );
+    }
 }
+
+

@@ -125,8 +125,8 @@ const Page = ({ projects }) => {
                   alt="image"
                 />
                 <StyledImageInfo>
-                  <div> {project.title} </div>
-                  <div> {project.no} </div>
+                  <p> {project.title} </p>
+                  <p> {project.no} </p>
                 </StyledImageInfo>
               </Link>
             </StyledItems>

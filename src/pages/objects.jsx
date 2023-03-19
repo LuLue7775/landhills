@@ -2,19 +2,16 @@ import useObjectsQuery from '@/queries/useObjectsQuery'
 import {
     StyledPages,
     StyledSection,
-    StyledCoverSection,
-    StyledText,
+    StyledObject,
     StyledObjectContent,
-    StyledObjectDisplayCols,
-    StyledObjectCol,
     StyledLoader,
-    StyledLoaderContainer
+    StyledLoaderContainer,
+    StyledImage,
 } from '@/styles/styles'
 import { getObjects } from '@/queries/useObjectsQuery'
 import { QueryClient, dehydrate } from '@tanstack/react-query'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
-import Carousel from '@/components/carousel'
 
 const Shader = dynamic(() => import('@/components/canvas/Shader/Shader'), {
     ssr: false,
@@ -22,7 +19,7 @@ const Shader = dynamic(() => import('@/components/canvas/Shader/Shader'), {
 
 const Page = () => {
     const { objects, isLoading } = useObjectsQuery()
-
+    console.log(objects)
     return (
         isLoading ?
             <StyledLoaderContainer>
@@ -31,61 +28,33 @@ const Page = () => {
             : <StyledPages>
                 <StyledSection>
                     {objects?.map((object, i) => (
-                        <StyledCoverSection key={object.id}>
-                            <Image
-                                className="images"
-                                draggable="false"
-                                src={object.object_cover_image.guid}
-                                alt="image"
-                                height={475}
-                                width={700}
-                                sizes="100vh"
-                                style={{
-                                    width: 'auto',
-                                    maxWidth: '70vw',
-                                    height: '100%',
-                                    objectFit: "contain"
-                                }}
-                            />
-                            <StyledText style={{ paddingLeft: "2rem" }} dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(object.object_cover_paragraph) }} />
-                            <StyledObjectContent dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(object.object_content) }} />
-                            <StyledObjectDisplayCols>
-                                <StyledObjectCol>
-                                    <Carousel>
-                                        {object.object_images.map(imageData => (
-                                            <Image
-                                                key={imageData.ID}
-                                                className="images"
-                                                draggable="false"
-                                                src={imageData.guid}
-                                                alt="images"
-                                                fill
-                                                sizes="100vw"
-                                                style={{
-                                                    objectFit: "cover"
-                                                }} />
-                                        ))}
-                                    </Carousel>
-                                    <StyledText dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(object.object_description) }} />
-                                </StyledObjectCol>
+                        <StyledObject key={object.id}
+                            object_top={object.object_top}
+                            object_width={object.object_width}
 
-                                <StyledObjectCol>
-                                    <Image
-                                        className="single-image"
-                                        draggable="false"
-                                        src={object.single_object_image.guid}
-                                        alt="single-image"
-                                        width="350"
-                                        height="350"
-                                        style={{
-                                            // width: 'auto',
-                                            // height: '100%',
-                                            objectFit: "contain"
-                                        }} />
-                                    <StyledText dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(object.single_object_description) }} />
-                                </StyledObjectCol>
-                            </StyledObjectDisplayCols>
-                        </StyledCoverSection>
+                        >
+                            {object.object_column === '3'
+                                ? <> <div></div><div></div></>
+                                : object.object_column === '2' ? <div></div> : ''
+                            }
+                            <div>
+                                <StyledImage
+                                    className="images"
+                                    draggable="false"
+                                    src={object.object_image.guid}
+                                    alt="image"
+                                    style={{ height: 'auto', width: `${object.object_width}px`, maxWidth: `${object.object_width}px` }}
+                                />
+
+                                <StyledObjectContent
+                                    object_width={object.object_width}
+                                    dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(object.object_content) }} />
+                            </div>
+                            {object.object_column === '3'
+                                ? ''
+                                : object.object_column === '2' ? <div></div> : <> <div></div><div></div></>}
+
+                        </StyledObject>
 
                     ))}
                 </StyledSection>

@@ -8,6 +8,7 @@ const withPWA = require('next-pwa')({
 })
 
 const nextConfig = {
+
   webpack(config, { isServer }) {
     // audio support
     config.module.rules.push({
@@ -37,7 +38,28 @@ const nextConfig = {
 
     return config
   },
-
+  async headers() {
+    return [
+      {
+        source: '/fonts/circular-book.woff',
+        headers: [
+          {
+            key: 'Cache-control',
+            value: 'public, immutable, max-age=31536000',
+          },
+        ],
+      },
+      {
+        source: '/fonts/circular-medium.woff',
+        headers: [
+          {
+            key: 'Cache-control',
+            value: 'public, immutable, max-age=31536000',
+          },
+        ],
+      },
+    ]
+  },
 }
 
 nextConfig.images = {

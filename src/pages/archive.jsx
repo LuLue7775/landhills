@@ -54,7 +54,7 @@ const Page = ({ projects }) => {
                     onRowMouseEnter={handleRowMouseEnter}
                     onRowMouseLeave={handleRowMouseLeave}
                     responsive={true}
-                    striped={true}
+                    // striped={true}
                     customStyles={customStyles}
                     expandableRows={viewport === 'tablet' || viewport === 'mobile'}
                     expandableRowsComponent={ExpandedComponent}

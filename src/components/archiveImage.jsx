@@ -20,6 +20,10 @@ export default function ArchiveImage({ projectImage }) {
                 height={200}
                 width={200}
                 style={{
+                    width: 'auto',
+                    height: '100%',
+                    maxWidth: '250px',
+                    maxHeight: '250px',
                     objectFit: 'contain',
                 }}
             />

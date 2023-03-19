@@ -28,7 +28,8 @@ const Page = () => {
       <StyledLoaderContainer>
         <StyledLoader />
       </StyledLoaderContainer>
-      : <>
+      : <div style={{ height: "100dvh", width: "100%", }}>
+
         <Carousel>
           {
             home_images?.map(imageData => (
@@ -43,10 +44,12 @@ const Page = () => {
                   draggable="false"
                   src={imageData.image}
                   alt="image"
-                  fill
+                  responsive
+                  width={2400}
+                  height={1000}
                   style={{
                     width: '100%',
-                    height: '100%',
+                    // height: '100%',
                     objectFit: 'contain'
                   }}
                 />
@@ -54,8 +57,9 @@ const Page = () => {
             ))
           }
         </Carousel>
+
         <StyledTextMedium dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(current_event) }} />
-      </>
+      </div>
   )
 }
 
