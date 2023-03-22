@@ -12,7 +12,7 @@ export const columns = [
         name: 'Location',
         selector: row => row.location,
         sortable: true,
-        right: true,
+        // right: true,
         hide: 'md'
     },
     { hide: 'md' },
@@ -20,14 +20,14 @@ export const columns = [
         name: 'Type',
         selector: row => row.type,
         sortable: true,
-        right: true,
+        // right: true,
         hide: 'md'
     },
     {
         name: 'Year',
         selector: row => row.year,
         sortable: true,
-        right: true,
+        // right: true,
         hide: 'md'
     },
     {

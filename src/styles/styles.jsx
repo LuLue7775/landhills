@@ -245,9 +245,10 @@ export const StyledCarouselSlot = styled.div`
   height: 100%;
   margin-right: 20px;
   order: ${(props) => props.order};
-
+${(props) => (!props.homepage && `
   justify-content: start;
   align-items:start;
+`)}
 `;
 
 export const StyledSlideButtonContainer = styled.div`
