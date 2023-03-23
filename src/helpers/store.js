@@ -32,3 +32,14 @@ const useMeshRefStore = create((set) => ({
 export {
   useMeshRefStore
 }
+
+const useProjectStore = create((set) => ({
+  newSequence: [],
+  setSequence: (element) =>
+    set({ newSequence: element }),
+})
+)
+
+export {
+  useProjectStore
+}

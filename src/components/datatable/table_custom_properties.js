@@ -1,7 +1,7 @@
 
 export const columns = [
     {
-        name: 'Title',
+        name: 'Project',
         id: 'first_col',
         selector: row => row.title,
         sortable: true,

@@ -19,7 +19,6 @@ const Shader = dynamic(() => import('@/components/canvas/Shader/Shader'), {
 
 const Page = () => {
     const { objects, isLoading } = useObjectsQuery()
-    console.log(objects)
     return (
         isLoading ?
             <StyledLoaderContainer>
@@ -47,6 +46,7 @@ const Page = () => {
                                 />
 
                                 <StyledObjectContent
+                                    className="editor"
                                     object_width={object.object_width}
                                     dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(object.object_content) }} />
                             </div>

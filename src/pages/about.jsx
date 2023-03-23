@@ -36,7 +36,7 @@ const Page = () => {
             <StyledPages fixed>
                 {
                     viewport !== 'tablet' && viewport !== 'mobile' &&
-                    <StyledMenuInfo>
+                    <StyledMenuInfo className='menu'>
                         <StyledText dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(info_content) }} />
                     </StyledMenuInfo>
                 }

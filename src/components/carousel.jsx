@@ -43,7 +43,7 @@ function Carousel(props) {
             <StyledCarouselWrapper className="StyledCarouselWrapper" >
                 <StyledCarouselContainer className="StyledCarouselContainer" dir={state.dir} sliding={state.sliding} homepage={router.pathname === '/'}>
                     {React.Children.map(props.children, (child, index) => (
-                        <StyledCarouselSlot className="StyledCarouselSlot" order={getOrder(index, state.pos, item_amount)}>
+                        <StyledCarouselSlot className="StyledCarouselSlot" order={getOrder(index, state.pos, item_amount)} homepage={router.pathname === '/'}>
                             {child}
                         </StyledCarouselSlot>
                     )

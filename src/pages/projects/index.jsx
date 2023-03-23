@@ -8,12 +8,12 @@ import {
   StyledImage,
 } from '@/styles/styles'
 import useProjectsQuery, { getProjects, transformProjects } from '@/queries/useProjectsQuery'
-import { useMeshRefStore, useObjectScrollStore } from '@/helpers/store'
+import { useMeshRefStore, useObjectScrollStore, useProjectStore } from '@/helpers/store'
 import useViewport, { projectShaderPosTable } from '@/utils/useViewport'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { QueryClient, dehydrate, useQueryClient } from '@tanstack/react-query'
 import gsap from 'gsap'
 
@@ -104,7 +104,49 @@ const Page = ({ projects }) => {
 
   }, [scrollPos, meshRef.current])
 
+  const [newSequence, setSequence] = useState([])
+  // const { newSequence, setnewSequence } = useProjectStore()
+  useLayoutEffect(() => {
+    let sm = []
+    let lg = []
+    let images = document.getElementsByClassName('images')
+    Object.values(images).forEach(image => {
+      if (image.width > 500) lg.push(projects.filter((project) => project.id.toString() === image.id)[0])
+      else sm.push(projects.filter((project) => project.id.toString() === image.id)[0])
+    })
 
+    for (let i = 0; i <= projects.length; i++) {
+
+      if (i % 2 === 0) {
+        if (sm.length !== 0) {
+          const ele = sm.shift()
+          setSequence(newSequence => [...newSequence, ele])
+        }
+        else {
+          const ele = lg.shift()
+          setSequence(newSequence => [...newSequence, ele])
+        }
+
+      }
+      else if (i % 2 !== 0) {
+        if (lg.length !== 0) {
+          const ele = lg.shift()
+          setSequence(newSequence => [...newSequence, ele])
+        }
+        else {
+          const ele = sm.shift()
+          setSequence(newSequence => [...newSequence, ele])
+        }
+      }
+      // else sm.length !== 0 ? setSequence(newSequence => [...newSequence, sm.shift()]) : setSequence(newSequence => [...newSequence, lg.shift()])
+    }
+
+  }, [])
+
+  useEffect(() => {
+    console.log('newSequence', newSequence)
+
+  }, [newSequence])
   return (
     // isLoading ?
     //   <StyledLoaderContainer>
@@ -114,23 +156,53 @@ const Page = ({ projects }) => {
     <StyledPages ref={scrollRef}>
       <StyledRow >
         {
-          projects?.map(project => (
-            <StyledItems key={project.id} >
-              <Link href={`${process.env.NODE_ENV !== 'production'
-                ? 'http://localhost:3000' : process.env.NEXT_PUBLIC_SITE_URL}/projects/${project.id}`}>
-                <StyledImage
-                  className="images"
-                  draggable="false"
-                  src={project.image}
-                  alt="image"
-                />
-                <StyledImageInfo>
-                  <p> {project.title} </p>
-                  <p> {project.no} </p>
-                </StyledImageInfo>
-              </Link>
-            </StyledItems>
-          ))
+          newSequence.length !== 0 ?
+            newSequence?.map((project, i) => project && (
+              <StyledItems key={project.id}
+                className='projects-wrap'
+              // style={{ flex: '1 1 auto' }}
+              >
+                <Link href={`${process.env.NODE_ENV !== 'production'
+                  ? 'http://localhost:3000' : process.env.NEXT_PUBLIC_SITE_URL}/projects/${project.id}`}>
+                  <StyledImage
+                    className="images"
+                    id={project.id}
+                    draggable="false"
+                    src={project.image}
+                    alt="image"
+                  // style={{ width: '100%', maxHeight: '800px' }}
+                  // style={i % 2 === 0 ? { maxWidth: '600px' } : {}}
+                  />
+                  <StyledImageInfo className='projects' >
+                    <p > {project.title} </p>
+                    <p> {project.no} </p>
+                  </StyledImageInfo>
+                </Link>
+              </StyledItems>
+            ))
+            : projects?.map((project, i) => (
+              <StyledItems key={project.id}
+                className='projects-wrap'
+              // style={{ flex: '1 1 auto' }}
+              >
+                <Link href={`${process.env.NODE_ENV !== 'production'
+                  ? 'http://localhost:3000' : process.env.NEXT_PUBLIC_SITE_URL}/projects/${project.id}`}>
+                  <StyledImage
+                    className="images"
+                    id={project.id}
+                    draggable="false"
+                    src={project.image}
+                    alt="image"
+                  // style={{ width: '100%', maxHeight: '800px' }}
+                  // style={i % 2 === 0 ? { maxWidth: '600px' } : {}}
+                  />
+                  <StyledImageInfo className='projects' >
+                    <p > {project.title} </p>
+                    <p> {project.no} </p>
+                  </StyledImageInfo>
+                </Link>
+              </StyledItems>
+            ))
         }
       </StyledRow>
     </StyledPages>
@@ -165,11 +237,6 @@ const Page = ({ projects }) => {
   )
 }
 
-Page.r3f = (props) => (
-  <>
-    <Shader />
-  </>
-)
 
 export default Page
 
@@ -180,10 +247,17 @@ export default Page
 export async function getStaticProps() {
   // const queryClient = new QueryClient()
   // const data = await queryClient.fetchQuery(['projects'], getProjects)
-  const data = await fetch(`https://landhills.co/wp-json/wp/v2/projects`)
+  const data = await fetch(`https://landhills.co/wp-json/wp/v2/projects?per_page=20`)
   const project = await data.json()
-
   const sortedData = transformProjects(project).sort(() => Math.random() - 0.5)
+
+  /**
+   * @TODO pagination here
+   * err msg: \u8981\u6c42\u7684\u9801\u78bc\u5927\u65bc\u5be6\u969b\u9801\u6578\u3002
+   * https://landhills.co/wp-json/wp/v2/projects?per_page=20&page=3
+   * page index state要useRef 
+   */
+
   /**
    * @WANRING Now we are not using our custom hook
    */

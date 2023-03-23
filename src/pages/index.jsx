@@ -45,10 +45,11 @@ const Page = () => {
                   src={imageData.image}
                   alt="image"
                   responsive
-                  width={2400}
-                  height={1000}
+                  width={1920}
+                  height={1080}
                   style={{
                     width: '100%',
+                    // height: 'auto',
                     // height: '100%',
                     objectFit: 'contain'
                   }}
@@ -58,7 +59,7 @@ const Page = () => {
           }
         </Carousel>
 
-        <StyledTextMedium dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(current_event) }} />
+        <StyledTextMedium className="home" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(current_event) }} />
       </div>
   )
 }

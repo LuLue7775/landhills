@@ -30,9 +30,12 @@ export default function ProjectsSinglePage({ project }) {
             <StyledProjectGrid>
                 <StyledProjectContent>
                     <StyledProjectTitle> {project?.title?.rendered} </StyledProjectTitle>
-                    <StyledText dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(project?.project_category[0]?.name) }} />
-                    <StyledText dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(project?.date) }} />
-                    <StyledText dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(project?.content?.rendered) }} />
+                    <StyledText className="editor"
+                        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(project?.project_category[0]?.name) }} />
+                    <StyledText className="editor"
+                        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(project?.date) }} />
+                    <StyledText className="editor"
+                        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(project?.content?.rendered) }} />
                 </StyledProjectContent>
                 <StyledProjectCoverImageContainer>
                     {project?.project_cover_image &&

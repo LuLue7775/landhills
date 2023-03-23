@@ -58,7 +58,7 @@ export default function Menu({ isMenuOpened, setMenuOpen }) {
 
                 {isSuccess
                     ? <StyledMenuInfo>
-                        <StyledText dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(info_content) }} />
+                        <StyledText className='menu' dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(info_content) }} />
                     </StyledMenuInfo>
                     : isLoading
                         ? <p> Loader </p>

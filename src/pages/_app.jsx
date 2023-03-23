@@ -8,6 +8,7 @@ import dynamic from 'next/dynamic'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
 import { Hydrate, QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { handleExternalLink } from '@/utils/handleExternalLink'
 
 const LCanvas = dynamic(() => import('@/components/layout/canvas'), {
   ssr: true,
@@ -32,6 +33,11 @@ function App({ Component, pageProps = { title: 'index' } }) {
   useEffect(() => {
     setState({ router })
   }, [router])
+
+  useEffect(() => {
+    handleExternalLink()
+  }, [])
+
 
   return (
     <>

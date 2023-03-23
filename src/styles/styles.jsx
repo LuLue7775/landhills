@@ -53,15 +53,42 @@ export const GlobalStyle = createGlobalStyle`
     outline: inherit;
   }
 
+
   p {
     margin: 0;
     font-size:1rem;
-   letter-spacing: 1px;
+    letter-spacing: 1px;
+    opacity: .9;
+    line-height: 26px;
+    margin-top: 15px;
   }
+  .menu p{
+    margin-top: 0;
+        line-height: 18px;
+
+  }
+  .projects p{
+    line-height: 1.2rem;
+    margin-top: 0;
+  }
+
+
   h2 {
     letter-spacing: 2px;
     font-size: 2rem;
-    line-height: 3rem;
+    line-height: 2.8rem;
+  }
+  .home h2{
+    font-family: 'Circular Book';
+    letter-spacing: 1.6px;
+    font-size: 18px;
+    line-height: .7rem;
+  }
+  .events h2{
+    font-family: 'Circular Book';
+    letter-spacing: 1.6px;
+    font-size: 18px;
+    line-height: .7rem;
   }
 
   a {
@@ -164,7 +191,7 @@ export const StyledTextMedium = styled.div`
 export const StyledText = styled.div`
   text-align: start;
   font-size: 1rem;
-  line-height: 1.5rem;
+  line-height: 1.2rem;
   text-align: justify;
   font-family: 'Circular Book';
   }
@@ -292,6 +319,7 @@ export const StyledItems = styled.div`
   margin: 1rem;
   overflow: hidden;
   padding-bottom: 1.5rem;
+
 `;
 
 // ========= non-next/image version 
@@ -304,7 +332,7 @@ export const StyledRow = styled.div`
   align-items: end;
   display: flex;
   flex-wrap: wrap;
-
+  margin: 0 2rem;
 `;
 
 export const StyledImage = styled.img`
@@ -330,8 +358,8 @@ export const StyledImageInfo = styled.div`
   font-size: 1rem;
   text-align: start;
   position: absolute;
-  bottom: 0;
-  margin-top: 2rem;
+  bottom: -3px;
+
 `
 
 /**
