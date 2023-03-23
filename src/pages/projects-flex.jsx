@@ -144,6 +144,12 @@ const Page = ({ projects }) => {
     )
 }
 
+Page.r3f = (props) => (
+    <>
+        <Shader />
+    </>
+)
+
 
 export default Page
 
