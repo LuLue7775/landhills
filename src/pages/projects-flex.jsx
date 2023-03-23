@@ -129,7 +129,7 @@ const Page = ({ projects }) => {
                                 style={{ width: '100%', maxHeight: '800px' }}
                             // style={i % 2 === 0 ? { maxWidth: '600px' } : {}}
                             />
-                            <StyledImageInfo className='projects' >
+                            <StyledImageInfo className='projects' style={{ textAlign: 'center', position: 'relative' }} >
                                 <p > {project.title} </p>
                                 <p> {project.no} </p>
                             </StyledImageInfo>
