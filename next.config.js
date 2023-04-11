@@ -36,6 +36,13 @@ const nextConfig = {
       use: ['raw-loader', 'glslify-loader'],
     })
 
+    if (typeof nextRuntime === "undefined") {
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        fs: false,
+      };
+    }
+
     return config
   },
   async headers() {

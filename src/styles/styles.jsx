@@ -53,42 +53,17 @@ export const GlobalStyle = createGlobalStyle`
     outline: inherit;
   }
 
-
-  p {
+  .object a{
+    text-decoration: underline;
+  }
+  h1,h2,h3,h4,h5,h6 {
+    font-weight: normal;
+    padding: 0;
     margin: 0;
-    font-size:1rem;
-    letter-spacing: 1px;
-    opacity: .9;
-    line-height: 26px;
-    margin-top: 15px;
   }
-  .menu p{
-    margin-top: 0;
-    line-height: 18px;
-
-  }
-  .projects p{
-    line-height: 1.2rem;
-    margin-top: 0;
-  }
-
-
-  h2 {
-    letter-spacing: 2px;
-    font-size: 2rem;
-    line-height: 2.8rem;
-  }
-  .home h2{
-    font-family: 'Circular Book';
-    letter-spacing: 1.6px;
-    font-size: 18px;
-    line-height: .7rem;
-  }
-  .events h2{
-    font-family: 'Circular Book';
-    letter-spacing: 1.6px;
-    font-size: 18px;
-    line-height: .7rem;
+  p {
+    padding: 0;
+    margin: 0;
   }
 
   a {
@@ -112,6 +87,11 @@ export const GlobalStyle = createGlobalStyle`
     border-radius: 10px;
   }
 
+
+  /* THIS IS FOR DATA TABLE* /
+//   [data-row-id="first_col"] {
+//     background-color: black;
+// }
 `;
 
 export const StyledLayout = styled.div`
@@ -122,6 +102,7 @@ export const StyledLayout = styled.div`
   width: 100%;
   height: 100vh;
   overflow: hidden;
+  color: #383838;
 `
 
 export const StyledMenu = styled.div`
@@ -131,7 +112,7 @@ export const StyledMenu = styled.div`
   height: 100vh;
   width: 100%;
   padding: 0 0 0 2rem;
-  z-index: 20;
+  z-index: 30;
 
   background-color: #dedcd380;
   backdrop-filter: blur(10px);
@@ -144,9 +125,11 @@ export const StyledMenuWrap = styled.div`
 export const StyledMenuUl = styled.ul`
   width: 20%;
 
+  font-family: 'Circular Medium';
   font-size: 2rem;
-  line-height: 2rem;
-  font-family: Circular Medium;
+  line-height: 28px;
+  letter-spacing: .7px;
+  
   padding: 0;
   list-style-type: none;
 `
@@ -155,6 +138,7 @@ export const StyledMenuInfo = styled.div`
   position: absolute;
   bottom: 2rem;
   left: 2rem;
+  z-index: 20;
 `
 export const StyledCloseButton = styled.button`
     position: absolute;
@@ -174,26 +158,51 @@ export const StyledNav = styled.div`
   width: 100%;
   padding: 2rem;
   display: flex;
+  line-height: .6rem;
+  
+ ${({ home }) => home ? '' : 'background: #FFF;'}
+  
   justify-content: space-between;
 `
 
-export const StyledTextMedium = styled.div`
+export const StyledTextHome = styled.div`
  position: absolute;
  bottom: 0;
  z-index:10;
  padding: 0 0 2rem 2rem;
- font-size: 2rem;
- line-height: 2rem;
- font-family: Circular Medium;
+
+  font-family: 'Circular Medium';
+  letter-spacing: .7px;
+  font-size: 1rem;
+  line-height: 14.5px;
+
+  h2 {
+    font-family: 'Circular Medium';
+    letter-spacing: .7px;
+    font-size: 2rem;
+    line-height: 28px;
+  }  
 
 `
 
 export const StyledText = styled.div`
-  text-align: start;
-  font-size: 1rem;
-  line-height: 1.2rem;
-  text-align: justify;
   font-family: 'Circular Book';
+  font-size: 1rem;
+  letter-spacing: .7px;
+  line-height: 14.5px;
+
+  h2 {
+    font-family: 'Circular Medium';
+    letter-spacing: .7px;
+    font-size: 2rem;
+    line-height: 28px;
+  }
+
+  h6 {
+    font-family: 'Circular Medium';
+    letter-spacing: .7px;
+    font-size: 1rem;
+    line-height: 14.5px;
   }
 `
 
@@ -204,8 +213,9 @@ export const StyledLink = styled.a`
 export const StyledPages = styled.div`
   position: relative;
     // height: calc(100vh - 70px);  
+    height: 100vh;
     height: 100dvh;
-    padding-top: 70px;
+    padding-top: 65px;
   // padding-bottom: 10vh;
   overflow-x: hidden;
   ${({ fixed }) => (fixed ? `overflow-y: hidden;` : `overflow-y: scroll;`)};
@@ -222,8 +232,21 @@ export const StyledLoaderContainer = styled.div`
 export const StyledFooter = styled.div`
   position: absolute;
   bottom: 0;
-  right: 0;
-  margin: 2rem;
+  width: 100%;
+  padding: 2rem;
+ ${({ home }) => home ? '' : 'background: #FFF;'}
+  z-index: 20;
+
+  font-family: 'Circular Book';
+  letter-spacing: 1.1px;
+  font-size: 1rem;
+  p {
+    line-height: .5rem;
+    margin:0;
+    padding:0;
+    width: 100%;
+    text-align: right;
+  }
 `
 
 
@@ -356,6 +379,9 @@ export const StyledImage = styled.img`
 export const StyledImageInfo = styled.div`
   font-family: 'Circular Book';
   font-size: 1rem;
+  letter-spacing: .7px;
+  line-height: 27.5px;
+
   text-align: start;
   position: absolute;
   bottom: -3px;
@@ -383,11 +409,26 @@ export const StyledObject = styled.div`
 
 export const StyledObjectContent = styled.div`
 ${({ object_width }) => `width: ${object_width}px`};
-  text-align: justify;
-  font-family: Circular Medium;
-  font-size: 1.2rem;
-  line-height: 2rem;
 
+  font-family: 'Circular Book';
+  font-size: 1rem;
+  line-height: 26px;
+  letter-spacing: 1px;
+  
+  ${({ circular_medium }) => circular_medium && `
+    font-family: 'Circular Medium';
+    font-size: 1rem;
+    line-height: 26px;  
+    letter-spacing: 1px;
+
+    h2 {
+      font-family: 'Circular Medium';
+      letter-spacing: 1.2px;
+      font-size: 2rem;
+      line-height: 36px;
+
+    }
+  `};
 `;
 
 
@@ -400,6 +441,12 @@ export const StyledTableWrapper = styled.div`
   width: calc(100% - 4rem);
   margin: 0 2rem 100px 2rem;
   border-top: 1px solid #00000050;
+
+  font-family: 'Circular Book';
+  font-size: 1rem;
+  letter-spacing: .7px;
+  line-height: 14.5px;
+
 `
 export const StyledImageWrapper = styled.div`
   position: absolute;
@@ -455,8 +502,10 @@ export const StyledProjectGrid = styled.div`
 `
 
 export const StyledProjectTitle = styled.h1`
-  font-size: 2rem;
   font-family: 'Circular Medium';
+  font-size: 2rem;
+  letter-spacing: .7px;
+  line-height: 28px;
 
 `
 
@@ -518,13 +567,9 @@ export const StyledExpandContent = styled.div`
   display: flex;
   gap: 2rem;
   padding: 0 2rem;
+
+    font-family: 'Circular Book';
+  font-size: 1rem;
+  letter-spacing: .7px;
+  line-height: 27.5px;
 `
-
-export const StyledExpandText = styled.div`
-  font-family: 'Circular Medium';
-  padding: 2rem 0;
-  text-align: start;
-  line-height: 2rem;
-
-`
-

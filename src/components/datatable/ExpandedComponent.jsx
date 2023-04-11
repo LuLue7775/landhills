@@ -1,13 +1,14 @@
 import {
     StyledExpandContent,
-    StyledExpandText
+    StyledText
 } from '@/styles/styles'
 import Image from 'next/image'
 import React from 'react'
 
 export default function ExpandedComponent({ data }) {
     return (
-        <StyledExpandContent>
+        <StyledExpandContent
+        >
             <Image
                 alt="projects"
                 src={data.image}
@@ -16,15 +17,19 @@ export default function ExpandedComponent({ data }) {
                 style={{
                     width: 'auto',
                     height: '100%',
-                    objectFit: 'contain'
+                    objectFit: 'contain',
+                    paddingLeft: '10%'
                 }}
             />
-            <StyledExpandText>
-                <div style={{ fontStyle: 'italic' }}> {data.type} </div>
-                <div style={{ fontSize: '1.2rem', fontWeight: '600' }}> {data.no} </div>
-                <div style={{ fontSize: '1.2rem', fontWeight: '600' }}> {data.location} </div>
-                <div style={{ fontSize: '1.2rem', fontWeight: '600' }}> {data.year} </div>
-            </StyledExpandText>
+            <StyledText
+                style={{
+                    paddingLeft: '10%',
+                    width: 'min(100%, 450px)',
+                    display: 'flex',
+                    alignSelf: 'end'
+                }}
+                dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(data?.description) }} />
+
         </StyledExpandContent>
     )
 }

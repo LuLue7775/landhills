@@ -28,9 +28,12 @@
     "babel-plugin-glsl": "^1.0.0",
     "glsl-random": "^0.0.5",
     "gsap": "^3.11.3",
+    "https": "^1.0.0",
+    "image-size": "^1.0.2",
     "isomorphic-dompurify": "^0.23.0",
-    "next": "^13.0.1",
+    "next": "^13.1.6",
     "next-pwa": "^5.6.0",
+    "probe-image-size": "^7.2.3",
     "react": "^18.2.0",
     "react-data-table-component": "^7.5.3",
     "react-dom": "^18.2.0",
@@ -38,6 +41,7 @@
     "styled-components": "^5.3.6",
     "three": "^0.146.0",
     "three-stdlib": "^2.17.3",
+    "url": "^0.11.0",
     "zustand": "^4.1.1"
   },
   "devDependencies": {

@@ -125,7 +125,7 @@ const Page = ({ projects }) => {
                                 draggable="false"
                                 src={project.image}
                                 alt="image"
-                                style={i % 2 === 0 ? { maxWidth: '600px' } : {}}
+                                style={i % 2 === 0 ? { maxWidth: '600px' } : { maxHeight: '900px' }}
                             />
                             <StyledImageInfo className='projects' >
                                 <p > {project.title} </p>

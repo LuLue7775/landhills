@@ -3,9 +3,12 @@ import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 
-export default function Nav({ isMenuOpened, setMenuOpen }) {
+export default function Nav({ isMenuOpened, setMenuOpen, router }) {
+
     return (
-        <StyledNav className="Nav">
+        <StyledNav className="Nav"
+            home={router === ''}
+        >
             <Link href="/">
                 <Image
                     src="/img/logo.png"

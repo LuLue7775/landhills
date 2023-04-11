@@ -20,6 +20,8 @@ export const transformProjects = (data) => data?.reduce((filteredData, project, 
         year: project.project_date.slice(0, 4),
         no: project.project_number,
         image: project.project_cover_image.guid,
+        description: project.project_description,
+
     })
 
     return filteredData

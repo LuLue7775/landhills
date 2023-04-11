@@ -56,7 +56,14 @@ const Page = () => {
                             </StyledCarouselWrapper>
 
                             <StyledTextWrapper className='events' >
-                                <StyledText dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(event.event_content) }} />
+                                {event?.event_content?.map((content, i) =>
+                                    <StyledText key={i}
+                                        style={{ paddingBottom: '2rem' }}
+                                        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(content) }} />
+                                )}
+                                <StyledText
+                                    style={{ paddingBottom: '1rem' }}
+                                    dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(event.event_content_sm) }} />
                             </StyledTextWrapper>
                             <div> </div>
                         </StyledGridWrapper>

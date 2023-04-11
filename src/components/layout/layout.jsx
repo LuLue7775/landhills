@@ -2,8 +2,9 @@ import Nav from '../nav'
 import Menu from './menu'
 import { StyledLayout } from '@/styles/styles'
 import { setState } from '@/helpers/store'
-import { useState, useEffect, useRef } from 'react'
+import useStore from '@/helpers/store'
 import Footer from './footer'
+import { useState, useEffect, useRef } from 'react'
 
 const Layout = ({ children }) => {
   const [isMenuOpened, setMenuOpen] = useState(false)
@@ -13,14 +14,20 @@ const Layout = ({ children }) => {
     setState({ dom: ref })
   }, [])
 
+  const router = useStore((state) => {
+    if (!state.router) return
+    if (state.router.pathname === "/projects/[projectId]") return ""
+    return state.router.pathname.charAt(1).toUpperCase() + state.router.pathname.slice(2)
+  })
+
   return (
     <StyledLayout
       className='Layout'
       ref={ref}
     >
-      <Nav isMenuOpened={isMenuOpened} setMenuOpen={setMenuOpen} />
+      <Nav isMenuOpened={isMenuOpened} setMenuOpen={setMenuOpen} router={router} />
       <Menu isMenuOpened={isMenuOpened} setMenuOpen={setMenuOpen} />
-      <Footer />
+      <Footer router={router} />
 
       {children}
     </StyledLayout>

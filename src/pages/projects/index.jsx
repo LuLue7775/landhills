@@ -104,49 +104,7 @@ const Page = ({ projects }) => {
 
   }, [scrollPos, meshRef.current])
 
-  const [newSequence, setSequence] = useState([])
-  // const { newSequence, setnewSequence } = useProjectStore()
-  useLayoutEffect(() => {
-    let sm = []
-    let lg = []
-    let images = document.getElementsByClassName('images')
-    Object.values(images).forEach(image => {
-      if (image.width > 500) lg.push(projects.filter((project) => project.id.toString() === image.id)[0])
-      else sm.push(projects.filter((project) => project.id.toString() === image.id)[0])
-    })
 
-    for (let i = 0; i <= projects.length; i++) {
-
-      if (i % 2 === 0) {
-        if (sm.length !== 0) {
-          const ele = sm.shift()
-          setSequence(newSequence => [...newSequence, ele])
-        }
-        else {
-          const ele = lg.shift()
-          setSequence(newSequence => [...newSequence, ele])
-        }
-
-      }
-      else if (i % 2 !== 0) {
-        if (lg.length !== 0) {
-          const ele = lg.shift()
-          setSequence(newSequence => [...newSequence, ele])
-        }
-        else {
-          const ele = sm.shift()
-          setSequence(newSequence => [...newSequence, ele])
-        }
-      }
-      // else sm.length !== 0 ? setSequence(newSequence => [...newSequence, sm.shift()]) : setSequence(newSequence => [...newSequence, lg.shift()])
-    }
-
-  }, [])
-
-  useEffect(() => {
-    console.log('newSequence', newSequence)
-
-  }, [newSequence])
   return (
     // isLoading ?
     //   <StyledLoaderContainer>
@@ -155,96 +113,42 @@ const Page = ({ projects }) => {
     //   :
     <StyledPages ref={scrollRef}>
       <StyledRow >
-        {
-          newSequence.length !== 0 ?
-            newSequence?.map((project, i) => project && (
-              <StyledItems key={project.id}
-                className='projects-wrap'
-              // style={{ flex: '1 1 auto' }}
-              >
-                <Link href={`${process.env.NODE_ENV !== 'production'
-                  ? 'http://localhost:3000' : process.env.NEXT_PUBLIC_SITE_URL}/projects/${project.id}`}>
-                  <StyledImage
-                    className="images"
-                    id={project.id}
-                    draggable="false"
-                    src={project.image}
-                    alt="image"
-                  // style={{ width: '100%', maxHeight: '800px' }}
-                  // style={i % 2 === 0 ? { maxWidth: '600px' } : {}}
-                  />
-                  <StyledImageInfo className='projects' >
-                    <p > {project.title} </p>
-                    <p> {project.no} </p>
-                  </StyledImageInfo>
-                </Link>
-              </StyledItems>
-            ))
-            : projects?.map((project, i) => (
-              <StyledItems key={project.id}
-                className='projects-wrap'
-              // style={{ flex: '1 1 auto' }}
-              >
-                <Link href={`${process.env.NODE_ENV !== 'production'
-                  ? 'http://localhost:3000' : process.env.NEXT_PUBLIC_SITE_URL}/projects/${project.id}`}>
-                  <StyledImage
-                    className="images"
-                    id={project.id}
-                    draggable="false"
-                    src={project.image}
-                    alt="image"
-                  // style={{ width: '100%', maxHeight: '800px' }}
-                  // style={i % 2 === 0 ? { maxWidth: '600px' } : {}}
-                  />
-                  <StyledImageInfo className='projects' >
-                    <p > {project.title} </p>
-                    <p> {project.no} </p>
-                  </StyledImageInfo>
-                </Link>
-              </StyledItems>
-            ))
+        {projects?.map((project, i) => (
+          <StyledItems key={project.id}
+            className='projects-wrap'
+          >
+            <Link href={`${process.env.NODE_ENV !== 'production'
+              ? 'http://localhost:3000' : process.env.NEXT_PUBLIC_SITE_URL}/projects/${project.id}`}>
+              <StyledImage
+                className="images"
+                id={project.id}
+                draggable="false"
+                src={project.image}
+                alt="image"
+                style={i % 2 === 0 ? { maxWidth: '600px' } : { maxHeight: '900px' }}
+              />
+              <StyledImageInfo className='projects' >
+                <p > {project.title} </p>
+                <p> {project.no} </p>
+              </StyledImageInfo>
+            </Link>
+          </StyledItems>
+        ))
         }
       </StyledRow>
     </StyledPages>
 
-    // <StyledPages ref={scrollRef}>
-    //   <StyledRow>
-    //     {
-    //       projects?.map(project => (
-    //         <StyledItems key={project.id}>
-    //           <Link href={`/projects/${project.id}`}>
-    //             <Image
-    //               alt="projects"
-    //               src={project.image}
-    //               width={300}
-    //               height={300}
-    //               style={{
-    //                 width: 'auto',
-    //                 height: '100%',
-    //                 objectFit: 'contain'
-    //               }}
-    //             />
-    //           </Link>
-    //           <StyledImageInfo>
-    //             <b> {project.title} </b>
-    //             <p> {project.no} </p>
-    //           </StyledImageInfo>
-    //         </StyledItems>
-    //       ))
-    //     }
-    //   </StyledRow>
-    // </StyledPages>
+
   )
 }
-
 
 Page.r3f = (props) => (
   <>
     <Shader />
   </>
 )
-export default Page
 
+export default Page
 
 /**
  * either prefetch or fetch with ISR

@@ -1,37 +1,41 @@
 
 export const columns = [
     {
-        name: 'Project',
+        name: 'project',
         id: 'first_col',
         selector: row => row.title,
         sortable: true,
     },
-    { hide: 'md' },
-    { hide: 'md' },
+    // { hide: 'md' },
+    // { hide: 'md' },
+    // { hide: 'md' },
     {
-        name: 'Location',
+        name: 'location',
         selector: row => row.location,
         sortable: true,
         // right: true,
         hide: 'md'
     },
-    { hide: 'md' },
+    // { hide: 'md' },
     {
-        name: 'Type',
+        name: 'type',
         selector: row => row.type,
         sortable: true,
         // right: true,
         hide: 'md'
     },
+    // { hide: 'md' },
+
     {
-        name: 'Year',
+        name: 'year',
         selector: row => row.year,
         sortable: true,
         // right: true,
         hide: 'md'
     },
+
     {
-        name: 'No.',
+        name: 'no.',
         selector: row => row.no,
         sortable: true,
         right: true,
@@ -56,7 +60,10 @@ export const customStyles = {
             margin: '0',
             paddingLeft: '0rem', // override the cell padding for head cells
             paddingRight: '0rem',
-            fontFamily: 'Circular Medium'
+            fontFamily: 'Circular Medium',
+
+            display: 'flex',
+            justifyContent: 'end'
         },
 
     },
@@ -64,8 +71,13 @@ export const customStyles = {
         style: {
             paddingLeft: '0rem', // override the cell padding for data cells
             paddingRight: '0rem',
-
+            display: 'flex',
+            justifyContent: 'end'
         },
     },
+    // table: {
+    //     display: 'flex',
+    //     justifyContent: 'end'
+    // }
 
 };

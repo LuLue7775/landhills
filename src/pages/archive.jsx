@@ -56,7 +56,8 @@ const Page = ({ projects }) => {
                     responsive={true}
                     // striped={true}
                     customStyles={customStyles}
-                    expandableRows={viewport === 'tablet' || viewport === 'mobile'}
+                    // expandableRows={viewport === 'tablet' || viewport === 'mobile'}
+                    expandableRows={true}
                     expandableRowsComponent={ExpandedComponent}
                 />
 

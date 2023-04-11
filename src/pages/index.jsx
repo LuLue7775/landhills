@@ -1,5 +1,5 @@
 import Carousel from '@/components/carousel'
-import { StyledImageLink, StyledTextMedium, StyledLoader, StyledLoaderContainer } from '@/styles/styles'
+import { StyledImageLink, StyledLoader, StyledLoaderContainer, StyledTextHome } from '@/styles/styles'
 
 import dynamic from 'next/dynamic'
 import useHomeQuery, { getHome } from '@/queries/useHomeQuery'
@@ -59,7 +59,9 @@ const Page = () => {
           }
         </Carousel>
 
-        <StyledTextMedium className="home" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(current_event) }} />
+        <StyledTextHome className="home"
+          style={{ fontStyle: "bold" }}
+          dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(current_event) }} />
       </div>
   )
 }

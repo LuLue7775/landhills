@@ -36,7 +36,15 @@ export {
 const useProjectStore = create((set) => ({
   newSequence: [],
   setSequence: (element) =>
-    set({ newSequence: element }),
+    set((state) => ({ newSequence: [...state.newSequence, element] })),
+  projectPool: [],
+  setProjectPool: (elements) =>
+    set((state) => ({ projectPool: [...state.projectPool, ...elements] })),
+  requestPage: 1,
+  setRequestPage: () =>
+    set((state) => ({ requestPage: state.requestPage + 1 })),
+
+
 })
 )
 

@@ -67,7 +67,11 @@ const Page = () => {
                             </StyledCarouselWrapper>
 
                             <StyledTextWrapper>
-                                <StyledText dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(section.about_content) }} />
+                                {section?.about_content?.map((content, i) =>
+                                    < StyledText key={i}
+                                        style={{ paddingBottom: '2rem' }}
+                                        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(content) }} />
+                                )}
                             </StyledTextWrapper>
                             <div> </div>
                         </StyledGridWrapper>
