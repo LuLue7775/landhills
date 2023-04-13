@@ -154,7 +154,7 @@ export default Page
  * either prefetch or fetch with ISR
  * @TODO make this react-query again
  */
-export async function getStaticProps() {
+export async function getServerSideProps(context) {
   // const queryClient = new QueryClient()
   // const data = await queryClient.fetchQuery(['projects'], getProjects)
   const data = await fetch(`https://landhills.co/wp-json/wp/v2/projects?per_page=20`)
@@ -177,6 +177,5 @@ export async function getStaticProps() {
       // dehydratedState: dehydrate(queryClient),
       projects: sortedData
     },
-    revalidate: 1
   }
 }

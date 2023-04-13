@@ -88,10 +88,6 @@ export const GlobalStyle = createGlobalStyle`
   }
 
 
-  /* THIS IS FOR DATA TABLE* /
-//   [data-row-id="first_col"] {
-//     background-color: black;
-// }
 `;
 
 export const StyledLayout = styled.div`
@@ -142,13 +138,18 @@ export const StyledMenuInfo = styled.div`
 `
 export const StyledCloseButton = styled.button`
     position: absolute;
-    right: 0;
+    right: 2.5rem;
     top: 0;
-    margin: 1rem;
-    background-image: url('/img/close.png');
-    background-size: cover;
+    padding: 2rem;
     width: 30px;
     height: 30px;
+    cursor: crosshair;
+
+    font-family: 'Circular Book';
+    font-size: 1rem;
+    letter-spacing: .7px;
+    line-height: 14.5px;
+
 `
 
 export const StyledNav = styled.div`
@@ -334,14 +335,23 @@ export const StyledImageLink = styled.a`
  * Projects Page
  */
 export const StyledItems = styled.div`
-  display: inline-block;
-  position: relative;
-  height: 100%;
-  width: auto;
-  max-width: 90vw;
-  margin: 1rem;
-  overflow: hidden;
-  padding-bottom: 1.5rem;
+
+    display: inline-block;
+    position: relative;
+    height: 100%;
+    width: auto;
+    max-width: 90vw;
+    margin: 0 1rem 6rem 1rem;
+    overflow: hidden;
+    padding-bottom: 2rem;
+
+  ${({ singleProject }) => singleProject && `
+    padding: 0;
+    margin: 1rem;
+    height: auto;
+    max-height: 1000px; // dense factor
+    
+  `}
 
 `;
 
@@ -351,19 +361,30 @@ export const StyledRow = styled.div`
   position: relative;
   font-size: 5rem;
   text-align: center;
+  display: flex;
   justify-content: center;
   align-items: end;
-  display: flex;
+
   flex-wrap: wrap;
-  margin: 0 2rem;
+  margin: 0 1.1rem;
 `;
+
 
 export const StyledImage = styled.img`
   height: 100%;
   width: auto;
-  max-width: min(80vw, 1000px); 
   object-fit: contain;
-  
+
+  @media ${devices.laptop} {
+   max-width: min(80vw, 1000px); 
+ }
+
+   ${({ singleProject }) => singleProject && `
+    max-height: 1000px;
+    width: auto;
+    max-width: 100%;    
+  `}
+
 `;
 
 // ========= next/image version 
@@ -386,6 +407,10 @@ export const StyledImageInfo = styled.div`
   position: absolute;
   bottom: -3px;
 
+  font-family: 'Circular Book';
+  font-size: 1rem;
+  letter-spacing: .7px;
+  line-height: 18.5px;
 `
 
 /**
@@ -404,7 +429,7 @@ export const StyledObject = styled.div`
   height: auto;
   ${({ object_top }) => `margin-top: ${object_top}px`};
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: repeat(6, 1fr);
 `;
 
 export const StyledObjectContent = styled.div`
@@ -440,7 +465,7 @@ export const StyledTableWrapper = styled.div`
   height: auto;
   width: calc(100% - 4rem);
   margin: 0 2rem 100px 2rem;
-  border-top: 1px solid #00000050;
+  border-top: 1px solid #00000022;
 
   font-family: 'Circular Book';
   font-size: 1rem;
@@ -490,14 +515,12 @@ export const StyledTextWrapper = styled.div`
 
 export const StyledProjectGrid = styled.div`
   position: relative;
-  width: 100%;
-  
+  margin-right: 4rem;
+
   @media ${devices.laptop} {
-    height: calc(100vh - 70px);  
-    overflow: hidden;
-    display: grid;
-    grid-auto-flow: column;
-    grid-template-columns: 45% 55%;
+      float: left;
+      width: 40%;
+      overflow: hidden;
   }
 `
 
@@ -507,37 +530,23 @@ export const StyledProjectTitle = styled.h1`
   letter-spacing: .7px;
   line-height: 28px;
 
+  margin: 0 0 1rem 0;
+
 `
 
 export const StyledProjectContent = styled.div`
   position: relative;
   height: auto;
   width: 100%;
-  margin: 4rem 2rem;
+  margin: 0 2rem;
   overflow-y: scroll;
   overflow-x: hidden;
   ::-webkit-scrollbar {
     width: 0px;
   }
-box-shadow:         inset 0px 11px 8px -10px #CCC,
-        inset 0px -11px 8px -10px #CCC;  
 
 `
 
-export const StyledProjectCoverImageContainer = styled.div`
-  position: relative;
-  // position: absolute;
-  // top: 0;
-  // z-index: -1;
-  
-  @media ${devices.laptop} {
-    position: absolute;
-    right: -10%;
-    top: 0;
-    height: 70vh;
-    width: 60%;
-  }
-`
 
 /**
  * Loader
@@ -567,9 +576,29 @@ export const StyledExpandContent = styled.div`
   display: flex;
   gap: 2rem;
   padding: 0 2rem;
-
-    font-family: 'Circular Book';
+  font-family: 'Circular Book';
   font-size: 1rem;
   letter-spacing: .7px;
   line-height: 27.5px;
 `
+export const StyledExpandText = styled.div`
+  width: 20%;
+  height: 100%;
+  text-align: justify;
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  justify-content: end;
+  
+  position: absolute;
+  left: 40%;
+  
+
+  font-family: 'Circular Book';
+  font-size: 1rem;
+  letter-spacing: .7px;
+  line-height: 14.5px;
+
+
+`
+

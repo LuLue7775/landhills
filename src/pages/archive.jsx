@@ -26,17 +26,15 @@ const Page = ({ projects }) => {
     // const { isLoading } = useProjectsQuery()
     const [projectImage, setProjectImage] = useState('')
 
-    const handleRowClicked = target => {
-        router.push(
-            `${process.env.NODE_ENV !== 'production'
-                ? 'http://localhost:3000' : process.env.NEXT_PUBLIC_SITE_URL}/projects/${target.id}`
-        )
-    }
 
     const handleRowMouseEnter = target => setProjectImage(target.image)
     const handleRowMouseLeave = () => setProjectImage('')
 
     const viewport = useViewport()
+
+    // const [sort, setSort] = useState(false)
+    const [hideImage, setHideImage] = useState(false)
+
 
     return (
         // isLoading ?
@@ -50,19 +48,29 @@ const Page = ({ projects }) => {
                     columns={columns}
                     data={projects}
                     highlightOnHover={true}
-                    onRowClicked={handleRowClicked}
                     onRowMouseEnter={handleRowMouseEnter}
                     onRowMouseLeave={handleRowMouseLeave}
                     responsive={true}
-                    // striped={true}
                     customStyles={customStyles}
-                    // expandableRows={viewport === 'tablet' || viewport === 'mobile'}
                     expandableRows={true}
+                    expandOnRowClicked={true}
                     expandableRowsComponent={ExpandedComponent}
+                    expandableRowsHideExpander={true}
+                    // sortIcon={
+                    //     <span
+                    //         // onClick={() => setSort(!sort)}
+                    //         style={{
+                    //             transform: `${sort ? 'rotate(90deg)' : 'rotate(-90deg)'}`,
+                    //             display: 'block',
+                    //             margin: '4px'
+                    //         }}
+                    //     > ＞ </span>
+                    // }
+                    onRowExpandToggled={(expanded,) => expanded ? setHideImage(false) : setHideImage(true)} // hide float image
                 />
 
                 {viewport !== 'tablet' && viewport !== 'mobile' &&
-                    projectImage &&
+                    projectImage && hideImage &&
                     <ArchiveImage projectImage={projectImage} />
                 }
             </StyledTableWrapper>

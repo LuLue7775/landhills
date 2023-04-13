@@ -3,22 +3,22 @@ import {
     StyledProjectContent,
     StyledProjectTitle,
     StyledText,
-    StyledProjectCoverImageContainer,
-    StyledRow,
     StyledItems,
+    StyledImage,
+    StyledPages,
+    StyledProjectCoverImageContainer,
     StyledLoaderContainer,
     StyledLoader,
-    StyledImage,
-    StyledPages
 } from '@/styles/styles'
 import { QueryClient, dehydrate } from '@tanstack/react-query'
-import Image from 'next/image'
 import { getProjects, getSingleProject, useSingleProjectQuery } from '@/queries/useProjectsQuery'
-import { useRouter } from 'next/router'
+
+
 
 export default function ProjectsSinglePage({ project }) {
     // const { query: { projectId } } = useRouter()
     // const { project, isLoading } = useSingleProjectQuery(projectId)
+
 
     return (
         // isLoading ?
@@ -37,45 +37,36 @@ export default function ProjectsSinglePage({ project }) {
                     <StyledText className="editor"
                         dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(project?.content?.rendered) }} />
                 </StyledProjectContent>
-                <StyledProjectCoverImageContainer>
-                    {project?.project_cover_image &&
-                        <StyledImage
-                            className="images"
-                            draggable="false"
-                            src={project.project_cover_image?.guid}
-                            alt="image"
-                        />
-                    }
-                </StyledProjectCoverImageContainer>
+
             </StyledProjectGrid>
 
-            <StyledRow>
+            <div style={{
+                width: '100%',
+                textAlign: 'center'
+            }}>
+                {project?.project_cover_image &&
+                    <StyledImage
+                        className="images"
+                        draggable="false"
+                        src={project.project_cover_image?.guid}
+                        alt="image"
+                        style={{ maxWidth: '50%', width: 'auto' }}
+                    />
+                }
                 {project?.project_images.length &&
                     project?.project_images?.map(image => (
-                        <StyledItems key={image.ID}>
+                        <StyledItems key={image.ID} singleProject>
                             <StyledImage
                                 className="images"
                                 draggable="false"
                                 src={image.guid}
                                 alt="image"
+
+                                singleProject
                             />
                         </StyledItems>
-
-                        // <StyledItems key={image.ID}>
-                        //     <Image
-                        //         alt="projects"
-                        //         src={image.guid}
-                        //         width={300}
-                        //         height={300}
-                        //         style={{
-                        //             width: 'auto',
-                        //             height: '100%',
-                        //             objectFit: 'contain'
-                        //         }}
-                        //     />
-                        // </StyledItems>
                     ))}
-            </StyledRow>
+            </div>
         </StyledPages>
     )
 }
@@ -106,7 +97,7 @@ export async function getStaticPaths() {
  * @TODO make this react-query again
  */
 export async function getStaticProps({ params }) {
-    console.log(params)
+    // console.log(params)
     // const queryClient = new QueryClient();
 
     // const project = await queryClient.fetchQuery({

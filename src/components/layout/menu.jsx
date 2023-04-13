@@ -25,12 +25,11 @@ export default function Menu({ isMenuOpened, setMenuOpen }) {
 
     return (
         isMenuOpened &&
-        <StyledMenu ref={menuRef}>
-            <StyledMenuWrap id="menu">
+        <StyledMenu ref={menuRef} style={{ cursor: 'url("/img/close.png"), auto' }}>
+            <StyledMenuWrap id="menu" >
                 <StyledMenuUl>
                     <li className="nav-item">
                         <StyledLink
-                            // href="/projects" // we dont use native href because we need to use the route state. see useDelayRouting
                             onClick={() => routerWrapper.push('/projects')}
                         > PROJECTS </StyledLink>
                     </li>
@@ -65,7 +64,9 @@ export default function Menu({ isMenuOpened, setMenuOpen }) {
                         : <p> {error} </p>
                 }
             </StyledMenuWrap>
-            <StyledCloseButton onClick={() => setMenuOpen(!isMenuOpened)} />
+            <StyledCloseButton onClick={() => setMenuOpen(!isMenuOpened)} >
+                Close
+            </StyledCloseButton>
         </StyledMenu>
     )
 }

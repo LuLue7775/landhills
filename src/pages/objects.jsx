@@ -12,10 +12,68 @@ import { getObjects } from '@/queries/useObjectsQuery'
 import { QueryClient, dehydrate } from '@tanstack/react-query'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
+import Object from '@/components/Object'
 
 const Shader = dynamic(() => import('@/components/canvas/Shader/Shader'), {
     ssr: false,
 })
+
+
+
+const placeObject = (col, object) => {
+    switch (col) {
+        case '1':
+            return (
+                <>
+                    <Object object={object} />
+                    <div /><div /><div /><div /><div />
+                </>
+            )
+        case '2':
+            return (
+                <>
+                    <div />
+                    <Object object={object} />
+                    <div /><div /><div /><div />
+                </>
+            )
+        case '3':
+            return (
+                <>
+                    <div /><div />
+                    <Object object={object} />
+                    <div /><div /><div />
+                </>
+            )
+        case '4':
+            return (
+                <>
+                    <div /><div /><div />
+                    <Object object={object} />
+                    <div /><div />
+                </>
+            )
+        case '5':
+            return (
+                <>
+                    <div /><div /><div /><div />
+                    <Object object={object} />
+                    <div />
+                </>
+            )
+        case '6':
+            return (
+                <>
+                    <div /><div /><div /><div /><div />
+                    <Object object={object} />
+                </>
+            )
+
+        // default:
+        //     console.log("didn't match any one")
+        //     break
+    }
+}
 
 const Page = () => {
     const { objects, isLoading } = useObjectsQuery()
@@ -35,32 +93,7 @@ const Page = () => {
                             object_width={object.object_width}
 
                         >
-                            {object.object_column === '3'
-                                ? <> <div></div><div></div></>
-                                : object.object_column === '2' ? <div></div> : ''
-                            }
-                            <div>
-                                {object?.object_image?.guid ? <StyledImage
-                                    className="images"
-                                    draggable="false"
-                                    src={object.object_image.guid}
-                                    alt="image"
-                                    style={{ height: 'auto', width: `${object.object_width}px`, maxWidth: `${object.object_width}px` }}
-                                /> : ''}
-
-                                {object.object_content ? <StyledObjectContent
-                                    className="editor object circular-medium"
-                                    object_width={object.object_width}
-                                    circular_medium={object?.is_editor_font_circular_medium === '1'}
-                                    dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(object?.object_content) }} />
-                                    : ''
-                                }
-
-                            </div>
-                            {object.object_column === '3'
-                                ? ''
-                                : object.object_column === '2' ? <div></div> : <> <div></div><div></div></>}
-
+                            {placeObject(object.object_column, object)}
                         </StyledObject>
 
                     ))}

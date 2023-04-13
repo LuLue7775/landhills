@@ -5,33 +5,48 @@ export const columns = [
         id: 'first_col',
         selector: row => row.title,
         sortable: true,
+        // right: true,
+
     },
-    // { hide: 'md' },
-    // { hide: 'md' },
-    // { hide: 'md' },
+    { hide: 'md' },
+    { hide: 'md' },
+    { hide: 'md' },
     {
         name: 'location',
         selector: row => row.location,
         sortable: true,
         // right: true,
-        hide: 'md'
+        hide: 'md',
+        // style: {
+        //     display: 'flex',
+        //     justifyContent: 'end'
+        // }
     },
-    // { hide: 'md' },
+    { hide: 'md' },
+
     {
         name: 'type',
         selector: row => row.type,
         sortable: true,
         // right: true,
-        hide: 'md'
+        hide: 'md',
+        // style: {
+        //     display: 'flex',
+        //     justifyContent: 'end'
+        // }
     },
-    // { hide: 'md' },
+    { hide: 'md' },
 
     {
         name: 'year',
         selector: row => row.year,
         sortable: true,
         // right: true,
-        hide: 'md'
+        hide: 'md',
+        // style: {
+        //     display: 'flex',
+        //     justifyContent: 'end'
+        // }
     },
 
     {
@@ -39,6 +54,10 @@ export const columns = [
         selector: row => row.no,
         sortable: true,
         right: true,
+        style: {
+            display: 'flex',
+            justifyContent: 'end'
+        }
     },
 ];
 
@@ -62,8 +81,8 @@ export const customStyles = {
             paddingRight: '0rem',
             fontFamily: 'Circular Medium',
 
-            display: 'flex',
-            justifyContent: 'end'
+            // display: 'flex',
+            // justifyContent: 'end'
         },
 
     },
@@ -71,13 +90,22 @@ export const customStyles = {
         style: {
             paddingLeft: '0rem', // override the cell padding for data cells
             paddingRight: '0rem',
-            display: 'flex',
-            justifyContent: 'end'
+            // display: 'flex',
+            // justifyContent: 'end'
         },
     },
-    // table: {
-    //     display: 'flex',
-    //     justifyContent: 'end'
-    // }
+    // headRow: {
+    //     style: {
+    //         // backgroundColor: theme.background.default,
+    //         minHeight: '52px',
+    //         // borderBottomWidth: '20px',
+    //         // borderBottomColor: theme.divider.default,
+    //         borderBottomStyle: 'solid',
+    //         borderTopColor: '#f00'
+    //     },
+    //     denseStyle: {
+    //         minHeight: '10px',
+    //     },
+    // },
 
 };
