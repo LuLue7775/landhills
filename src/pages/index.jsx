@@ -1,18 +1,14 @@
 import Carousel from '@/components/carousel'
-import { StyledImageLink, StyledLoader, StyledLoaderContainer, StyledTextHome } from '@/styles/styles'
+import { StyledImageLink, StyledLoader, StyledLoaderContainer, StyledSlide, StyledSlider, StyledTextHome } from '@/styles/styles'
 
 import dynamic from 'next/dynamic'
 import useHomeQuery, { getHome } from '@/queries/useHomeQuery'
 import Image from 'next/image'
 import DOMPurify from 'isomorphic-dompurify';
 import { dehydrate, QueryClient } from '@tanstack/react-query'
+import { useEffect, useState } from 'react'
+import Carousel2 from '@/components/Carousel2'
 
-// import Shader from '@/components/canvas/Shader/Shader'
-
-// Dynamic import is used to prevent a payload when the website start that will include threejs r3f etc..
-// WARNING ! errors might get obfuscated by using dynamic import.
-// If something goes wrong go back to a static import to show the error.
-// https://github.com/pmndrs/react-three-next/issues/49
 const Shader = dynamic(() => import('@/components/canvas/Shader/Shader'), {
   ssr: false,
 })
@@ -22,21 +18,24 @@ const Shader = dynamic(() => import('@/components/canvas/Shader/Shader'), {
 const Page = () => {
   const { home, isLoading } = useHomeQuery()
   const { current_event, home_images } = home?.[0] || []
+  const [currSlide, setSlide] = useState(0)
 
   return (
     isLoading ?
       <StyledLoaderContainer>
         <StyledLoader />
       </StyledLoaderContainer>
-      : <div style={{ height: "100dvh", width: "100%", }}>
-
-        <Carousel>
-          {
-            home_images?.map(imageData => (
+      :
+      <div style={{ height: "100dvh", width: "100%", }}>
+        <Carousel2 amount={home_images?.length} currSlide={currSlide} setSlide={setSlide}>
+          {home_images?.map((imageData, i) => (
+            <StyledSlide key={i} className='slide'
+              style={currSlide === i ? { opacity: '1' } : { opacity: '0' }}
+            >
               <StyledImageLink key={imageData.id}
                 draggable="false"
                 $hasLink={imageData.image_link ? true : false}
-                href={imageData.image_link ? imageData.image_link : false}
+                href={imageData.image_link ? imageData.image_link : ''}
               >
                 <Image
                   key={imageData.id}
@@ -44,25 +43,32 @@ const Page = () => {
                   draggable="false"
                   src={imageData.image}
                   alt="image"
-                  responsive
                   width={1920}
                   height={1080}
+                  sizes="100vw"
                   style={{
                     width: '100%',
-                    // height: 'auto',
-                    // height: '100%',
-                    objectFit: 'contain'
+                    minHeight: '100%',
+                    objectFit: 'cover',
                   }}
                 />
               </StyledImageLink>
-            ))
+
+            </StyledSlide>
+          ))
+
           }
-        </Carousel>
+          <StyledTextHome style={{ position: 'absolute', right: '0', marginRight: '2rem', fontSize: '2rem' }}>
+            {currSlide + 1}/{home_images?.length}
+          </StyledTextHome>
+
+        </Carousel2>
 
         <StyledTextHome className="home"
           style={{ fontStyle: "bold" }}
           dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(current_event) }} />
-      </div>
+
+      </div >
   )
 }
 
@@ -90,3 +96,69 @@ export async function getStaticProps() {
     revalidate: 1
   }
 }
+
+
+
+        // <Carousel>
+        //   <StyledImageLink key={'f1'}
+        //     draggable="false"
+        //   >
+        //     <Image
+        //       className="images"
+        //       draggable="false"
+        //       src={'https://fakeimg.pl/1920x1080/ff0000/'}
+        //       alt="image"
+        //       width={1920}
+        //       height={1080}
+        //       sizes="100vw"
+        //       style={{
+        //         width: '100%',
+        //         minHeight: '100%',
+        //         objectFit: 'cover',
+        //       }}
+        //     />
+        //   </StyledImageLink>
+        //   {
+        //     home_images?.map(imageData => (
+        //       <StyledImageLink key={imageData.id}
+        //         draggable="false"
+        //         $hasLink={imageData.image_link ? true : false}
+        //         href={imageData.image_link ? imageData.image_link : ''}
+        //       >
+        //         <Image
+        //           key={imageData.id}
+        //           className="images"
+        //           draggable="false"
+        //           src={imageData.image}
+        //           alt="image"
+        //           // responsive="true"
+        //           // width={1920}
+        //           // height={1080}
+        //           // style={{
+        //           //   width: '110%',
+        //           //   // width: 'auto',
+        //           //   // height: 'auto',
+        //           //   // height: '100%',
+        //           //   objectFit: 'cover',
+        //           //   // translate: 'transformX(-100%)'
+        //           //   // position: 'absolute',
+        //           //   // left: '0'
+
+        //           // }}
+        //           width={1920}
+        //           height={1080}
+        //           sizes="100vw"
+        //           style={{
+        //             width: '100%',
+        //             minHeight: '100%',
+        //             objectFit: 'cover',
+        //             // minWidth: '100%',
+        //             // textAlign: 'center',
+        //             // transform: 'translate(-15%, -5%)'
+        //           }}
+        //         />
+        //       </StyledImageLink>
+        //     ))
+        //   }
+
+        // </Carousel>

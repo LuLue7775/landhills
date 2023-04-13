@@ -70,7 +70,7 @@ const nextConfig = {
 }
 
 nextConfig.images = {
-  domains: ['landhills.co', 'landhills.netlify.app'],
+  domains: ['landhills.co', 'landhills.netlify.app', 'fakeimg.pl'],
 }
 nextConfig.env = {
   NEXT_PUBLIC_API_URL: 'https://landhills.co/wp-json/wp/v2',

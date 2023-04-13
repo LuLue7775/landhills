@@ -258,7 +258,7 @@ export const StyledSwipeHandler = styled.div`
  z-index: -1;
 `
 export const StyledCarouselWrapper = styled.div`
-  width: 100%;
+    width: 100%;
   height: auto;
   // max-height: 40vh;
   overflow: hidden;
@@ -266,7 +266,8 @@ export const StyledCarouselWrapper = styled.div`
 
 export const StyledCarouselContainer = styled.div`
 
-  display: flex;
+    display: flex;
+
     transition: ${(props) => (props.sliding ? "none" : "opacity 0.5s ease")};
     opacity: ${(props) => {
     if (!props.sliding) return "1";
@@ -276,12 +277,14 @@ export const StyledCarouselContainer = styled.div`
 
   ${(props) => (props.homepage ? `
     position: absolute;
-    transform: translate(0, -50%);
-    top: 50%;
+    // transform: translateX(5%);
+    // left: -10%;
+    // width: 150%;
   `: `
     position: relative;
   `
   )}
+
 
 
 `;
@@ -309,19 +312,21 @@ export const StyledSlideButtonContainer = styled.div`
   display: flex;
   justify-content: space-between;
   padding-bottom: 10px;
+  z-index:30;
 //   pointer-events: none;
 `;
 
 export const StyledSlideButton = styled.button`
   position: absolute;
-  ${(props) => props.direction === 'PREV' ? `left:0;` : `right:0;`}
+  ${({ dir }) => dir === 'prev' ? `left:0;` : `right:0;`}
   top: 50%;
+
   transform: translateY(-50%);
 
   height: 50%;
   width: 30%;
   display: block;
-  cursor: ${(props) => props.direction === 'PREV' ? `url('/img/prev.png')` : `url('/img/next.png')`}, auto;
+  cursor: ${({ dir }) => dir === 'prev' ? `url('/img/prev.png')` : `url('/img/next.png')`}, auto;
   margin: 10px;
   text-decoration: none;
 `;
@@ -593,12 +598,41 @@ export const StyledExpandText = styled.div`
   position: absolute;
   left: 40%;
   
-
   font-family: 'Circular Book';
   font-size: 1rem;
   letter-spacing: .7px;
   line-height: 14.5px;
+`
+
+export const StyledSlider = styled.div`
+  position: relative;
+  // overflow: hidden;
+  ${({ isHome, isObject }) => isHome ? `
+    height: 100vh;
+    width: 100vw;
+  ` : isObject ? `
+      // min-height: 500px;
+      height: auto;
+      width: 100%;
+
+
+  ` : `
+    height: 300px;
+    width: 100%;
+  `} 
 
 
 `
+export const StyledSlide = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.4s ease-in-out;
+text-align: center;
+
+`
+
 

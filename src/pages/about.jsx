@@ -11,18 +11,19 @@ import {
     StyledLoader,
     StyledContentWrapper
 } from '@/styles/styles'
-import Carousel from '@/components/carousel'
-
-import Image from 'next/image'
 import dynamic from 'next/dynamic'
 import { dehydrate, QueryClient } from '@tanstack/react-query'
 import useViewport from '@/utils/useViewport'
+import AboutGrid from '@/components/AboutGrid'
+import { useRouter } from 'next/router'
 
 const Shader = dynamic(() => import('@/components/canvas/Shader/Shader'), {
     ssr: false,
 })
 
 const Page = () => {
+    const router = useRouter()
+
     const { about, isLoading } = useAboutQuery()
     const { brandInfo } = useBrandInfoQuery()
     const { info_content } = brandInfo?.[0] || []
@@ -41,40 +42,8 @@ const Page = () => {
                     </StyledMenuInfo>
                 }
                 <StyledContentWrapper>
-                    {about?.map(section => (
-                        <StyledGridWrapper key={section.id}>
-                            <div></div>
-                            <StyledCarouselWrapper>
-                                <Carousel>
-                                    {section?.about_images?.map(image => (
-                                        <Image
-                                            key={image.ID}
-                                            draggable="false"
-                                            src={image.guid}
-                                            alt="image"
-                                            width={200}
-                                            height={200}
-                                            style={{
-                                                width: 'auto',
-                                                height: '100%',
-                                                maxWidth: '400px',
-                                                maxHeight: '400px',
-                                                objectFit: 'contain',
-                                            }}
-                                        />
-                                    ))}
-                                </Carousel>
-                            </StyledCarouselWrapper>
-
-                            <StyledTextWrapper>
-                                {section?.about_content?.map((content, i) =>
-                                    < StyledText key={i}
-                                        style={{ paddingBottom: '2rem' }}
-                                        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(content) }} />
-                                )}
-                            </StyledTextWrapper>
-                            <div> </div>
-                        </StyledGridWrapper>
+                    {about?.map((about_element, i) => (
+                        <AboutGrid key={i} about={about_element} router={router} />
                     ))}
                 </StyledContentWrapper>
             </StyledPages>

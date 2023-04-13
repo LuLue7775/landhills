@@ -1,21 +1,24 @@
 import useEventsQuery, { getEvents } from '@/queries/useEventsQuery'
-import { StyledPages, StyledGridWrapper, StyledMenuInfo, StyledText, StyledCarouselWrapper, StyledTextWrapper, StyledLoaderContainer, StyledLoader, StyledContentWrapper } from '@/styles/styles'
+import { StyledPages, StyledMenuInfo, StyledText, StyledCarouselWrapper, StyledTextWrapper, StyledLoaderContainer, StyledLoader, StyledContentWrapper, StyledSlide } from '@/styles/styles'
 import useBrandInfoQuery from '@/queries/useBrandInfoQuery'
 import dynamic from 'next/dynamic'
-import Image from 'next/image'
-import Carousel from '@/components/carousel'
 import { dehydrate, QueryClient } from '@tanstack/react-query'
 import useViewport from '@/utils/useViewport'
+import EventGrid from '@/components/EventGrid'
+import { useRouter } from 'next/router'
 
 const Shader = dynamic(() => import('@/components/canvas/Shader/Shader'), {
     ssr: false,
 })
 
 const Page = () => {
+    const router = useRouter()
+
     const { events, isLoading } = useEventsQuery()
     const { brandInfo } = useBrandInfoQuery()
     const { info_content } = brandInfo?.[0] || []
     const viewport = useViewport()
+
     return (
         isLoading ?
             <StyledLoaderContainer>
@@ -30,43 +33,8 @@ const Page = () => {
                     </StyledMenuInfo>
                 }
                 <StyledContentWrapper>
-                    {events?.map(event => (
-                        <StyledGridWrapper key={event.id}>
-                            <div></div>
-                            <StyledCarouselWrapper>
-                                <Carousel>
-                                    {event?.event_images?.map(image => (
-                                        <Image
-                                            key={image.ID}
-                                            draggable="false"
-                                            src={image.guid}
-                                            alt="image"
-                                            width={200}
-                                            height={200}
-                                            style={{
-                                                width: 'auto',
-                                                height: '100%',
-                                                maxWidth: '400px',
-                                                maxHeight: '400px',
-                                                objectFit: 'contain',
-                                            }}
-                                        />
-                                    ))}
-                                </Carousel>
-                            </StyledCarouselWrapper>
-
-                            <StyledTextWrapper className='events' >
-                                {event?.event_content?.map((content, i) =>
-                                    <StyledText key={i}
-                                        style={{ paddingBottom: '2rem' }}
-                                        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(content) }} />
-                                )}
-                                <StyledText
-                                    style={{ paddingBottom: '1rem' }}
-                                    dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(event.event_content_sm) }} />
-                            </StyledTextWrapper>
-                            <div> </div>
-                        </StyledGridWrapper>
+                    {events?.map((event, i) => (
+                        <EventGrid key={i} event={event} router={router} />
                     ))}
                 </StyledContentWrapper>
             </StyledPages>
