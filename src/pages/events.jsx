@@ -1,5 +1,5 @@
 import useEventsQuery, { getEvents } from '@/queries/useEventsQuery'
-import { StyledPages, StyledMenuInfo, StyledText, StyledCarouselWrapper, StyledTextWrapper, StyledLoaderContainer, StyledLoader, StyledContentWrapper, StyledSlide } from '@/styles/styles'
+import { StyledPages, StyledMenuInfo, StyledText, StyledContentWrapper, StyledSlide } from '@/styles/styles'
 import useBrandInfoQuery from '@/queries/useBrandInfoQuery'
 import dynamic from 'next/dynamic'
 import { dehydrate, QueryClient } from '@tanstack/react-query'

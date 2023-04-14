@@ -10,44 +10,45 @@ export default function AboutGrid({ about, router }) {
     return (
         <StyledGridWrapper>
             <div></div>
-            <StyledCarouselWrapper>
-                <Carousel2 amount={about?.about_images?.length} currSlide={currSlide} setSlide={setSlide}>
-                    {about?.about_images?.map((imageData, i) => (
-                        <StyledSlide key={i} className='slide'
-                            style={currSlide === i ? { opacity: '1' } : { opacity: '0' }}
-                        >
-                            <Image
-                                key={imageData.id}
-                                className="images"
-                                draggable="false"
-                                src={imageData.guid}
-                                alt="image"
-                                width={500}
-                                height={500}
-                                style={{
-                                    width: 'auto',
-                                    height: '100%',
-                                    maxWidth: '400px',
-                                    maxHeight: '400px',
-                                    objectFit: 'cover',
-                                }}
-                            />
+            <div>
+                <StyledCarouselWrapper>
+                    <Carousel2 amount={about?.about_images?.length} currSlide={currSlide} setSlide={setSlide}>
+                        {about?.about_images?.map((imageData, i) => (
+                            <StyledSlide key={i} className='slide'
+                                style={currSlide === i ? { opacity: '1' } : { opacity: '0' }}
+                            >
+                                <Image
+                                    key={imageData.id}
+                                    className="images"
+                                    draggable="false"
+                                    src={imageData.guid}
+                                    alt="image"
+                                    width={500}
+                                    height={500}
+                                    style={{
+                                        width: 'auto',
+                                        height: '100%',
+                                        // maxWidth: '400px',
+                                        // maxHeight: '400px',
+                                        objectFit: 'contain',
+                                    }}
+                                />
 
-                        </StyledSlide>
-                    ))
+                            </StyledSlide>
+                        ))
 
-                    }
-                    <StyledText
-                        isHome={router.pathname === '/'}
-                        style={{
-                            position: 'absolute', right: '0', bottom: '-1.5rem',
-                            fontSize: '1rem',
-                        }}>
-                        {currSlide + 1}/{about?.about_images?.length}
-                    </StyledText>
-                </Carousel2>
-
-            </StyledCarouselWrapper>
+                        }
+                    </Carousel2>
+                </StyledCarouselWrapper>
+                <StyledText
+                    isHome={router.pathname === '/'}
+                    style={{
+                        position: 'absolute', right: '0', bottom: '-1.5rem',
+                        fontSize: '1rem',
+                    }}>
+                    {currSlide + 1}/{about?.about_images?.length}
+                </StyledText>
+            </div>
 
             <StyledTextWrapper className='events' >
                 {about?.about_content?.map((content, i) =>
@@ -57,5 +58,5 @@ export default function AboutGrid({ about, router }) {
                 )}
             </StyledTextWrapper>
             <div> </div>
-        </StyledGridWrapper>)
+        </StyledGridWrapper >)
 }

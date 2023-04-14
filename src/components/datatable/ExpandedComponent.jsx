@@ -21,10 +21,8 @@ export default function ExpandedComponent({ data }) {
                 style={{
                     width: 'auto',
                     height: '100%',
-                    // height: 'auto',
-
                     objectFit: 'contain',
-                    paddingLeft: 'calc(25vw - 4rem)',
+                    paddingLeft: 'calc(25vw - 4rem )',
 
                 }}
             />
