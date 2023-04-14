@@ -40,7 +40,8 @@ const Page = ({ projects }) => {
     const ref = useRef()
 
     useEffect(() => {
-        const el = document.querySelector(`[data-column-id="${sortedCol.selectedColumn.id}"]`);
+        if (!sortedCol) return
+        const el = document.querySelector(`[data-column-id="${sortedCol?.selectedColumn.id}"]`);
         const icon = el?.querySelector("span")
         if (!icon) return
         if (sortedCol.sortDirection === 'asc') {
@@ -87,7 +88,7 @@ const Page = ({ projects }) => {
                     }
 
                     onSort={(selectedColumn, sortDirection, sortedRows) => setSortedCol({ selectedColumn, sortDirection })}
-                    onRowExpandToggled={(expanded,) => expanded ? setHideImage(false) : setHideImage(true)} // hide float image
+                    onRowExpandToggled={(expanded) => expanded ? setHideImage(false) : setHideImage(true)} // hide float image
                 />
 
                 {viewport !== 'tablet' && viewport !== 'mobile' &&
