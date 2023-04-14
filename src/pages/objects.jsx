@@ -109,7 +109,7 @@ Page.r3f = (props) => (
 
 export default Page
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
     const queryClient = new QueryClient()
     await queryClient.prefetchQuery(['objects'], getObjects)
     /**
@@ -121,6 +121,5 @@ export async function getStaticProps() {
             title: 'Objects',
             dehydratedState: dehydrate(queryClient),
         },
-        revalidate: 1
     }
 }
