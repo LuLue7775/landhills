@@ -43,8 +43,8 @@ export default function AboutGrid({ about, router }) {
                 <StyledText
                     isHome={router.pathname === '/'}
                     style={{
-                        position: 'absolute', right: '0', bottom: '-1.5rem',
-                        fontSize: '1rem',
+                        position: 'relative', width: '100%', textAlign: 'end',
+                        fontSize: '1rem', marginTop: '.5rem'
                     }}>
                     {currSlide + 1}/{about?.about_images?.length}
                 </StyledText>
