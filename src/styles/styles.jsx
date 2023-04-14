@@ -138,10 +138,10 @@ export const StyledMenuInfo = styled.div`
 `
 export const StyledCloseButton = styled.button`
     position: absolute;
-    right: 2.5rem;
+    right: 1.5rem;
     top: 0;
     padding: 2rem;
-    width: 30px;
+    width: 70px;
     height: 30px;
     cursor: crosshair;
 
@@ -376,7 +376,8 @@ export const StyledRow = styled.div`
 
 
 export const StyledImage = styled.img`
-  height: 100%;
+  height: min;
+  max-height: 400px;
   width: auto;
   object-fit: contain;
 
