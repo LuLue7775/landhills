@@ -15,7 +15,9 @@ import { useState } from 'react';
 import { useRouter } from 'next/router'
 import DataTable from 'react-data-table-component'
 import useViewport from '@/utils/useViewport'
-
+import { useRef } from 'react'
+import { useEffect } from 'react'
+import gsap from 'gsap'
 const Shader = dynamic(() => import('@/components/canvas/Shader/Shader'), {
     ssr: false,
 })
@@ -32,9 +34,25 @@ const Page = ({ projects }) => {
 
     const viewport = useViewport()
 
-    // const [sort, setSort] = useState(false)
+    const [sort, setSort] = useState(false)
+    const [sortedCol, setSortedCol] = useState()
     const [hideImage, setHideImage] = useState(false)
+    const ref = useRef()
 
+    useEffect(() => {
+        const el = document.querySelector(`[data-column-id="${sortedCol.selectedColumn.id}"]`);
+        const icon = el?.querySelector("span")
+        if (!icon) return
+        if (sortedCol.sortDirection === 'asc') {
+            gsap.to(icon, {
+                rotation: 180
+            })
+        } else {
+            gsap.to(icon, {
+                rotation: 0
+            })
+        }
+    }, [sortedCol])
 
     return (
         // isLoading ?
@@ -56,16 +74,19 @@ const Page = ({ projects }) => {
                     expandOnRowClicked={true}
                     expandableRowsComponent={ExpandedComponent}
                     expandableRowsHideExpander={true}
-                    // sortIcon={
-                    //     <span
-                    //         // onClick={() => setSort(!sort)}
-                    //         style={{
-                    //             transform: `${sort ? 'rotate(90deg)' : 'rotate(-90deg)'}`,
-                    //             display: 'block',
-                    //             margin: '4px'
-                    //         }}
-                    //     > ＞ </span>
-                    // }
+                    sortIcon={
+                        <span
+                            ref={ref}
+                            onClick={() => setSort(!sort)}
+                            style={{
+                                transform: `rotate(90deg)`,
+                                display: 'block',
+                                margin: '4px'
+                            }}
+                        > ＞ </span>
+                    }
+
+                    onSort={(selectedColumn, sortDirection, sortedRows) => setSortedCol({ selectedColumn, sortDirection })}
                     onRowExpandToggled={(expanded,) => expanded ? setHideImage(false) : setHideImage(true)} // hide float image
                 />
 
