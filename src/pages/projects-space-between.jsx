@@ -113,7 +113,7 @@ const Page = ({ projects }) => {
         //   :
         <StyledPages ref={scrollRef}>
             <StyledRow
-                style={{ justofyContent: 'space-between' }}
+                style={{ justifyContent: 'space-between' }}
             >
                 {projects?.map((project, i) => (
                     <StyledItems key={project.id}

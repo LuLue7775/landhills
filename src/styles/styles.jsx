@@ -504,7 +504,7 @@ export const StyledGridWrapper = styled.div`
   position: relative;
   @media ${devices.laptop} {
       display: grid;
-      grid-template-columns: 2fr 2fr 2fr 2fr;
+      grid-template-columns: repeat(5, 1fr);
     }
 `
 
