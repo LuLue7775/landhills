@@ -40,7 +40,7 @@ export default function EventGrid({ event, router }) {
                     <StyledText
                         isHome={router.pathname === '/'}
                         style={{
-                            position: 'absolute', right: '0', bottom: '-2rem',
+                            position: 'absolute', right: '0', bottom: '-1.5rem',
                             fontSize: '1rem',
                         }}>
                         {currSlide + 1}/{event?.event_images?.length}

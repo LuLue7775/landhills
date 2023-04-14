@@ -40,7 +40,7 @@ export default function AboutGrid({ about, router }) {
                     <StyledText
                         isHome={router.pathname === '/'}
                         style={{
-                            position: 'absolute', right: '0', bottom: '0',
+                            position: 'absolute', right: '0', bottom: '-1.5rem',
                             fontSize: '1rem',
                         }}>
                         {currSlide + 1}/{about?.about_images?.length}
