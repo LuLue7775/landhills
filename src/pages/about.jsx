@@ -29,24 +29,24 @@ const Page = () => {
     const { info_content } = brandInfo?.[0] || []
     const viewport = useViewport()
     return (
-        isLoading ?
-            <StyledLoaderContainer>
-                <StyledLoader />
-            </StyledLoaderContainer>
-            :
-            <StyledPages fixed>
-                {
-                    viewport !== 'tablet' && viewport !== 'mobile' &&
-                    <StyledMenuInfo className='menu'>
-                        <StyledText dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(info_content) }} />
-                    </StyledMenuInfo>
-                }
-                <StyledContentWrapper>
-                    {about?.map((about_element, i) => (
-                        <AboutGrid key={i} about={about_element} router={router} />
-                    ))}
-                </StyledContentWrapper>
-            </StyledPages>
+        // isLoading ?
+        //     <StyledLoaderContainer>
+        //         <StyledLoader />
+        //     </StyledLoaderContainer>
+        //     :
+        <StyledPages fixed>
+            {
+                viewport !== 'tablet' && viewport !== 'mobile' &&
+                <StyledMenuInfo className='menu'>
+                    <StyledText dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(info_content) }} />
+                </StyledMenuInfo>
+            }
+            <StyledContentWrapper>
+                {about?.map((about_element, i) => (
+                    <AboutGrid key={i} about={about_element} router={router} />
+                ))}
+            </StyledContentWrapper>
+        </StyledPages>
     )
 }
 

@@ -215,12 +215,12 @@ const CarouserContainerInner = styled.div`
 display: flex;
   overflow-x: scroll;
   scroll-snap-type: x mandatory;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-
+  
   // offset for children spacing
   margin-left: -1rem;
-
+  
+  -ms-overflow-style: none;
+  scrollbar-width: none;
   &::-webkit-scrollbar {
     display: none;
   }

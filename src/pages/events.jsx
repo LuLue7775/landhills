@@ -20,24 +20,24 @@ const Page = () => {
     const viewport = useViewport()
 
     return (
-        isLoading ?
-            <StyledLoaderContainer>
-                <StyledLoader />
-            </StyledLoaderContainer>
-            :
-            <StyledPages fixed>
-                {
-                    viewport !== 'tablet' && viewport !== 'mobile' &&
-                    <StyledMenuInfo className='menu'>
-                        <StyledText dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(info_content) }} />
-                    </StyledMenuInfo>
-                }
-                <StyledContentWrapper>
-                    {events?.map((event, i) => (
-                        <EventGrid key={i} event={event} router={router} />
-                    ))}
-                </StyledContentWrapper>
-            </StyledPages>
+        // isLoading ?
+        //     <StyledLoaderContainer>
+        //         <StyledLoader />
+        //     </StyledLoaderContainer>
+        //     :
+        <StyledPages fixed>
+            {
+                viewport !== 'tablet' && viewport !== 'mobile' &&
+                <StyledMenuInfo className='menu'>
+                    <StyledText dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(info_content) }} />
+                </StyledMenuInfo>
+            }
+            <StyledContentWrapper>
+                {events?.map((event, i) => (
+                    <EventGrid key={i} event={event} router={router} />
+                ))}
+            </StyledContentWrapper>
+        </StyledPages>
     )
 }
 
