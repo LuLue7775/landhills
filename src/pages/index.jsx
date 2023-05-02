@@ -27,12 +27,28 @@ const Page = () => {
             <StyledSlide key={i} className='slide'
               style={currSlide === i ? { opacity: '1' } : { opacity: '0' }}
             >
-              <StyledImageLink key={imageData.id}
-                draggable="false"
-                $hasLink={imageData.image_link ? true : false}
-                href={imageData.image_link ? imageData.image_link : ''}
-              >
-                <Image
+              {imageData.image_link ?
+                <StyledImageLink key={imageData.id}
+                  draggable="false"
+                  href={imageData.image_link ? imageData.image_link : ''}
+                >
+                  <Image
+                    key={imageData.id}
+                    className="images"
+                    draggable="false"
+                    src={imageData.image}
+                    alt="image"
+                    width={1920}
+                    height={1080}
+                    sizes="100vw"
+                    style={{
+                      width: '100%',
+                      minHeight: '100%',
+                      objectFit: 'cover',
+                    }}
+                  />
+                </StyledImageLink>
+                : <Image
                   key={imageData.id}
                   className="images"
                   draggable="false"
@@ -47,7 +63,8 @@ const Page = () => {
                     objectFit: 'cover',
                   }}
                 />
-              </StyledImageLink>
+              }
+
 
             </StyledSlide>
           ))

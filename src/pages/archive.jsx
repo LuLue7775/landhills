@@ -22,7 +22,7 @@ import gsap from 'gsap'
 const Page = ({ projects }) => {
     const router = useRouter()
     /** @TODO useProjectsQuery unable to fetch */
-    // const { isLoading } = useProjectsQuery()
+    const { isLoading } = useProjectsQuery()
     const [projectImage, setProjectImage] = useState('')
 
 
@@ -53,48 +53,48 @@ const Page = ({ projects }) => {
     }, [sortedCol])
 
     return (
-        // isLoading ?
-        //     <StyledLoaderContainer>
-        //         <StyledLoader />
-        //     </StyledLoaderContainer>
-        //     :
-        <StyledPages>
-            <StyledTableWrapper>
-                <DataTable
-                    columns={columns}
-                    data={projects}
-                    highlightOnHover={true}
-                    onRowMouseEnter={handleRowMouseEnter}
-                    onRowMouseLeave={handleRowMouseLeave}
-                    responsive={true}
-                    customStyles={customStyles}
-                    expandableRows={true}
-                    expandOnRowClicked={true}
-                    expandableRowsComponent={ExpandedComponent}
-                    expandableRowsHideExpander={true}
-                    sortIcon={
-                        <span
-                            ref={ref}
-                            onClick={() => setSort(!sort)}
-                            style={{
-                                transform: `rotate(90deg)`,
-                                display: 'block',
-                                margin: '4px'
-                            }}
-                        > ＞ </span>
+        isLoading ?
+            <StyledLoaderContainer>
+                <StyledLoader />
+            </StyledLoaderContainer>
+            :
+            <StyledPages>
+                <StyledTableWrapper>
+                    <DataTable
+                        columns={columns}
+                        data={projects}
+                        highlightOnHover={true}
+                        onRowMouseEnter={handleRowMouseEnter}
+                        onRowMouseLeave={handleRowMouseLeave}
+                        responsive={true}
+                        customStyles={customStyles}
+                        expandableRows={true}
+                        expandOnRowClicked={true}
+                        expandableRowsComponent={ExpandedComponent}
+                        expandableRowsHideExpander={true}
+                        sortIcon={
+                            <span
+                                ref={ref}
+                                onClick={() => setSort(!sort)}
+                                style={{
+                                    transform: `rotate(90deg)`,
+                                    display: 'block',
+                                    margin: '4px'
+                                }}
+                            > ＞ </span>
+                        }
+
+                        onSort={(selectedColumn, sortDirection, sortedRows) => setSortedCol({ selectedColumn, sortDirection })}
+                        onRowExpandToggled={(expanded) => expanded ? setHideImage(false) : setHideImage(true)} // hide float image
+                    />
+
+                    {viewport !== 'tablet' && viewport !== 'mobile' &&
+                        projectImage && hideImage &&
+                        <ArchiveImage projectImage={projectImage} />
                     }
-
-                    onSort={(selectedColumn, sortDirection, sortedRows) => setSortedCol({ selectedColumn, sortDirection })}
-                    onRowExpandToggled={(expanded) => expanded ? setHideImage(false) : setHideImage(true)} // hide float image
-                />
-
-                {viewport !== 'tablet' && viewport !== 'mobile' &&
-                    projectImage && hideImage &&
-                    <ArchiveImage projectImage={projectImage} />
-                }
-            </StyledTableWrapper>
-            <div className='block'> </div>
-        </StyledPages>
+                </StyledTableWrapper>
+                <div className='block'> </div>
+            </StyledPages>
     )
 }
 

@@ -88,7 +88,7 @@ async function handleData(project) {
 }
 
 const Page = ({ projects, projectsTotalPageHeader }) => {
-  const { newSequence, setSequence,
+  const {
     firstpageProjectPool, setFirstpagefirstpageProjectPool,
     requestPage, setRequestPage,
   } = useProjectStore()
@@ -120,10 +120,7 @@ const Page = ({ projects, projectsTotalPageHeader }) => {
   // console.log(inView)
   useEffect(() => {
     if (!inView) return
-    // setSequence('')
     if (requestPage > parseInt(projectsTotalPageHeader)) return
-    // console.log(requestPage >= parseInt(projectsTotalPageHeader))
-    // console.log(requestPage, parseInt(projectsTotalPageHeader))
     setRequestPage()
   }, [inView])
 
@@ -157,11 +154,8 @@ const Page = ({ projects, projectsTotalPageHeader }) => {
 
 
   /** @TODO useProjectsQuery unable to fetch */
-  // const { isLoading } = useProjectsQuery()
+  const { isLoading } = useProjectsQuery()
   // const queryClient = useQueryClient()
-  // useEffect(() => {
-  //   queryClient.setQueryData(['projects'], (data) => data.sort(() => Math.random() - 0.5))
-  // }, [projects])
 
   /**
    * Detect scroll behavior, move mesh after 2sec scrolled. 
@@ -209,19 +203,19 @@ const Page = ({ projects, projectsTotalPageHeader }) => {
 
 
   return (
-    // isLoading ?
-    //   <StyledLoaderContainer>
-    //     <StyledLoader />
-    //   </StyledLoaderContainer>
-    //   :
-    <StyledPages ref={scrollRef}>
-      <StyledRow >
+    isLoading ?
+      <StyledLoaderContainer>
+        <StyledLoader />
+      </StyledLoaderContainer>
+      :
+      <StyledPages ref={scrollRef}>
+        <StyledRow >
 
-        <Projects firstpageProjectPool={firstpageProjectPool} newComingIn={newComingIn} />
-        <div ref={bottomRef} style={{ transform: 'translateY(120%)', height: '50%', width: '100%', }}> - </div>
+          <Projects firstpageProjectPool={firstpageProjectPool} newComingIn={newComingIn} />
+          <div ref={bottomRef} style={{ transform: 'translateY(120%)', height: '50%', width: '100%', }}> - </div>
 
-      </StyledRow>
-    </StyledPages>
+        </StyledRow>
+      </StyledPages>
 
 
   )

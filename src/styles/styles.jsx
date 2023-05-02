@@ -332,9 +332,8 @@ export const StyledSlideButton = styled.button`
 `;
 
 export const StyledImageLink = styled.a`
-  cursor: ${({ $hasLink }) => $hasLink ? `url('/img/plus.png'), auto;` : 'auto'}
-`;
-
+  cursor: url('/img/plus.png'), auto;
+`
 
 /**
  * Projects Page
@@ -376,12 +375,9 @@ export const StyledRow = styled.div`
 
 
 export const StyledImage = styled.img`
-  // background-image: url('placeholder.png');
+  height: min;
   max-height: 400px;
   width: auto;
-  
-  // width: 600px;
-  // height: 700px;
   object-fit: contain;
 
   @media ${devices.laptop} {
@@ -590,32 +586,31 @@ export const StyledExpandContent = styled.div`
   letter-spacing: .7px;
   line-height: 27.5px;
 
-  flex-direction: column;  
+  flex-direction: column;
   @media ${devices.laptop} {
-    flex-direction: row;  
+    flex-direction: row;
   }
 
   min-height: 300px;
 `
-export const StyledExpandText = styled.div`
 
+export const StyledExpandText = styled.div`
+  max-height: 400px;
+  width: min(100%, 300px);
+  position: relative;
   display: flex;
   flex-direction: column;
   text-align: justify;
     
-    align-items: end;
-    justify-content: end; 
+  align-items: end;
+  justify-content: end; 
   
   font-family: 'Circular Book';
   font-size: 1rem;
   letter-spacing: .7px;
   line-height: 14.5px;
-  
-  
-  max-height: 400px;
-  width: 100%;
-  position: relative;
-  width: 70%;
+
+
 
   @media ${devices.laptop} {
     min-height: 300px; // based on StyledExpandContent min height. this is for algin end (cause we need position: absolute;)
@@ -627,6 +622,7 @@ export const StyledExpandText = styled.div`
     justify-content: end; 
   }
 `
+
 
 export const StyledSlider = styled.div`
   position: relative;
@@ -655,7 +651,7 @@ export const StyledSlide = styled.div`
   height: 100%;
   opacity: 0;
   transition: opacity 0.4s ease-in-out;
-  text-align: center;
+text-align: center;
 
 `
 

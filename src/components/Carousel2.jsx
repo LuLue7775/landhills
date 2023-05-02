@@ -37,6 +37,7 @@ export default function Carousel2(props) {
                     )}
                     <StyledSlideButton dir={'prev'} onClick={() => handleClicked('prev')} />
                     <StyledSlideButton dir={'next'} onClick={() => handleClicked('next')} />
+
                 </StyledSlider>
             </StyledSwipeHandler>
         </>

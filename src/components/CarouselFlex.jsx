@@ -85,7 +85,7 @@ export function usePosition(ref, imageRefs, currSlide) {
 
     const scrollRight = React.useCallback(() => {
         scrollToElement(imageRefs.current[currSlide])
-        console.log('scroll right')
+        // console.log('scroll right')
     }, [
         scrollToElement,
         currSlide,
@@ -178,8 +178,14 @@ export default function CarouselFlex(props) {
                         key={`${index}`}>{child}</CarouselItem>
                 ))}
             </CarouserContainerInner>
-            <StyledSlideButton dir={'prev'} onClick={() => handleClicked('prev')} />
-            <StyledSlideButton dir={'next'} onClick={() => handleClicked('next')} />
+            {imageRefs.current.length > 1 ?
+                <>
+                    <StyledSlideButton dir={'prev'} onClick={() => handleClicked('prev')} />
+                    <StyledSlideButton dir={'next'} onClick={() => handleClicked('next')} />
+                </>
+                : ''
+            }
+
 
 
 
