@@ -107,5 +107,15 @@ export const customStyles = {
     //         minHeight: '10px',
     //     },
     // },
+    expanderRow: {
+        style: {
+            overflow: 'hidden'
 
+        },
+    },
+    responsiveWrapper: {
+        style: {
+            overflowX: 'hidden'
+        },
+    },
 };

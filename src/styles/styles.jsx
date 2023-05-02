@@ -592,6 +592,7 @@ export const StyledExpandContent = styled.div`
   }
 
   min-height: 300px;
+
 `
 
 export const StyledExpandText = styled.div`
@@ -609,8 +610,6 @@ export const StyledExpandText = styled.div`
   font-size: 1rem;
   letter-spacing: .7px;
   line-height: 14.5px;
-
-
 
   @media ${devices.laptop} {
     min-height: 300px; // based on StyledExpandContent min height. this is for algin end (cause we need position: absolute;)

@@ -3,9 +3,10 @@ import {
     StyledExpandText,
 } from '@/styles/styles'
 import useViewport from '@/utils/useViewport'
+import { gsap } from 'gsap'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 
 export default function ExpandedComponent({ data }) {
     const router = useRouter()
@@ -24,8 +25,20 @@ export default function ExpandedComponent({ data }) {
         objectFit: 'contain',
     }
 
+    const contentRef = useRef()
+    useEffect(() => {
+        gsap.fromTo(contentRef.current, {
+            yPercent: -100
+        }, {
+            yPercent: 0,
+            duration: 1.2,
+            delay: .2,
+            ease: 'power4.out'
+        })
+
+    }, [])
     return (
-        <StyledExpandContent >
+        <StyledExpandContent ref={contentRef}>
             <Image
                 alt="projects"
                 src={data.image}
