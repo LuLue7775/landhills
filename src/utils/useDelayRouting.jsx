@@ -13,14 +13,20 @@ const backToCenterAnimation = ({ meshRef }) => {
     })
 }
 
+
 export default function useDelayRouting(isMenuOpened, setMenuOpen) {
-    const { meshRef } = useMeshRefStore()
+    const { meshRef, setMeshRef } = useMeshRefStore()
 
     const router = useStore((state) => state.router)
 
     const startAnimation = () => {
         return new Promise((resolve, reject) => {
-            backToCenterAnimation({ meshRef });
+            // backToCenterAnimation({ meshRef });
+
+            // storeCurrentMeshpos
+            setMeshRef(meshRef)
+
+            // close menu
             setMenuOpen(!isMenuOpened);
             setTimeout(resolve, 3000)
         });

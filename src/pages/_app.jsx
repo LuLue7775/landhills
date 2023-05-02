@@ -1,5 +1,5 @@
 import { GlobalStyle } from '@/styles/styles'
-import { setState } from '@/helpers/store'
+import { setState, useAsPathInitializer } from '@/helpers/store'
 import Header from '@/config'
 import Layout from '@/components/layout/layout'
 import { useRouter } from 'next/router'
@@ -15,6 +15,9 @@ const LCanvas = dynamic(() => import('@/components/layout/canvas'), {
 })
 
 function App({ Component, pageProps = { title: 'index' } }) {
+
+  // useAsPathInitializer()
+
 
   const [queryClient] = useState(() => new QueryClient({
     defaultOptions: {

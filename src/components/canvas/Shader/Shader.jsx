@@ -42,18 +42,20 @@ const Shader = (props) => {
 
   const router = useStore((s) => s.router)
 
-  const { meshRef, setMeshRef } = useMeshRefStore()
+  const { setMeshRef } = useMeshRefStore()
   const mesh = useRef(null)
-  useEffect(() => { setMeshRef(mesh) }, [mesh])
+  useEffect(() => {
+    setMeshRef(mesh)
+  }, [])
 
   /**
    * Object Rotation 
    */
   useFrame((state, delta) => {
-    if (!meshRef.current) return
+    if (!mesh.current) return
 
-    if (meshRef.current) {
-      meshRef.current.rotation.x = meshRef.current.rotation.y += 0.01
+    if (mesh.current) {
+      mesh.current.rotation.x = mesh.current.rotation.y += 0.01
     }
     // if (meshRef.current.material) {
     //   meshRef.current.material.uniforms.time.value +=
@@ -65,12 +67,12 @@ const Shader = (props) => {
    * Position depend on viewport
    * @TODO if duration is long, this need to be cancellable
    */
-  const viewport = useViewport()
+  // const viewport = useViewport()
 
-  useEffect(() => {
-    // const pos = objectPos % 2 ? 1 : -1
-    toSideAnimation({ mesh, viewport })
-  }, [viewport, router])
+  // useEffect(() => {
+  //   // const pos = objectPos % 2 ? 1 : -1
+  //   toSideAnimation({ mesh, viewport })
+  // }, [viewport, router])
 
   return (
     <mesh

@@ -1,15 +1,10 @@
 import useEventsQuery, { getEvents } from '@/queries/useEventsQuery'
 import { StyledPages, StyledMenuInfo, StyledText, StyledContentWrapper, StyledSlide } from '@/styles/styles'
 import useBrandInfoQuery from '@/queries/useBrandInfoQuery'
-import dynamic from 'next/dynamic'
 import { dehydrate, QueryClient } from '@tanstack/react-query'
 import useViewport from '@/utils/useViewport'
 import EventGrid from '@/components/EventGrid'
 import { useRouter } from 'next/router'
-
-const Shader = dynamic(() => import('@/components/canvas/Shader/Shader'), {
-    ssr: false,
-})
 
 const Page = () => {
     const router = useRouter()
@@ -43,7 +38,6 @@ const Page = () => {
 
 Page.r3f = (props) => (
     <>
-        <Shader />
     </>
 )
 

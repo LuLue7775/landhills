@@ -10,7 +10,6 @@ import useProjectsQuery, { getProjects, transformProjects } from '@/queries/useP
 import ArchiveImage from '@/components/archiveImage'
 import ExpandedComponent from '@/components/datatable/ExpandedComponent'
 import { QueryClient, dehydrate } from '@tanstack/react-query'
-import dynamic from 'next/dynamic'
 import { useState } from 'react';
 import { useRouter } from 'next/router'
 import DataTable from 'react-data-table-component'
@@ -18,9 +17,7 @@ import useViewport from '@/utils/useViewport'
 import { useRef } from 'react'
 import { useEffect } from 'react'
 import gsap from 'gsap'
-const Shader = dynamic(() => import('@/components/canvas/Shader/Shader'), {
-    ssr: false,
-})
+
 
 const Page = ({ projects }) => {
     const router = useRouter()
@@ -103,7 +100,6 @@ const Page = ({ projects }) => {
 
 Page.r3f = (props) => (
     <>
-        <Shader />
     </>
 )
 

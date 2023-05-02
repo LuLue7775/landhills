@@ -1,3 +1,5 @@
+import { useRouter } from 'next/router'
+import { useEffect } from 'react'
 import create from 'zustand'
 import shallow from 'zustand/shallow'
 
@@ -29,25 +31,57 @@ const useMeshRefStore = create((set) => ({
 })
 )
 
-export {
-  useMeshRefStore
-}
-
 const useProjectStore = create((set) => ({
   newSequence: [],
   setSequence: (element) =>
     set((state) => ({ newSequence: [...state.newSequence, element] })),
-  projectPool: [],
-  setProjectPool: (elements) =>
-    set((state) => ({ projectPool: [...state.projectPool, ...elements] })),
+  firstpageProjectPool: [],
+  // setFirstpagefirstpageProjectPool: (elements) =>
+  //   set((state) => ({ firstpageProjectPool: [...state.firstpageProjectPool, ...elements] })),
+  setFirstpagefirstpageProjectPool: (elements) =>
+    set((state) => ({ firstpageProjectPool: elements })),
   requestPage: 1,
   setRequestPage: () =>
-    set((state) => ({ requestPage: state.requestPage + 1 })),
+    set((state) => ({ requestPage: parseInt(state.requestPage) + 1 })),
+  // projectsTotalPage: 1,
+  // setProjectsTotalPage: (elements) =>
+  //   set((state) => ({ projectsTotalPage: parseInt(elements) })),
 
 
 })
 )
 
 export {
+  useMeshRefStore,
   useProjectStore
 }
+
+const asPathStore = create((set) => ({
+  prevAsPath: undefined,
+  currentAsPath: undefined,
+}));
+
+/** use as a hook to get prevAsPath and currentAsPath*/
+export const useAsPath = () => {
+  return asPathStore((state) => state);
+};
+
+/** use everywhere you like */
+export const getAsPath = () => {
+  return asPathStore.getState();
+};
+
+export const useAsPathInitializer = () => {
+  const { asPath } = useRouter();
+  const { currentAsPath } = useAsPath();
+
+  useEffect(() => {
+    if (currentAsPath !== asPath) {
+      asPathStore.setState((state) => ({
+        ...state,
+        currentAsPath: asPath,
+        prevAsPath: currentAsPath,
+      }));
+    }
+  }, [asPath, currentAsPath]);
+};

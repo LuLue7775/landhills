@@ -3,20 +3,13 @@ import {
     StyledPages,
     StyledSection,
     StyledObject,
-    StyledObjectContent,
     StyledLoader,
     StyledLoaderContainer,
-    StyledImage,
 } from '@/styles/styles'
 import Object from '@/components/Object'
 import { getObjects } from '@/queries/useObjectsQuery'
 import { QueryClient, dehydrate } from '@tanstack/react-query'
-import dynamic from 'next/dynamic'
-import Image from 'next/image'
 
-const Shader = dynamic(() => import('@/components/canvas/Shader/Shader'), {
-    ssr: false,
-})
 
 const placeObject = (col, object) => {
     switch (col) {
@@ -103,7 +96,6 @@ const Page = () => {
 
 Page.r3f = (props) => (
     <>
-        <Shader />
     </>
 )
 

@@ -1,17 +1,12 @@
 import Carousel from '@/components/carousel'
 import { StyledImageLink, StyledLoader, StyledLoaderContainer, StyledSlide, StyledSlider, StyledTextHome } from '@/styles/styles'
 
-import dynamic from 'next/dynamic'
 import useHomeQuery, { getHome } from '@/queries/useHomeQuery'
 import Image from 'next/image'
 import DOMPurify from 'isomorphic-dompurify';
 import { dehydrate, QueryClient } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 import Carousel2 from '@/components/Carousel2'
-
-const Shader = dynamic(() => import('@/components/canvas/Shader/Shader'), {
-  ssr: false,
-})
 
 
 // dom components goes here
@@ -76,7 +71,6 @@ const Page = () => {
 // It will receive same props as Page component (from getStaticProps, etc.)
 Page.r3f = (props) => (
   <>
-    <Shader />
   </>
 )
 export default Page

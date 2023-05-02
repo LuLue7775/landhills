@@ -376,9 +376,12 @@ export const StyledRow = styled.div`
 
 
 export const StyledImage = styled.img`
-  height: min;
+  // background-image: url('placeholder.png');
   max-height: 400px;
   width: auto;
+  
+  // width: 600px;
+  // height: 700px;
   object-fit: contain;
 
   @media ${devices.laptop} {
