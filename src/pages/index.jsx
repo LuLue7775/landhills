@@ -5,15 +5,15 @@ import useHomeQuery, { getHome } from '@/queries/useHomeQuery'
 import Image from 'next/image'
 import DOMPurify from 'isomorphic-dompurify';
 import { dehydrate, QueryClient } from '@tanstack/react-query'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import Carousel2 from '@/components/Carousel2'
-
 
 // dom components goes here
 const Page = () => {
   const { home, isLoading } = useHomeQuery()
   const { current_event, home_images } = home?.[0] || []
   const [currSlide, setSlide] = useState(0)
+
 
   return (
     isLoading ?

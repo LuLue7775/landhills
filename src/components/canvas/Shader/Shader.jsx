@@ -67,12 +67,16 @@ const Shader = (props) => {
    * Position depend on viewport
    * @TODO if duration is long, this need to be cancellable
    */
-  // const viewport = useViewport()
+  const viewport = useViewport()
 
   // useEffect(() => {
   //   // const pos = objectPos % 2 ? 1 : -1
   //   toSideAnimation({ mesh, viewport })
   // }, [viewport, router])
+  useEffect(() => {
+    // const pos = objectPos % 2 ? 1 : -1
+    toSideAnimation({ mesh, viewport })
+  }, [])
 
   return (
     <mesh

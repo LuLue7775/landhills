@@ -9,6 +9,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
 import { Hydrate, QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { handleExternalLink } from '@/utils/handleExternalLink'
+import { ErrorBoundary } from 'react-error-boundary'
 
 const LCanvas = dynamic(() => import('@/components/layout/canvas'), {
   ssr: true,
@@ -16,7 +17,7 @@ const LCanvas = dynamic(() => import('@/components/layout/canvas'), {
 
 function App({ Component, pageProps = { title: 'index' } }) {
 
-  // useAsPathInitializer()
+  useAsPathInitializer()
 
 
   const [queryClient] = useState(() => new QueryClient({
@@ -49,12 +50,15 @@ function App({ Component, pageProps = { title: 'index' } }) {
 
       <QueryClientProvider client={queryClient}>
         <Hydrate state={pageProps.dehydratedState}>
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
 
-          {Component?.r3f &&
-            <LCanvas> {Component.r3f(pageProps)} </LCanvas>}
+          <ErrorBoundary FallbackComponent={ErrorHandler}>
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+
+            {Component?.r3f &&
+              <LCanvas> {Component.r3f(pageProps)} </LCanvas>}
+          </ErrorBoundary>
 
           {/* <ReactQueryDevtools initialIsOpen={false} position='bottom-right' /> */}
         </Hydrate>
@@ -64,3 +68,14 @@ function App({ Component, pageProps = { title: 'index' } }) {
 }
 
 export default App
+
+
+
+function ErrorHandler({ error }) {
+  return (
+    <div role="alert">
+      <p>An error occurred:</p>
+      <pre>{error.message}</pre>
+    </div>
+  )
+}
