@@ -73,8 +73,9 @@ const Shader = (props) => {
   //   // const pos = objectPos % 2 ? 1 : -1
   //   toSideAnimation({ mesh, viewport })
   // }, [viewport, router])
+
   useEffect(() => {
-    // const pos = objectPos % 2 ? 1 : -1
+    // move to side on first load.
     toSideAnimation({ mesh, viewport })
   }, [])
 

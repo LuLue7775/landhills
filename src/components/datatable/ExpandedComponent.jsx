@@ -2,29 +2,38 @@ import {
     StyledExpandContent,
     StyledExpandText,
 } from '@/styles/styles'
+import useViewport from '@/utils/useViewport'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import React from 'react'
 
 export default function ExpandedComponent({ data }) {
     const router = useRouter()
+    const viewport = useViewport()
+
+    const desktopStyle = {
+        width: 'auto',
+        height: '100%',
+        objectFit: 'contain',
+        paddingLeft: 'calc(25vw - 4rem )',
+    }
+    const mobileStyle = {
+        width: 'auto',
+        maxWidth: '300px',
+        height: '100%',
+        objectFit: 'contain',
+    }
 
     return (
-        <StyledExpandContent
-            style={{ position: 'relative' }}
-        >
+        <StyledExpandContent >
             <Image
                 alt="projects"
                 src={data.image}
                 width={250}
                 height={250}
-                style={{
-                    width: 'auto',
-                    height: '100%',
-                    objectFit: 'contain',
-                    paddingLeft: 'calc(25vw - 4rem )',
-
-                }}
+                style={
+                    viewport !== 'mobile' ? desktopStyle : mobileStyle
+                }
             />
             <StyledExpandText>
                 <p dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(data?.description) }} />

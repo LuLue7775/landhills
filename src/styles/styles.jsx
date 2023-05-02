@@ -589,23 +589,43 @@ export const StyledExpandContent = styled.div`
   font-size: 1rem;
   letter-spacing: .7px;
   line-height: 27.5px;
+
+  flex-direction: column;  
+  @media ${devices.laptop} {
+    flex-direction: row;  
+  }
+
+  min-height: 300px;
 `
 export const StyledExpandText = styled.div`
-  width: 20%;
-  height: 100%;
-  text-align: justify;
+
   display: flex;
   flex-direction: column;
-  align-items: end;
-  justify-content: end;
-  
-  position: absolute;
-  left: 40%;
+  text-align: justify;
+    
+    align-items: end;
+    justify-content: end; 
   
   font-family: 'Circular Book';
   font-size: 1rem;
   letter-spacing: .7px;
   line-height: 14.5px;
+  
+  
+  max-height: 400px;
+  width: 100%;
+  position: relative;
+  width: 70%;
+
+  @media ${devices.laptop} {
+    min-height: 300px; // based on StyledExpandContent min height. this is for algin end (cause we need position: absolute;)
+    width: 20%;
+    position: absolute;
+    left: 40%;
+    
+    align-items: end;
+    justify-content: end; 
+  }
 `
 
 export const StyledSlider = styled.div`
@@ -635,7 +655,7 @@ export const StyledSlide = styled.div`
   height: 100%;
   opacity: 0;
   transition: opacity 0.4s ease-in-out;
-text-align: center;
+  text-align: center;
 
 `
 
