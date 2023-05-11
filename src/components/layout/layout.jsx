@@ -1,12 +1,14 @@
 import Nav from '../nav'
 import Menu from './menu'
 import { StyledLayout } from '@/styles/styles'
-import { setState } from '@/helpers/store'
+import { setState, useAsPathInitializer } from '@/helpers/store'
 import useStore from '@/helpers/store'
 import Footer from './footer'
 import { useState, useEffect, useRef } from 'react'
 
 const Layout = ({ children }) => {
+  useAsPathInitializer()
+
   const [isMenuOpened, setMenuOpen] = useState(false)
   const ref = useRef(null)
 

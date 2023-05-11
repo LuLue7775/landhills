@@ -25,7 +25,7 @@ import useOnScreen from '@/utils/useOnScreen'
 const moveAnimation = ({ meshRef, queue }) => {
   if (!meshRef.current) return
   if (!queue[1]) return
-  console.log(meshRef.current.position)
+  // console.log(meshRef.current.position)
 
   gsap.to(meshRef.current.position, {
     x: queue[1].x,
@@ -50,14 +50,13 @@ const addNewPosToQueue = ({ animationQueueRef, viewport }) => {
 
 
       animationQueueRef.current.push({ x: newPosX, y: newPosY })
-      console.log(animationQueueRef.current)
+      // console.log(animationQueueRef.current)
       resolve()
     }, 1000)
   })
 }
 
-
-async function fetchProjects(page) {
+export async function fetchProjects(page) {
   try {
     const project = fetch(`https://landhills.co/wp-json/wp/v2/projects?per_page=20&page=${page}`)
       .then((res) => {
@@ -77,12 +76,12 @@ async function fetchProjects(page) {
 
 
 /** @TODO transform 和randomize要分兩個func  */
-function randomizeData(data) {
+export function randomizeData(data) {
   // console.log('data', data)
   if (!data) return
   return transformProjects(data).sort(() => Math.random() - 0.5)
 }
-async function handleData(project) {
+export async function handleData(project) {
   const randData = randomizeData(project)
   return randData
 }
@@ -117,7 +116,6 @@ const Page = ({ projects, projectsTotalPageHeader }) => {
    */
   const bottomRef = useRef()
   const inView = useOnScreen(bottomRef)
-  // console.log(inView)
   useEffect(() => {
     if (!inView) return
     if (requestPage > parseInt(projectsTotalPageHeader)) return
@@ -130,6 +128,8 @@ const Page = ({ projects, projectsTotalPageHeader }) => {
   const [newComingIn, setComingIn] = useState()
   useEffect(() => {
     if (requestPage > parseInt(projectsTotalPageHeader)) return
+    // console.log(requestPage, parseInt(projectsTotalPageHeader))
+    // console.log(projects.length)
 
     async function fetchNew() {
       const project = await fetchProjects(requestPage)
@@ -165,6 +165,7 @@ const Page = ({ projects, projectsTotalPageHeader }) => {
   const scrollRef = useRef()
   useEffect(() => {
     const scrollPos = scrollRef.current
+
     // detect scroll stop
     let timer = null;
     const handleScrollStopped = () => {
@@ -178,14 +179,13 @@ const Page = ({ projects, projectsTotalPageHeader }) => {
 
     scrollPos?.addEventListener('scroll', handleScrollStopped)
     return () => scrollPos?.removeEventListener('scroll', handleScrollStopped)
-  }, [])
+  }, [scrollRef.current])
 
   const viewport = useViewport()
   const { meshRef } = useMeshRefStore()
   const animationQueueRef = useRef([])
 
   useEffect(() => {
-    // console.log("scrollPos", scrollPos)
     if (!viewport) return
     const waitFor3 = async () => {
       addNewPosToQueue({ animationQueueRef, viewport })
@@ -198,7 +198,6 @@ const Page = ({ projects, projectsTotalPageHeader }) => {
     waitFor3()
 
     // delete jobs if job exceed certain number
-
   }, [scrollPos, meshRef.current])
 
 
@@ -212,7 +211,10 @@ const Page = ({ projects, projectsTotalPageHeader }) => {
         <StyledRow >
 
           <Projects firstpageProjectPool={firstpageProjectPool} newComingIn={newComingIn} />
-          <div ref={bottomRef} style={{ transform: 'translateY(120%)', height: '50%', width: '100%', }}> - </div>
+          <div ref={bottomRef} style={{
+            // background: 'red',
+            transform: 'translateY(120%)', height: '50%', width: '100%',
+          }}> - </div>
 
         </StyledRow>
       </StyledPages>

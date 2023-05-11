@@ -1,11 +1,10 @@
 import { GlobalStyle } from '@/styles/styles'
-import { setState, useAsPathInitializer } from '@/helpers/store'
+import { setState } from '@/helpers/store'
 import Header from '@/config'
 import Layout from '@/components/layout/layout'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import dynamic from 'next/dynamic'
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
 import { Hydrate, QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { handleExternalLink } from '@/utils/handleExternalLink'
@@ -16,9 +15,6 @@ const LCanvas = dynamic(() => import('@/components/layout/canvas'), {
 })
 
 function App({ Component, pageProps = { title: 'index' } }) {
-
-  useAsPathInitializer()
-
 
   const [queryClient] = useState(() => new QueryClient({
     defaultOptions: {

@@ -46,14 +46,22 @@ const useProjectStore = create((set) => ({
   // projectsTotalPage: 1,
   // setProjectsTotalPage: (elements) =>
   //   set((state) => ({ projectsTotalPage: parseInt(elements) })),
-
+})
+)
+const useArchiveStore = create((set) => ({
+  requestArchivePage: 1,
+  setRequestArchivePage: () =>
+    set((state) => ({ requestArchivePage: parseInt(state.requestArchivePage) + 1 })),
+  archivePool: [],
+  setArchivePool: (elements) => set((state) => ({ archivePool: [...state.archivePool, ...elements] })),
 
 })
 )
 
 export {
   useMeshRefStore,
-  useProjectStore
+  useProjectStore,
+  useArchiveStore
 }
 
 const asPathStore = create((set) => ({
